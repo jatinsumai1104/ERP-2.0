@@ -354,9 +354,11 @@
                       <th>Age</th>
                       <th>Start date</th>
                       <th>Salary</th>
+                      <th>Edit</th>
                     </tr>
                   </thead>
                   <tbody>
+                    
                     <tr>
                       <td>Tiger Nixon</td>
                       <td>System Architect</td>
@@ -364,6 +366,7 @@
                       <td>61</td>
                       <td>2011/04/25</td>
                       <td>$320,800</td>
+                      <td><button type="button" class="btn btn-primary">Edit</button></td>
                     </tr>
                   </tbody>
                 </table>

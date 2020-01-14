@@ -2,22 +2,16 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-$path = __DIR__;
-require_once("{$path}/../../vendor/autoload.php");
+require __DIR__.'/../../vendor/autoload.php';
 
 class MailConfigHelper
 {
-    
-    
-   
-    
     public static function getMailer(): PHPMailer
     {
         
         $path = __DIR__;
         //Getting all the email smtp info in the array
-        $email_details = parse_ini_file("{$path}/../../config.ini");
+        $email_details = parse_ini_file(__DIR__."/../../config.ini");
 
 
         $mail = new PHPMailer();
