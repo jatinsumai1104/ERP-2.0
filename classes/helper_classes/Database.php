@@ -59,13 +59,13 @@ class Database {
         return $this->stmt->execute($data);
     }
 
-    public function where($field, $operator, $value){
-		$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
+    // public function where($field, $operator, $value){
+	// 	$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
 		
-		$this->stmt->execute(['value' => $value]);
+	// 	$this->stmt->execute(['value' => $value]);
 
-		return $this;
-    }
+	// 	return $this;
+    // }
     
     public function count(){
 		return $this->stmt->rowCount();
