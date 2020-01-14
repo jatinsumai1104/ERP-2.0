@@ -59,6 +59,10 @@ class Database {
         return $this->stmt->execute($data);
     }
 
+    public function lastInsertedID(){
+        return $this->pdo->lastInsertId();
+    }
+
     // public function where($field, $operator, $value){
 	// 	$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
 		

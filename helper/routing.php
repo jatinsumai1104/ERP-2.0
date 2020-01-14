@@ -19,9 +19,14 @@ if(isset($_POST['add_product'])){
     $quantity = $_POST['quantity'];
     
     $product_db = new Product($database);
-    echo $product_db->call();
+    //echo $product_db->call();
     $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
+    $res = $database->insert($data);
+    $lastInsertedID =  $database->lastInsertedID();
+
     
+
+
     //$database->
 }
 ?>
