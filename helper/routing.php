@@ -9,8 +9,8 @@ if(isset($_POST['login_details'])){
 }
 
 if(isset($_POST['add_product'])){
-    $product_name = $_POST['product_name'];
-    $product_specification = $_POST['product_specification'];
+    $name = $_POST['name'];
+    $specification = $_POST['specification'];
     $hsn_code = $_POST['hsn_code'];
     $sale_rate = $_POST['sale_rate'];
     $category_id = $_POST['category_id'];
@@ -20,7 +20,8 @@ if(isset($_POST['add_product'])){
     
     $product_db = new Product($database);
     echo $product_db->call();
-    $data=
-    $database->
+    $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
+    
+    //$database->
 }
 ?>

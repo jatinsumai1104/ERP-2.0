@@ -60,12 +60,12 @@ require_once('../includes/header.php');
                   <div class="form-group">
                     <label for="">Product Name</label>
                     <input type="text"
-                      class="form-control" name="product_name" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="name" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   <div class="form-group">
                     <label for="">Specification</label>
                     <input type="text"
-                      class="form-control" name="product_specification" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="specification" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   <div class="form-group">
                     <label for="">HSN CODE</label>
