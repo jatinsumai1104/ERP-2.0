@@ -1,6 +1,7 @@
 
 <?php
 require_once('../../helper/constants.php');
+require_once(__DIR__.'/../../helper/init.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,13 +76,25 @@ require_once('../includes/header.php');
                   <div class="form-group">
                     <label for="">Supplier</label>
                     <select name="supplier_id[]" id="supplier_id" class="form-control" multiple="multiple">
+                          <?php
+                          $res = $database->readData("suppliers",["id","first_name","last_name"],"deleted=0");
+                          // var_dump($res);
+                          foreach($res as $arr){
+                            // echo $arr['id'];
+                            // echo "<option value= $arr['id']>$arr['first_name'] $arr['last_name']</option>";
+                            echo "<option value={$arr['id']}>{$arr['first_name']} {$arr['last_name']}</option>";
+                          }
+                          // foreach($res as $key=>$value){
                             
+                          //   echo "<option value=$key[$value]>$supplier_name</option>"
+                          // }
+                          ?>  
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="">Sale Rate</label>
                     <input type="text"
-                      class="form-control" name="sale_rate" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="selling_rate" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   
                 </div>
