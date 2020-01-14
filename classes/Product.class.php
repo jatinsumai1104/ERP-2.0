@@ -1,7 +1,6 @@
 <?php
   class Product{
     protected $db ;
-    protected $table = "products";
     public function __construct(Database $db){
       $this->db = $db;
       $this->db->table($this->table);

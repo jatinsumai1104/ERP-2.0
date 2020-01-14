@@ -9,6 +9,7 @@ if(isset($_POST['login_details'])){
 }
 
 if(isset($_POST['add_product'])){
+    $table = "products";
     $name = $_POST['name'];
     $specification = $_POST['specification'];
     $hsn_code = $_POST['hsn_code'];
@@ -17,11 +18,12 @@ if(isset($_POST['add_product'])){
     $eoq_level = $_POST['eoq_level'];
     $danger_level = $_POST['danger_level'];
     $quantity = $_POST['quantity'];
-    
+    //$data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
+    //$assoc_array = $database->createAssocArray($data,$_POST);
     $product_db = new Product($database);
     //echo $product_db->call();
     $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
-    $res = $database->insert($data);
+    $res = $database->insert($table,$data);
     $lastInsertedID =  $database->lastInsertedID();
 
     
