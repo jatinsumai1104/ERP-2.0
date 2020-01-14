@@ -62,4 +62,5 @@ if(isset($_POST['login_details'])){
 
 if(isset($_POST['deleteBtn'])){
     $database->delete($_POST['table'], "id = ".$_POST['id']);
+    Util::redirect("manage-product");
 }

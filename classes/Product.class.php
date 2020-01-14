@@ -1,9 +1,9 @@
 <?php
   class Product{
+    private $table = "product";
     protected $db ;
     public function __construct(Database $db){
       $this->db = $db;
-      $this->db->table($this->table);
     }
 
 

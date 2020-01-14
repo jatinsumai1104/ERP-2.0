@@ -140,7 +140,7 @@ require_once('../includes/header.php');
         <div class="modal-body">Are you sure you want to delete?</div>
         <div class="modal-footer">
           <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
-            <input type="hidden" name="table" value="Product">
+            <input type="hidden" name="table" value="products">
             <input type="hidden" name="id" id="recordId">
             <button class="btn btn-danger" type="submit"  name="deleteBtn">Yes</button>
           </form>
