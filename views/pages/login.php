@@ -1,5 +1,9 @@
 <?php
-  require_once('../../helper/constants.php');
+
+
+
+require_once ("../../helper/init.php");
+require_once('../../helper/constants.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +32,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" action="../../helper/routing.php">
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
