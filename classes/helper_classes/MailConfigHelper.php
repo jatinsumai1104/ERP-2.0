@@ -8,6 +8,8 @@ class MailConfigHelper
 {
     public static function getMailer(): PHPMailer
     {
+        
+        $path = __DIR__;
         //Getting all the email smtp info in the array
         $email_details = parse_ini_file(__DIR__."/../../config.ini");
 
