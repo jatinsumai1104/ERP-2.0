@@ -27,63 +27,38 @@ class Database {
         }
     }
 
-    public function query($sql){
-        return $this->pdo->query($sql);
+    public function rawQuery($sql){
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Runs a prepared statement and returns an associative array,
-     * @param $sql
-     * @return array
-     */
-    public function fetchAll($sql){
-        return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
 
-    public function table($table){
-        $this->table = $table;
-        return $this;
-    }
 
-    public function insert($data){
+    public function insert($table, $data){
         $keys = array_keys($data);
 
         $fields = "`" . implode("`, `", $keys). "`";
 
         $placeholders = ":" . implode(", :", $keys);
 
-        $sql = "INSERT INTO {$this->table} ({$fields}) VALUES({$placeholders})";
+        $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
         
         $this->stmt = $this->pdo->prepare($sql);
 
         return $this->stmt->execute($data);
     }
 
-    // public function where($field, $operator, $value){
-	// 	$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
-		
-	// 	$this->stmt->execute(['value' => $value]);
-
-	// 	return $this;
-    // }
-    
-    public function count(){
-		return $this->stmt->rowCount();
+    public function lastInsertedID(){
+        return $this->pdo->lastInsertId();
     }
-    
-    public function exists($data){
-		$field = array_keys($data)[0];
 
-		return $this->where($field, '=', $data[$field])->count() ? true : false;
-    }
-    
-    public function get(){
-		return $this->stmt->fetchAll(PDO::FETCH_OBJ);
-	}
+    public function createAssocArray($arrayOfKeys,$post){
+        $assoc_value;
+        foreach($arrayOfKeys as $key){
 
-	public function first(){
-		return $this->get()[0];
+        }
     }
+
+    
 
     public function prepareColumnString($fields){
         $fieldsString = "";
@@ -98,25 +73,25 @@ class Database {
         return $fieldsString;
     }
     
-    public function readData($fields=["*"], $condition="1"){
+    public function readData($table,$fields=["*"], $condition="1"){
         $columnNameString = $this->prepareColumnString($fields);
         
-         $sql = "SELECT {$columnNameString} from {$this->table} where {$condition}";
+         $sql = "SELECT {$columnNameString} from {$table} where {$condition}";
         // echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
          $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function delete($condition="1"){
-        $sql = "update {$this->table} set deleted = 1 where $condition";
+    public function delete($table,$condition="1"){
+        $sql = "update {$table} set deleted = 1 where $condition";
         //echo $sql;
 		$this->stmt = $this->pdo->prepare($sql);
          $this->stmt->execute();
          return $this;
     }
     
-    public function update($data, $condition="1"){
+    public function update($table,$data, $condition="1"){
         $i = 0;
 		$columnValueSet = "";
 		foreach($data as $key=>$value){
@@ -124,7 +99,7 @@ class Database {
 			$columnValueSet .= $key. "='".$value."'".$comma;
 			$i++;
 		}
-		$sql = "update {$this->table} set {$columnValueSet} where {$condition}";
+		$sql = "update {$table} set {$columnValueSet} where {$condition}";
         echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
          $this->stmt->execute();
