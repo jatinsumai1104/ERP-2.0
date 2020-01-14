@@ -1,18 +1,22 @@
 <?php
 class Database {
-    protected $host = "localhost";
-    protected $db = "inventory_management";
-    protected $username = "root";
-    protected $password = "";
-
+    protected $config_db_details;
+    protected $host;
+    protected $db;
+    protected $username;
+    protected $password;
     protected $pdo;
-
     protected $stmt;
-
     protected $table;
+    
     public $debug = true;
     public function __construct(){
         try{
+            $this->config_db_details = parse_ini_file("config.ini");
+            $this->host = $config_db_details['host'];
+            $this->db = $config_db_details['db'];
+            $this->username = $config_db_details['username'];
+            $this->password = $config_db_details['password'];
             $this->pdo = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->username, $this->password);
 
             if($this->debug){
@@ -55,13 +59,13 @@ class Database {
         return $this->stmt->execute($data);
     }
 
-    public function where($field, $operator, $value){
-		$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
+    // public function where($field, $operator, $value){
+	// 	$this->stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$field} {$operator} :value");
 		
-		$this->stmt->execute(['value' => $value]);
+	// 	$this->stmt->execute(['value' => $value]);
 
-		return $this;
-    }
+	// 	return $this;
+    // }
     
     public function count(){
 		return $this->stmt->rowCount();

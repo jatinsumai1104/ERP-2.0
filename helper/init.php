@@ -3,14 +3,14 @@ session_start();
 
 $app = __DIR__;
 
-require_once "{$app}/../helper_classes/classes/Database.php";
-require_once "{$app}/../helper_classes/classes/Hash.php";
-require_once "{$app}/../helper_classes/classes/ErrorHandler.php";
-require_once "{$app}/../helper_classes/classes/Validator.php";
-require_once "{$app}/../helper_classes/classes/Auth.php";
-require_once "{$app}/../helper_classes/classes/TokenHandler.php";
-require_once "{$app}/../helper_classes/classes/UserHelper.php";
-require_once "{$app}/../helper_classes/classes/MailConfigHelper.php";
+require_once "{$app}/../classes/helper_classes/Database.php";
+require_once "{$app}/../classes/helper_classes/Hash.php";
+require_once "{$app}/../classes/helper_classes/ErrorHandler.php";
+require_once "{$app}/../classes/helper_classes/Validator.php";
+require_once "{$app}/../classes/helper_classes/Auth.php";
+require_once "{$app}/../classes/helper_classes/TokenHandler.php";
+require_once "{$app}/../classes/helper_classes/UserHelper.php";
+require_once "{$app}/../classes/helper_classes/MailConfigHelper.php";
 
 
 $database = new Database();
@@ -22,4 +22,3 @@ $userHelper = new UserHelper($database, $hash);
 $mail = MailConfigHelper::getMailer();
 
 $tokenHandler->build();
-$auth->build();

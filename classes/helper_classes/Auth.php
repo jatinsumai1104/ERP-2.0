@@ -4,7 +4,7 @@ class Auth {
     protected $database;
     protected $hash;
 
-    protected $table = 'users';
+    protected $table = 'employees';
 
     protected $session = 'user';
 
@@ -13,11 +13,11 @@ class Auth {
         $this->hash = $hash;
     }
 
-    public function build() {
-        return $this->database->query(
-        "CREATE TABLE IF NOT EXISTS users(id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)"
-        );
-    }
+    // public function build() {
+    //     return $this->database->query(
+    //     "CREATE TABLE IF NOT EXISTS users(id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)"
+    //     );
+    // }
 
     public function create($data)
 	{
