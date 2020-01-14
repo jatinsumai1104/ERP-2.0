@@ -53,47 +53,64 @@ require_once('../includes/header.php');
               <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-plus"></i> Add Product</h6>
             </div>
             <!-- Card Body -->
-            <form action="" method="POST">
+            <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
               <div class="card-body">
                 <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Product Name</label>
                     <input type="text"
-                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="name" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   <div class="form-group">
-                    <label for="">Product Name</label>
+                    <label for="">Specification</label>
                     <input type="text"
-                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="specification" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   <div class="form-group">
-                    <label for="">Product Name</label>
+                    <label for="">HSN CODE</label>
                     <input type="text"
-                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                      class="form-control" name="hsn_code" id="" aria-describedby="helpId" placeholder="">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Supplier</label>
+                    <select name="supplier_id[]" id="supplier_id" class="form-control" multiple="multiple">
+                            
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Sale Rate</label>
+                    <input type="text"
+                      class="form-control" name="sale_rate" id="" aria-describedby="helpId" placeholder="">
                   </div>
                   
                 </div>
                 <div class="col-md-6">
+                <div class="form-group">
+                <label for="">Category</label>
+                <select name="category_id" id="category_id" class="form-control">
+                           <option></option>
+                  </select>
+                  </div>
                     <div class="form-group">
-                      <label for="">Product Name</label>
+                      <label for="">EOQ</label>
                       <input type="text"
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                        class="form-control" name="eoq_level" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">Product Name</label>
+                      <label for="">Danger Level</label>
                       <input type="text"
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                        class="form-control" name="danger_level" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">Product Name</label>
+                      <label for="">Quantity</label>
                       <input type="text"
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" name="add_product">Submit</button>
               </div>
             </form>
           </div>
