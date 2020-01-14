@@ -118,7 +118,18 @@ require_once('../includes/header.php');
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body"></div>
+        <div class="modal-body">
+          <form action="<?php echo BASEURL?>helper/routing.php">
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <label for="product_name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+            </div>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" id="product_name" name="product_name">
+            </div>
+          </div>
+          </form>
+        </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
           <a class="btn btn-success " href="login.html">Confirm Edit</a>
