@@ -2,7 +2,7 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require '../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 class MailConfigHelper
 {
@@ -10,14 +10,14 @@ class MailConfigHelper
     
     public static function temp(){
         $path = __DIR__;
-        $email_details = parse_ini_file("config.ini");
+        $email_details = parse_ini_file(__DIR__.'/../../config.ini');
         echo $email_details['SMTPDebug'];
     }
     
     public static function getMailer(): PHPMailer
     {
         //Getting all the email smtp info in the array
-        $email_details = parse_ini_file("../config.ini");
+        $email_details = parse_ini_file(__DIR__.'/../../config.ini');
 
 
         $mail = new PHPMailer();

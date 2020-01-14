@@ -12,5 +12,9 @@
       $res = $db->query($query);
       var_dump($res);
     }
+
+    public function call(){
+      return "hii";
+    }
   }
 ?>
