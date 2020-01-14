@@ -21,3 +21,5 @@
   <!-- Page level custom scripts -->
   <script src="<?php echo BASEASSETS;?>js/demo/datatables-demo.js"></script>
 
+  <script src="<?php echo BASEASSETS;?>js/datatables.js"></script>
+

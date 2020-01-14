@@ -6,3 +6,6 @@ if(isset($_POST['login_details'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 }
+if(isset($_POST['deleteBtn'])){
+    $database;
+}

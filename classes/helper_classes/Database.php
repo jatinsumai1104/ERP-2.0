@@ -127,8 +127,8 @@ class Database {
 		$sql = "update $table set $columnValueSet where $condition";
         echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
-         $this->stmt->execute();
-         return $this;
+        $this->stmt->execute();
+        return $this;
     }
 
 }
