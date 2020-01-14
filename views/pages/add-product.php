@@ -78,16 +78,10 @@ require_once('../includes/header.php');
                     <select name="supplier_id[]" id="supplier_id" class="form-control" multiple="multiple">
                           <?php
                           $res = $database->readData("suppliers",["id","first_name","last_name"],"deleted=0");
-                          // var_dump($res);
                           foreach($res as $arr){
-                            // echo $arr['id'];
-                            // echo "<option value= $arr['id']>$arr['first_name'] $arr['last_name']</option>";
                             echo "<option value={$arr['id']}>{$arr['first_name']} {$arr['last_name']}</option>";
                           }
-                          // foreach($res as $key=>$value){
-                            
-                          //   echo "<option value=$key[$value]>$supplier_name</option>"
-                          // }
+          
                           ?>  
                     </select>
                   </div>
@@ -102,7 +96,13 @@ require_once('../includes/header.php');
                 <div class="form-group">
                 <label for="">Category</label>
                 <select name="category_id" id="category_id" class="form-control">
-                           <option></option>
+                   <?php
+                          $res = $database->readData("category",["id","name"],"deleted=0");
+                          foreach($res as $arr){
+                            echo "<option value={$arr['id']}>{$arr['name']}</option>";
+                          }
+          
+                          ?>    
                   </select>
                   </div>
                     <div class="form-group">
