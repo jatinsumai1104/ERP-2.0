@@ -2,22 +2,34 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
 class MailConfigHelper
 {
+    
+    
+    public static function temp(){
+        $path = __DIR__;
+        $email_details = parse_ini_file("config.ini");
+        echo $email_details['SMTPDebug'];
+    }
+    
     public static function getMailer(): PHPMailer
     {
+        //Getting all the email smtp info in the array
+        $email_details = parse_ini_file("config.ini");
+
+
         $mail = new PHPMailer();
-        $mail->SMTPDebug = 2;                   // Enable verbose debug output
+        $mail->SMTPDebug = $email_details['SMTPDebug'];                   // Enable verbose debug output
         $mail->isSMTP();                        // Set mailer to use SMTP
-        $mail->Host = 'smtp.gfg.com;';    // Specify main SMTP server
-        $mail->SMTPAuth = true;               // Enable SMTP authentication
-        $mail->Username = 'user@gfg.com';     // SMTP username
-        $mail->Password = 'password';         // SMTP password
-        $mail->SMTPSecure = 'tls';              // Enable TLS encryption, 'ssl' also accepted
-        $mail->Port = 587;                // TCP port to connect to    }
-        $mail->setFrom('from@gfg.com', 'Name');           // Set sender of the mail
+        $mail->Host = $email_details['email_host'];    // Specify main SMTP server
+        $mail->SMTPAuth = $email_details['SMTPAuth'];               // Enable SMTP authentication
+        $mail->Username = $email_details['email_username'];     // SMTP username
+        $mail->Password = $email_details['email_password'];         // SMTP password
+        $mail->SMTPSecure = $email_details['SMTPSecure'];              // Enable TLS encryption, 'ssl' also accepted
+        $mail->Port = $email_details['Port'];                // TCP port to connect to    }
+        $mail->setFrom($email_details['email_from'], $email_details['name']);           // Set sender of the mail
         return $mail;
     }
 
