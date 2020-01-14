@@ -65,3 +65,7 @@ if(isset($_POST['deleteBtn'])){
     $database->delete($_POST['table'], "id = ".$_POST['id']);
     Util::redirect("manage-product");
 }
+
+if(isset($_POST['getDetails'])){
+    echo json_encode($database->readData($_POST['table_name'], ["*"], "id = ".$_POST['id'])[0]);
+}

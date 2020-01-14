@@ -51,10 +51,6 @@ class Database {
         return $this->pdo->lastInsertId();
     }
 
-    
-
-    
-
     public function prepareColumnString($fields){
         $fieldsString = "";
         $i=0;
