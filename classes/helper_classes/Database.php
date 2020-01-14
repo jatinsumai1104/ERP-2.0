@@ -51,12 +51,7 @@ class Database {
         return $this->pdo->lastInsertId();
     }
 
-    public function createAssocArray($arrayOfKeys,$post){
-        $assoc_value;
-        foreach($arrayOfKeys as $key){
-
-        }
-    }
+    
 
     
 
@@ -76,19 +71,18 @@ class Database {
     public function readData($table,$fields=["*"], $condition="1"){
         $columnNameString = $this->prepareColumnString($fields);
         
-         $sql = "SELECT {$columnNameString} from {$table} where {$condition}";
+        $sql = "SELECT {$columnNameString} from {$table} where {$condition}";
         // echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
-         $this->stmt->execute();
+        $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function delete($table,$condition="1"){
         $sql = "update {$table} set deleted = 1 where $condition";
-        //echo $sql;
+        // echo $sql;
 		$this->stmt = $this->pdo->prepare($sql);
-         $this->stmt->execute();
-         return $this;
+        $this->stmt->execute();
     }
     
     public function update($table,$data, $condition="1"){
@@ -102,8 +96,8 @@ class Database {
 		$sql = "update {$table} set {$columnValueSet} where {$condition}";
         echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
-         $this->stmt->execute();
-         return $this;
+        $this->stmt->execute();
+        return $this;
     }
 
 }

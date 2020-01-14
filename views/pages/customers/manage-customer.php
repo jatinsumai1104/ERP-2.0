@@ -79,45 +79,12 @@ require_once('../../includes/header.php');
                       <td><?php echo $customer_details[$i]['phone_no'];?></td>
                       <td><?php echo $customer_details[$i]['email_id'];?></td>
                       <td><?php echo $customer_details[$i]['gender'];?></td>
-                      <td><button type="button" id=<?php echo $customer_details[$i]['id'] ?> class="btn btn-primary btn-block edit"><i class="fas fa-pencil-alt"></i> Edit</button></td>
-                      <td><button type="button" id=<?php echo $customer_details[$i]['id'] ?>  class="btn btn-danger btn-block delete"><i class="far fa-trash-alt"></i> Delete</button></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" table_name="customers" id=<?php echo $customer_details[$i]['id']?> href="#" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-danger btn-block delete" id=<?php echo $customer_details[$i]['id']?> href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                     <?php
                     }
                     ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-
-                    <!-- BEGIN EDIT MODAL -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Send message</button>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    <!-- END OF EDIT MODAL -->
                   </tbody>
                 </table>
               </div>
@@ -142,6 +109,101 @@ require_once('../../includes/header.php');
   <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Edit?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="<?php echo BASEURL?>helper/routing.php">
+            <input type="hidden" name="editId">
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="first_name" class="col-sm-2 col-form-label" style="max-width: 100%">First Name</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="first_name" name="first_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="last_name" class="col-sm-2 col-form-label" style="max-width: 100%">Last Name</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="last_name" name="last_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="gst_no" class="col-sm-2 col-form-label" style="max-width: 100%">Gst No.</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="gst_no" name="gst_no">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="phone_no" class="col-sm-2 col-form-label" style="max-width: 100%">Phone Number</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="phone_no" name="phone_no">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="email_id" class="col-sm-2 col-form-label" style="max-width: 100%">Email id</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="email_id" name="email_id">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="gender" class="col-sm-2 col-form-label" style="max-width: 100%">Gender</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="gender" name="gender">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-success " href="login.html">Confirm Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of edit Modal -->
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Delete?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Are you sure you want to delete?</div>
+        <div class="modal-footer">
+          <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+            <input type="hidden" name="table" value="customers">
+            <input type="hidden" name="id" id="recordID">
+            <button class="btn btn-danger" type="submit"  name="deleteBtn">Yes</button>
+          </form>
+          <a class="btn btn-success" href="#" data-dismiss="modal">No</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Delete Modal -->
 
 <!-- All Required Scripts  -->
 <?php

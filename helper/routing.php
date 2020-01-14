@@ -18,20 +18,21 @@ if(isset($_POST['add_product'])){
     $eoq_level = $_POST['eoq_level'];
     $danger_level = $_POST['danger_level'];
     $quantity = $_POST['quantity'];
-    //$data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
-    //$assoc_array = $database->createAssocArray($data,$_POST);
+    $data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
+    $assoc_array = Util::createAssocArray($data,$_POST);
     $product_db = new Product($database);
+    echo print_r($assoc_array);
     //echo $product_db->call();
-    $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
-    $res = $database->insert($table,$data);
-    $lastInsertedID =  $database->lastInsertedID();
+    // $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
+    // $res = $database->insert($table,$data);
+    // $lastInsertedID =  $database->lastInsertedID();
 
     
 
 
     //$database->
 }
-?>
+
 if(isset($_POST['register_button'])){
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -58,4 +59,16 @@ if(isset($_POST['login_details'])){
     }else{
         echo "not set";
     }
+}
+
+if(isset($_POST['deleteBtn'])){
+    // var_dump($_POST);
+    $database->delete($_POST['table'], "id = ".$_POST['id']);
+    Util::redirect("customers/manage-customer");
+}
+
+if(isset($_POST['getDetails'])){
+    $data = $database->readData($_POST['table_name'], ["*"], "id = ".$_POST['id'])[0];
+    // $data["selling_rate"] = $product->getSellingRate($_POST['id'])[0]["selling_rate"];
+    echo json_encode($data);
 }
