@@ -16,10 +16,11 @@ class Customer
     
     public function __construct(Database $db){
         $this->db = $db;
+        $this->db = $this->db->table($this->table);
     }
 
     function readAllCustomers(){
-        $customerData =  $this->db->readData($this->table);
+        $customerData =  $this->db->readData();
         return $customerData;
     }
 
