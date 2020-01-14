@@ -23,11 +23,3 @@ $mail = MailConfigHelper::getMailer();
 
 $tokenHandler->build();
 $auth->build();
-
-/*
-$auth->create([
-   'email'=>"hello@world.com",
-    'password'=>"hello",
-    'username'=>"hello"
-]);*/
-/*$tokenHandler->createForgotPasswordToken(1);*/
