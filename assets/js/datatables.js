@@ -1,7 +1,6 @@
 var customerTable = $("#customer_list");
 console.log('Hello');
 customerTable.on('click', '#edit', function(e){
-    console.log('Hello');
     $id = $(this).attr('id');
     $("#edit_category_id").val($id);
     //fetching all other values from database using ajax and loading them onto their respective edit fields!

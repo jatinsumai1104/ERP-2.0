@@ -85,6 +85,18 @@ require_once('../../includes/header.php');
                     <?php
                     }
                     ?>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+
+                    <!-- BEGIN EDIT MODAL -->
+                        
+                    <!-- END OF EDIT MODAL -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
                   </tbody>
                 </table>
               </div>
