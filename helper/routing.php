@@ -31,7 +31,7 @@ if(isset($_POST['add_product'])){
 
     //$database->
 }
-?>
+
 if(isset($_POST['register_button'])){
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -53,12 +53,13 @@ if(isset($_POST['register_button'])){
 
     $data = array('block_no'=>$block_no, 'street'=>$street,'city'=> $city, 'pincode' =>$pincode, 'state'=>$state, 'country'=>$country, 'town'=>$town);
 
-    $database->table('address')->insert($data);
-        
+    $data = ['block_no','street','city','pincode','state','country','state','country','town'];
 
-    $address_id=1;
+    $database->insert('address', $data);
+
+    $address_id = $database->lastInsertedID();
     $data = array('first_name'=>$first_name,'last_name'=>$last_name, 'email_id'=> $email, 'password_hash'=>$password,'phone_no'=>$phone,'gender'=>$gender,'address_id'=>$address_id);
-    print_r(array_keys($data));
+    $database->insert('employees', $data);
 
 
 }
@@ -71,3 +72,5 @@ if(isset($_POST['login_details'])){
         echo "not set";
     }
 }
+
+
