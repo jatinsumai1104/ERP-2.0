@@ -19,7 +19,7 @@ if(isset($_POST['add_product'])){
     $danger_level = $_POST['danger_level'];
     $quantity = $_POST['quantity'];
     $data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
-    $assoc_array = $database->createAssocArray($data,$_POST);
+    $assoc_array = Util::createAssocArray($data,$_POST);
     $product_db = new Product($database);
     echo print_r($assoc_array);
     //echo $product_db->call();
