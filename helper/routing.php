@@ -20,6 +20,7 @@ if(isset($_POST['add_product'])){
     
     $product_db = new Product($database);
     echo $product_db->call();
+    $data=
     $database->
 }
 ?>

@@ -1,5 +1,5 @@
 <?php 
-class Customers
+class Customer
 {
     private $table="customers";
     private $id;
@@ -14,13 +14,13 @@ class Customers
     private $updated_at;
     private $db;
     
-    public function __construct($db){
+    public function __construct(Database $db){
         $this->db = $db;
     }
 
     function readAllCustomers(){
-        $customerData =  $this->db->readData($table);
-        print_r($customerData);
+        $customerData =  $this->db->readData($this->table);
+        return $customerData;
     }
 
 }
