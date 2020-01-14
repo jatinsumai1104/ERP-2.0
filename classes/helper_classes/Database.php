@@ -12,11 +12,11 @@ class Database {
     public $debug = true;
     public function __construct(){
         try{
-            $this->config_db_details = parse_ini_file("config.ini");
-            $this->host = $config_db_details['host'];
-            $this->db = $config_db_details['db'];
-            $this->username = $config_db_details['username'];
-            $this->password = $config_db_details['password'];
+            $this->config_db_details = parse_ini_file(__DIR__."/../../config.ini");
+            $this->host = $this->config_db_details['host'];
+            $this->db = $this->config_db_details['db'];
+            $this->username = $this->config_db_details['username'];
+            $this->password = $this->config_db_details['password'];
             $this->pdo = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->username, $this->password);
 
             if($this->debug){
