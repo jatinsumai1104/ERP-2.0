@@ -1,9 +1,9 @@
 <?php
 class Database {
     protected $host = "localhost";
-    protected $db = "test";
-    protected $username = "Jatin";
-    protected $password = "jatin@99";
+    protected $db = "inventory_management";
+    protected $username = "root";
+    protected $password = "";
 
     protected $pdo;
 
@@ -79,5 +79,58 @@ class Database {
 
 	public function first(){
 		return $this->get()[0];
-	}
+    }
+
+    public function prepareColumnString($fields){
+        $fieldsString = "";
+        $i=0;
+        foreach($fields as $column){
+            $i++;
+            $fieldsString.=$column;
+            if($i < count($fields))
+                $fieldsString.=",";
+            
+        }
+        return $fieldsString;
+    }
+    
+    public function readData($table,  $fields=["*"], $condition="1"){
+        $columnNameString = $this->prepareColumnString($fields);
+        
+         $sql = "SELECT {$columnNameString} from $table where {$condition}";
+        // echo $sql;
+        $this->stmt = $this->pdo->prepare($sql);
+         $this->stmt->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function delete($table, $condition="1"){
+        $sql = "update $table set deleted = 1 where $condition";
+        //echo $sql;
+		$this->stmt = $this->pdo->prepare($sql);
+         $this->stmt->execute();
+         return $this;
+    }
+    
+    public function update($table,$data, $condition="1"){
+        $i = 0;
+		$columnValueSet = "";
+		foreach($data as $key=>$value){
+			$comma = ($i<count($data)-1 ? ", " : "");
+			$columnValueSet .= $key. "='".$value."'".$comma;
+			$i++;
+		}
+		$sql = "update $table set $columnValueSet where $condition";
+        echo $sql;
+        $this->stmt = $this->pdo->prepare($sql);
+         $this->stmt->execute();
+         return $this;
+    }
+
 }
+// $db = new Database();
+
+//$res = $db->readData("employees",["*"],"1");
+//$res2 = $db->delete("employees","first_name='Tanay'");
+// $res3 = $db->update("employees",['first_name'=>'Tanay'],"first_name='Tana'");
+// echo print_r($res3);
