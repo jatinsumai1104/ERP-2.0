@@ -2,7 +2,7 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require '../vendor/autoload.php';
+require 'http://localhost/oop-php-erp/vendor/autoload.php';
 
 class MailConfigHelper
 {
@@ -17,7 +17,7 @@ class MailConfigHelper
     public static function getMailer(): PHPMailer
     {
         //Getting all the email smtp info in the array
-        $email_details = parse_ini_file("../config.ini");
+        $email_details = parse_ini_file("http://localhost/oop-php-erp/config.ini");
 
 
         $mail = new PHPMailer();

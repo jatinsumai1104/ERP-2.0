@@ -1,9 +1,9 @@
-
 <?php
 require_once('../../../helper/constants.php');
-require_once('../../../classes/helper_classes/init.php');
+require_once('../../../helper/init.php');
+require_once('../../../classes/Customer.php');
 $customer = new Customer($database);
-$customer->readAllCustomers();
+$customer_details =  $customer->readAllCustomers();
 
 ?>
 <!DOCTYPE html>
@@ -55,32 +55,36 @@ require_once('../../includes/header.php');
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="customer_list" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Product Name</th>
-                      <th>Additional Specification</th>
-                      <th>EOQ Level</th>
-                      <th>Danger Level</th>
-                      <th>Category Name</th>
-                      <th>Supplier Name</th>
-                      <th>Selling Rate</th>
+                      <th>First name</th>
+                      <th>Last name</th>
+                      <th>Gst number</th>
+                      <th>Phone number</th>
+                      <th>Email id</th>
+                      <th>Gender</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php
+                    for($i=0;$i<count($customer_details);$i++){
+                  ?>
                     <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
-                      <td>Varun</td>
-                      <td>$10,000</td>
-                      <td><button type="button" class="btn btn-primary btn-block"><i class="fas fa-pencil-alt"></i> Edit</button></td>
-                      <td><button type="button" class="btn btn-danger btn-block"><i class="far fa-trash-alt"></i> Delete</button></td>
+                      <td><?php echo $customer_details[$i]['first_name'];?></td>
+                      <td><?php echo $customer_details[$i]['last_name'];?></td>
+                      <td><?php echo $customer_details[$i]['gst_no'];?></td>
+                      <td><?php echo $customer_details[$i]['phone_no'];?></td>
+                      <td><?php echo $customer_details[$i]['email_id'];?></td>
+                      <td><?php echo $customer_details[$i]['gender'];?></td>
+                      <td><button type="button" id="edit" class="btn btn-primary btn-block"><i class="fas fa-pencil-alt"></i> Edit</button></td>
+                      <td><button type="button" id="delete" class="btn btn-danger btn-block"><i class="far fa-trash-alt"></i> Delete</button></td>
                     </tr>
+                    <?php
+                    }
+                    ?>
                   </tbody>
                 </table>
               </div>
@@ -110,7 +114,7 @@ require_once('../../includes/header.php');
 <?php
   require_once('../../includes/scripts.php');
 ?>
-
+<script src="../../../assets/js/datatables.js"></script>
 </body>
 
 </html>
