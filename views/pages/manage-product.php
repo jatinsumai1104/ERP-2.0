@@ -1,6 +1,7 @@
 
 <?php
-require_once('../../helper/constants.php');
+require_once(__DIR__.'/../../helper/constants.php');
+require_once(__DIR__.'/../../helper/init.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

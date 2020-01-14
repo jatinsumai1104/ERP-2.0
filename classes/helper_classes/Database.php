@@ -12,7 +12,7 @@ class Database {
     public $debug = true;
     public function __construct(){
         try{
-            $this->config_db_details = parse_ini_file("http://localhost/oop-php-erp/config.ini");
+            $this->config_db_details = parse_ini_file(__DIR__."/../../config.ini");
             $this->host = $this->config_db_details['host'];
             $this->db = $this->config_db_details['db'];
             $this->username = $this->config_db_details['username'];
