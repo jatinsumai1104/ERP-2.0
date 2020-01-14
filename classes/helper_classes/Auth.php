@@ -21,11 +21,6 @@ class Auth {
 
     public function create($data)
 	{
-		if(isset($data['password']))
-		{
-			$data['password'] = $this->hash->make($data['password']);
-		}
-
 		return $this->database->table($this->table)->insert($data);
     }
     

@@ -20,6 +20,18 @@ if(isset($_POST['register_button'])){
     $country = $_POST['country'];
 
     
+    $hashed_password = $hash->make($password);
+
+    $data = array('block_no'=>$block_no, 'street'=>$street,'city'=> $city, 'pincode' =>$pincode, 'state'=>$state, 'country'=>$country, 'town'=>$town);
+
+    $database->table('address')->insert($data);
+        
+
+    $address_id=1;
+    $data = array('first_name'=>$first_name,'last_name'=>$last_name, 'email_id'=> $email, 'password_hash'=>$password,'phone_no'=>$phone,'gender'=>$gender,'address_id'=>$address_id);
+    print_r(array_keys($data));
+
+
 }
 if(isset($_POST['login_details'])){
     $email = $_POST['email'];
