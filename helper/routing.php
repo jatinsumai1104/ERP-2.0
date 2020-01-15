@@ -33,7 +33,8 @@ if(isset($_POST['add_product'])){
     $data = ["product_id","supplier_id"];
     foreach($suppliers as $supplier_id){
         $assoc_array = Util::createAssocArray($data,$_POST);
-        $res = $database->insert($table,$assoc_array);
+        var_dump ($assoc_array);
+            $res = $database->insert($table,$assoc_array);
     }
 
     $table="products_selling_rate";
