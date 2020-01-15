@@ -77,11 +77,11 @@ require_once('../includes/header.php');
                     <label for="">Supplier</label>
                     <select name="supplier_id[]" id="supplier_id" class="form-control" multiple="multiple">
                           <?php
-                          $res = $database->readData("suppliers",["id","first_name","last_name"],"deleted=0");
-                          foreach($res as $arr){
-                            echo "<option value={$arr['id']}>{$arr['first_name']} {$arr['last_name']}</option>";
-                          }
-          
+                            $res = $di->get("Database")->readData("suppliers",["id","first_name","last_name"],"deleted=0");
+                            foreach($res as $arr){
+                              echo "<option value={$arr['id']}>{$arr['first_name']} {$arr['last_name']}</option>";
+                            }
+            
                           ?>  
                     </select>
                   </div>
@@ -96,11 +96,11 @@ require_once('../includes/header.php');
                 <div class="form-group">
                 <label for="">Category</label>
                 <select name="category_id" id="category_id" class="form-control">
-                   <?php
-                          $res = $database->readData("category",["id","name"],"deleted=0");
-                          foreach($res as $arr){
-                            echo "<option value={$arr['id']}>{$arr['name']}</option>";
-                          }
+                          <?php
+                            $res = $di->get("Database")->readData("category",["id","name"],"deleted=0");
+                            foreach($res as $arr){
+                              echo "<option value={$arr['id']}>{$arr['name']}</option>";
+                            }
           
                           ?>    
                   </select>

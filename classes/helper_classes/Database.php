@@ -44,12 +44,11 @@ class Database {
         //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
-        print_r($data);
-        echo "<br>";
         
         $this->stmt = $this->pdo->prepare($sql);
 
-        return $this->stmt->execute($data);
+        $this->stmt->execute($data);
+        return $this->pdo->lastInsertId();
     }
 
     public function lastInsertedID(){
@@ -73,7 +72,6 @@ class Database {
         $columnNameString = $this->prepareColumnString($fields);
         
         $sql = "SELECT {$columnNameString} from {$table} where {$condition}";
-        echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);

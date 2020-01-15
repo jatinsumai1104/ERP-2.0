@@ -68,7 +68,7 @@ require_once('../includes/header.php');
                   </thead>
                   <tbody>
                   <?php
-                      $products = $product->getDataForDataTables();
+                      $products = $di->get("Product")->getDataForDataTables();
                       foreach($products as $product){
                     ?>
                     <tr>
@@ -79,7 +79,7 @@ require_once('../includes/header.php');
                       <td><?echo $product["danger_level"]?></td>
                       <td><?echo $product["category_name"]?></td>
                       <td><?echo $product["supplier_name"]?></td>
-                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="products"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="Product"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
                       <td><a type="button" class="btn btn-danger btn-block delete" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                       <?php }?>
