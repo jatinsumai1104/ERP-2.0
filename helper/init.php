@@ -23,6 +23,7 @@ $auth = new Auth($database, $hash); //this is called as database injection
 // $tokenHandler = new TokenHandler($database, $hash);
 $userHelper = new UserHelper($database, $hash);
 //$mail = MailConfigHelper::getMailer();
+$product = new Product($database);
 $supplierObj  = new Supplier($database);
 $categoryObj = new Category($database);
 // $tokenHandler->build();

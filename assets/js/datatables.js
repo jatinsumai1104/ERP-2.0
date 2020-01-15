@@ -18,7 +18,7 @@ table.on("click", ".edit", function(e) {
     success: function(data) {
       $("#product_name").val(data.name);
       $("#specification").val(data.specification);
-      $("#selling_rate").val(data.name);
+      $("#selling_rate").val(data.selling_rate);
       $("#eoq_level").val(data.eoq_level);
       $("#danger_level").val(data.danger_level);
     },

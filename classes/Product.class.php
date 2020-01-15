@@ -1,6 +1,6 @@
 <?php
   class Product{
-    private $table = "product";
+    private $table = "products";
     protected $db ;
     public function __construct(Database $db){
       $this->db = $db;
@@ -12,6 +12,10 @@
       
       $res = $this->db->rawQuery($query);
       return $res;
+    }
+
+    public function getSellingRate($id){
+      return $this->db->readData("products_selling_rate", ["*"], "product_id=".$id);
     }
 
     public function call(){

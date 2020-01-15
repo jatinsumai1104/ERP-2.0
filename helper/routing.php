@@ -75,5 +75,7 @@ if(isset($_POST['deleteBtn'])){
 }
 
 if(isset($_POST['getDetails'])){
-    echo json_encode($database->readData($_POST['table_name'], ["*"], "id = ".$_POST['id'])[0]);
+    $data = $database->readData($_POST['table_name'], ["*"], "id = ".$_POST['id'])[0];
+    $data["selling_rate"] = $product->getSellingRate($_POST['id'])[0]["selling_rate"];
+    echo json_encode($data);
 }
