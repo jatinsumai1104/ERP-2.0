@@ -35,8 +35,8 @@
   </a>
   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?echo BASEPAGES?>add-product.php">Add Product</a>
-      <a class="collapse-item" href="<?echo BASEPAGES?>manage-product.php">Manage Product</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-product.php">Add Product</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-product.php">Manage Product</a>
     </div>
   </div>
 </li>

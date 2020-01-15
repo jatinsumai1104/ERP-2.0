@@ -1,10 +1,10 @@
-<?
+<?php
 
 class DependencyInjector{
 
   private $dependencies = [];
 
-  public function set(string $name, object $value){
+  public function set(string $name, $value){
     $this->dependencies[$name] = $value;
   }
 
