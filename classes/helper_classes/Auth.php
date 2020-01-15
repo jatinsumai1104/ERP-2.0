@@ -1,20 +1,19 @@
 <?php
 class Auth {
 
-    protected $database;
-    protected $hash;
+    protected $di;
+    
 
     protected $table = 'employees';
 
     protected $session = 'user';
 
-    public function __construct(Database $database, Hash $hash){
-        $this->database = $database;
-        $this->hash = $hash;
+    public function __construct(DependencyInjector $di){
+        $this->di = $di;
     }
 
     // public function build() {
-    //     return $this->database->query(
+    //     return $this->di->get("Database")->query(
     //     "CREATE TABLE IF NOT EXISTS users(id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)"
     //     );
     // }
@@ -23,35 +22,35 @@ class Auth {
 	{
 		if(isset($data['password']))
 		{
-			$data['password'] = $this->hash->make($data['password']);
+			$data['password'] = $this->di->get("Hash")->make($data['password']);
 		}
 
-		return $this->database->table($this->table)->insert($data);
+		return $this->di->get("Database")->table($this->table)->insert($data);
     }
     
-    public function signin($data){
-		$user = $this->database->table($this->table)->where('username', '=', $data['username']);
+    public function signIn($data){
+      $user = $this->di->get("Database")->table($this->table)->where('username', '=', $data['username']);
 
-		if($user->count())
-		{
-			$user = $user->first();
+      if($user->count())
+      {
+        $user = $user->first();
 
-			if($this->hash->verify($data['password'], $user->password))
-			{
-				$this->setAuthSession($user->id);
+        if($this->di->get("Hash")->verify($data['password'], $user->password))
+        {
+          $this->setAuthSession($user->id);
 
-				return true;
-			}
-		}
+          return true;
+        }
+      }
 
-		return false;
+      return false;
     }
 
 
 
     public function updateUserPassword(string $token, string $password){
-        $password=$this->hash->make($password);
-        return $this->database->query( "update users, tokens
+        $password=$this->di->get("Hash")->make($password);
+        return $this->di->get("Database")->query( "update users, tokens
         set users.password = '$password', tokens.expires_at= NOW() 
         where users.id = tokens.user_id and tokens.token = '$token'");
     }

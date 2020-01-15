@@ -1,8 +1,8 @@
 <?php
   class Category{
-    protected $db ;
-    public function __construct(Database $db){
-      $this->db = $db;
+    protected $di ;
+    public function __construct($di){
+      $this->di = $di;
     }
 
   }

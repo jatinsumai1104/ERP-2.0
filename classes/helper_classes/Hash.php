@@ -1,6 +1,11 @@
 <?php
 
 class Hash{
+
+    public function __construct($di){
+		$this->di = $di;
+    }
+    
     public function make($plainText){
         return password_hash($plainText, PASSWORD_BCRYPT, ['cost'=>10]);
     }

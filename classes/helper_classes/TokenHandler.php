@@ -9,14 +9,12 @@ class TokenHandler {
     private $table = 'tokens';
     private const CREATE_QUERY = "CREATE TABLE IF NOT EXISTS tokens (id bigint primary key auto_increment, user_id int,
                                 token varchar(255) UNIQUE, expires_at DATETIME NOT NULL, is_remember TINYINT DEFAULT 0 )";
-    private $database;
+    private $di;
     private $hasher;
 
-    public function __construct(Database $da, Hash $hash)
-    {
-        $this->database = $da;
-        $this->hasher =$hash;
-    }
+    public function __construct($di){
+		$this->di = $di;
+	}
 
     public static function getCurrentTimeInMillis(){
         return round(microtime(true) * 1000);
@@ -24,7 +22,7 @@ class TokenHandler {
 
     public function build()
     {
-        $this->database->query(TokenHandler::CREATE_QUERY);
+        $this->di->get("Database")->query(TokenHandler::CREATE_QUERY);
     }
 
     /**
@@ -34,7 +32,7 @@ class TokenHandler {
      * @return
      */
     public function getValidExistingToken(int $id, int $isRemember){
-        $retval = $this->database->fetchAll('
+        $retval = $this->di->get("Database")->fetchAll('
             SELECT * FROM tokens WHERE user_id = '.$id.' and expires_at >= NOW() and is_remember = '.$isRemember.'; 
         ');
         return $retval == null? null: $retval[0]["token"] ;
@@ -48,7 +46,7 @@ class TokenHandler {
     public function isValid(string $token, int $isRemember){
         //$token = stripslashes($token);
         $current =date('Y-m-d H:i:s');
-        return !empty($this->database->fetchAll(
+        return !empty($this->di->get("Database")->fetchAll(
             'SELECT * FROM tokens WHERE token = \''.$token. '\' and expires_at >= \''.$current.'\' and is_remember = '.$isRemember
         ));
 
@@ -66,11 +64,11 @@ class TokenHandler {
         $timeToBeAdded = $isRemember ? TokenHandler::$REMEMBER_EXPIRY_TIME : TokenHandler::$FORGOT_PWD_EXPIRY_TIME;
         $data = [
             'user_id' => $userId,
-            'token' => $this->hasher->generateForgotToken($userId),
+            'token' => $this->di->get("Hash")->generateForgotToken($userId),
             'expires_at' => date('Y-m-d H:i:s', strtotime($current.'+'.$timeToBeAdded)),
             'is_remember' => $isRemember
         ];
-        return $this->database->table($this->table)->insert($data) ? $data : null;
+        return $this->di->get("Database")->table($this->table)->insert($data) ? $data : null;
     }
 
 }

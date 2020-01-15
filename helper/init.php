@@ -15,15 +15,19 @@ require_once "{$app}/../classes/Product.class.php";
 require_once "{$app}/../classes/Supplier.class.php";
 require_once "{$app}/../classes/Category.class.php";
 require_once "{$app}/../classes/helper_classes/Util.php";
+require_once "{$app}/../classes/helper_classes/DependencyInjector.php";
 
-$database = new Database();
-$hash = new Hash();
-$errorHandler = new ErrorHandler();
-$auth = new Auth($database, $hash); //this is called as database injection
-// $tokenHandler = new TokenHandler($database, $hash);
-$userHelper = new UserHelper($database, $hash);
-//$mail = MailConfigHelper::getMailer();
-$product = new Product($database);
-$supplierObj  = new Supplier($database);
-$categoryObj = new Category($database);
+$di = new DependencyInjector();
+$di.set("database", new Database());
+$di.set("Hash", new Hash($di));
+$di.set("ErrorHandler", new ErrorHandler($di));
+$di.set("Auth", new Auth($di));
+// $di.set("TokenHandler", new TokenHandler($database, $hash));
+$di.set("UserHelper", new UserHelper($i));
+// $di.set("Mail", MailConfigHelper::getMailer());
+
+$di.set("Product", new Product($di));
+$di.set("Supplier", new Supplier($di));
+$di.set("Supplier", new Category($di));
+
 // $tokenHandler->build();

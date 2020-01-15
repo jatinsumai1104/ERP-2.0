@@ -3,7 +3,12 @@
 class ErrorHandler
 {
 	protected $errors;
+	protected $di;
 
+	public function __construct($di){
+		$this->di = $di;
+	}
+	
 	public function addError($error, $key = null)
 	{
 		if($key)

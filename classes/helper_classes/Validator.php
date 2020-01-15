@@ -2,9 +2,7 @@
 
 class Validator
 {
-	protected $db;
-
-	protected $errorHandler;
+	protected $di;
 
 	protected $rules = ['required', 'minlength', 'maxlength', 'unique', 'email'];
 
@@ -16,11 +14,8 @@ class Validator
 		'unique' => 'That :field is already taken'
 	];
 
-	public function __construct(Database $db, ErrorHandler $errorHandler)
-	{
-		$this->db = $db;
-
-		$this->errorHandler = $errorHandler;
+	public function __construct($di){
+		$this->di = $di;
 	}
 
 	public function check($items, $rules)
@@ -42,7 +37,7 @@ class Validator
 
 	public function fails()
 	{
-		return $this->errorHandler->hasErrors();
+		return $this->di->get("ErrorHandler")->hasErrors();
 	}
 
 	public function errors()
@@ -60,7 +55,7 @@ class Validator
 			{
 				if(!call_user_func_array([$this, $rule], [$field, $item['value'], $satisfier]))
 				{
-					$this->errorHandler->addError(
+					$this->di->get("ErrorHandler")->addError(
 						str_replace([':field', ':satisfier'], [$field, $satisfier], $this->messages[$rule]),
 						$field
 					);
@@ -91,7 +86,7 @@ class Validator
 
 	protected function unique($field, $value, $satisfier)
 	{
-		return !$this->db->table($satisfier)->exists([
+		return !$this->di->get("Database")->table($satisfier)->exists([
 			$field => $value
 		]);
 	}
