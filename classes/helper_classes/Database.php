@@ -101,7 +101,7 @@ class Database {
 
     public function exists($table,$data){
         $field = array_keys($data)[0];
-        echo "hello";
+        // echo "hello";
         $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
         if(count($result)>0){
             return true;

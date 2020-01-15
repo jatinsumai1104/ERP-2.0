@@ -8,33 +8,33 @@ if(isset($_POST['add_product'])){
     Util::redirect("manage-product");
 }
 
-// if(isset($_POST['register_button'])){
-//     $email = $_POST['email'];
-//     $password = $_POST['password_hash'];
-//     $repeat_password = $_POST['repeat_password'];
+if(isset($_POST['register_button'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $repeat_password = $_POST['repeat_password'];
 
-//         $validator = new Validator($database, $errorHandler);
-//         $validation = $validator->check($_POST, [
-//             'email' => [
-//                 'required' => true,
-//                 'maxlength' => 200,
-//                 'unique' => 'employees',
-//                 'email' => true
-//             ],
-//             'password' => [
-//                 'required' => true,
-//                 'minlength' => 5
-//             ]
-//         ]);
+        $validator = new Validator($database, $errorHandler);
+        $validation = $validator->check($_POST, [
+            'email' => [
+                'required' => true,
+                'maxlength' => 200,
+                'unique' => 'employees',
+                'email' => true
+            ],
+            'password' => [
+                'required' => true,
+                'minlength' => 5
+            ]
+        ]);
 
-//         if($validation->fails())
-//         {
-//             echo '<pre>', print_r($validation->errors()->all(), true), '</pre>';
-//         }
-//         else
-//         {
-//             //CODE TO BE EXECUTED IF THE VALIDATION HAS NO ERRORS
-//             $hashed_password = $hash->make($password);
+        if($validation->fails())
+        {
+            echo '<pre>', print_r($validation->errors()->all(), true), '</pre>';
+        }
+        else
+        {
+            //CODE TO BE EXECUTED IF THE VALIDATION HAS NO ERRORS
+            $hashed_password = $hash->make($password);
     
 //             $data = ['block_no','street','city','pincode','state','country','state','country','town'];
 //             $insertion_array = Util::createAssocArray($data,$_POST);
