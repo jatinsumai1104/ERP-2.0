@@ -46,7 +46,7 @@ if(isset($_POST['add_product'])){
 
 if(isset($_POST['register_button'])){
     $email = $_POST['email'];
-    $password = $_POST['password_hash'];
+    $password = $_POST['password'];
     $repeat_password = $_POST['repeat_password'];
 
         $validator = new Validator($database, $errorHandler);
