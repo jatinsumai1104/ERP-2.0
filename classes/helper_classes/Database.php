@@ -35,12 +35,17 @@ class Database {
 
     public function insert($table, $data){
         $keys = array_keys($data);
-
+        // print_r($keys);
         $fields = "`" . implode("`, `", $keys). "`";
 
         $placeholders = ":" . implode(", :", $keys);
+        //echo $fields;
+        // echo "<br>";
+        //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
+        print_r($data);
+        echo "<br>";
         
         $this->stmt = $this->pdo->prepare($sql);
 
