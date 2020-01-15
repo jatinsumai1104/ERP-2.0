@@ -56,7 +56,7 @@ require_once('../includes/header.php');
                   <thead>
                     <tr>
                       <th>Product Name</th>
-                      <th>Additional Specification</th>
+                      <th>Specification</th>
                       <th>Selling Rate</th>
                       <th>EOQ Level</th>
                       <th>Danger Level</th>
@@ -68,8 +68,7 @@ require_once('../includes/header.php');
                   </thead>
                   <tbody>
                   <?php
-                      $product = new Product($database);
-                      $products = $product->getDataForDataTables();
+                      $products = $di->get("Product")->getDataForDataTables();
                       foreach($products as $product){
                     ?>
                     <tr>
@@ -80,7 +79,7 @@ require_once('../includes/header.php');
                       <td><?echo $product["danger_level"]?></td>
                       <td><?echo $product["category_name"]?></td>
                       <td><?echo $product["supplier_name"]?></td>
-                      <td><a type="button" class="btn btn-primary btn-block" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="Product"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
                       <td><a type="button" class="btn btn-danger btn-block delete" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                       <?php }?>
@@ -120,14 +119,47 @@ require_once('../includes/header.php');
         </div>
         <div class="modal-body">
           <form action="<?php echo BASEURL?>helper/routing.php">
-          <div class="form-group row">
-            <div class="col-sm-4">
-              <label for="product_name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+            <input type="hidden" name="editId">
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="product_name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="product_name" name="product_name">
+              </div>
             </div>
-            <div class="col-sm-7">
-              <input type="text" class="form-control" id="product_name" name="product_name">
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="specification" class="col-sm-2 col-form-label" style="max-width: 100%">Specification</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="specification" name="specification">
+              </div>
             </div>
-          </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="selling_rate" class="col-sm-2 col-form-label" style="max-width: 100%">Selling Rate</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="selling_rate" name="selling_rate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="eoq_level" class="col-sm-2 col-form-label" style="max-width: 100%">EOQ Level</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="eoq_level" name="eoq_level">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="danger_level" class="col-sm-2 col-form-label" style="max-width: 100%">Danger Level</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="danger_level" name="danger_level">
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">

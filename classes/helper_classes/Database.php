@@ -44,21 +44,16 @@ class Database {
         //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
-        print_r($data);
-        echo "<br>";
         
         $this->stmt = $this->pdo->prepare($sql);
 
-        return $this->stmt->execute($data);
+        $this->stmt->execute($data);
+        return $this->pdo->lastInsertId();
     }
 
     public function lastInsertedID(){
         return $this->pdo->lastInsertId();
     }
-
-    
-
-    
 
     public function prepareColumnString($fields){
         $fieldsString = "";
@@ -103,6 +98,18 @@ class Database {
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         return $this;
+    }
+
+    public function exists($table,$data){
+        $field = array_keys($data)[0];
+        // echo "hello";
+        $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
+        if(count($result)>0){
+            // echo "count>0";
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
