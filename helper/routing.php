@@ -13,24 +13,35 @@ if(isset($_POST['add_product'])){
     $name = $_POST['name'];
     $specification = $_POST['specification'];
     $hsn_code = $_POST['hsn_code'];
-    $sale_rate = $_POST['sale_rate'];
+    $selling_rate = $_POST['selling_rate'];
     $category_id = $_POST['category_id'];
     $eoq_level = $_POST['eoq_level'];
     $danger_level = $_POST['danger_level'];
     $quantity = $_POST['quantity'];
-    $data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
+    $suppliers = $_POST['supplier_id'];
+    $data = ["name","specification","hsn_code","category_id","eoq_level","danger_level","quantity"];
     $assoc_array = Util::createAssocArray($data,$_POST);
+    // print_r($assoc_array);
     $product_db = new Product($database);
-    echo print_r($assoc_array);
+    //echo print_r($assoc_array);
     //echo $product_db->call();
     // $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
-    // $res = $database->insert($table,$data);
-    // $lastInsertedID =  $database->lastInsertedID();
+    $res = $database->insert($table,$assoc_array);
+    $product_id =  $database->lastInsertedID();
+    $table="product_supplier";
+    $_POST['product_id'] = $product_id;
+    $data = ["product_id","supplier_id"];
+    foreach($suppliers as $supplier_id){
+        $assoc_array = Util::createAssocArray($data,$_POST);
+        $res = $database->insert($table,$assoc_array);
+    }
 
-    
+    $table="products_selling_rate";
+    $data=["product_id","selling_rate"];
+    $assoc_array = Util::createAssocArray($data,$_POST);
+    $res = $database->insert($table,$assoc_array);
+    echo "success";
 
-
-    //$database->
 }
 
 if(isset($_POST['register_button'])){
@@ -95,4 +106,10 @@ if(isset($_POST['login_details'])){
 if(isset($_POST['deleteBtn'])){
     $database->delete($_POST['table'], "id = ".$_POST['id']);
     Util::redirect("manage-product");
+}
+
+if(isset($_POST['getDetails'])){
+    $data = $database->readData($_POST['table_name'], ["*"], "id = ".$_POST['id'])[0];
+    $data["selling_rate"] = $product->getSellingRate($_POST['id'])[0]["selling_rate"];
+    echo json_encode($data);
 }
