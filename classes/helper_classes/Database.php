@@ -114,6 +114,20 @@ class Database {
         }
     }
 
+
+    public function beginTransaction(){
+        return $this->pdo->beginTransaction();
+    }
+
+    public function commit(){
+        return $this->pdo->commit();
+    }
+
+    public function rollback(){
+        return $this->pdo->rollback();
+    }
+
+
 }
 // $db = new Database();
 

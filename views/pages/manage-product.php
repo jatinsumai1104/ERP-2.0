@@ -41,7 +41,7 @@ require_once('../includes/header.php');
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800"> Manage Product</h1>
-          <a href="<?echo BASEPAGES?>add-product.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Product </a>
+          <a href="<?php echo BASEPAGES?>add-product.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Product </a>
         </div>
 
         <!-- Content Row -->
@@ -73,16 +73,16 @@ require_once('../includes/header.php');
                       foreach($products as $product){
                     ?>
                     <tr>
-                      <td><?echo $product["product_name"];?></td>
-                      <td><?echo $product["specification"]?></td>
-                      <td><?echo $product["selling_rate"]?></td>
-                      <td><?echo $product["wef"]?></td>
-                      <td><?echo $product["eoq_level"]?></td>
-                      <td><?echo $product["danger_level"]?></td>
-                      <td><?echo $product["category_name"]?></td>
-                      <td><?echo $product["supplier_name"]?></td>
-                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="Product"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
-                      <td><a type="button" class="btn btn-danger btn-block delete" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
+                      <td><?php echo $product["product_name"];?></td>
+                      <td><?php echo $product["specification"]?></td>
+                      <td><?php echo $product["selling_rate"]?></td>
+                      <td><?php echo $product["wef"]?></td>
+                      <td><?php echo $product["eoq_level"]?></td>
+                      <td><?php echo $product["danger_level"]?></td>
+                      <td><?php echo $product["category_name"]?></td>
+                      <td><?php echo $product["supplier_name"]?></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?php echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="Product"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-danger btn-block delete" id="<?php echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                       <?php }?>
                   </tbody>

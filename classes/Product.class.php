@@ -35,9 +35,12 @@
 
     public function addProduct($data){
       try{
+        
         $table_attr = ["name","specification","hsn_code","category_id","eoq_level","danger_level","quantity"];
-
         $assoc_array = Util::createAssocArray($table_attr,$data);
+
+        // Begin Transaction
+        $this->di->get("Database")->beginTransaction();
         $product_id = $this->di->get("Database")->insert($this->table,$assoc_array);
 
         $tale_attr = ["product_id","supplier_id"];
@@ -53,9 +56,10 @@
         $assoc_array["product_id"] = $product_id;
         $assoc_array["selling_rate"] = $data["selling_rate"];
         $res = $this->di->get("Database")->insert("products_selling_rate",$assoc_array);
-
+        $this->di->get("Database")->commit();
         Session::setSession("product_add", "success");
       }catch(Exception $e){
+        $this->di->get("Database")->rollback();
         Session::setSession("product_add", "fail");
       }
     }
