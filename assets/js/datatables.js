@@ -1,7 +1,6 @@
 var table = $("#dataTable");
 table.on("click", ".delete", function(e) {
   $id = $(this).attr("id");
-  console.log($id);
   $("#recordId").val($id);
 });
 table.on("click", ".edit", function(e) {
@@ -16,9 +15,11 @@ table.on("click", ".edit", function(e) {
     data: { getDetails: true, id: $id, table_name: $table_name },
     dataType: "json",
     success: function(data) {
-      $("#product_name").val(data.name);
+      $("#name").val(data.name);
       $("#specification").val(data.specification);
-      $("#selling_rate").val(data.selling_rate);
+      $("#old_selling_rate").val(data.psr.selling_rate);
+      $("#selling_rate").val(data.psr.selling_rate);
+      $("#wef").val(data.psr.wef);
       $("#eoq_level").val(data.eoq_level);
       $("#danger_level").val(data.danger_level);
     },

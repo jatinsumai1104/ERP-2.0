@@ -9,14 +9,16 @@
 
 
     public function getDataForDataTables(){
-      $query = "SELECT p.id as product_id, p.name as product_name, p.specification, psr.selling_rate, p.eoq_level, p.danger_level,cat.name as category_name, GROUP_CONCAT(CONCAT(s.first_name,' ', s.last_name)) as supplier_name from products as p INNER JOIN product_supplier as ps ON p.id = ps.product_id INNER JOIN suppliers as s ON ps.supplier_id = s.id INNER JOIN category as cat ON p.category_id = cat.id INNER JOIN products_selling_rate as psr ON p.id = psr.product_id where p.deleted = 0 GROUP BY p.id ORDER BY p.id ASC";
+      $query = "SELECT p.id as product_id, p.name as product_name, p.specification, psr.selling_rate, p.eoq_level, p.danger_level,cat.name as category_name, GROUP_CONCAT(CONCAT(s.first_name,' ', s.last_name)) as supplier_name, max(psr.with_effect_from) as wef from products as p INNER JOIN product_supplier as ps ON p.id = ps.product_id INNER JOIN suppliers as s ON ps.supplier_id = s.id INNER JOIN category as cat ON p.category_id = cat.id INNER JOIN products_selling_rate as psr ON p.id = psr.product_id INNER JOIN (select product_id, max(with_effect_from) as MaxDate from products_selling_rate group by product_id) as tm ON psr.product_id = tm.product_id and psr.with_effect_from = tm.MaxDate where p.deleted = 0 GROUP BY p.id HAVING max(psr.with_effect_from) ORDER BY p.id ASC";
       
       $res = $this->di->get("Database")->rawQuery($query);
       return $res;
     }
 
     public function getSellingRate($id){
-      return $this->di->get("Database")->readData("products_selling_rate", ["*"], "product_id=".$id);
+      $query = "select t.selling_rate, t.with_effect_from as wef from products_selling_rate t inner join (select product_id, max(with_effect_from) as MaxDate from products_selling_rate group by product_id) tm on t.product_id = tm.product_id and t.with_effect_from = tm.MaxDate WHERE t.product_id = {$id}";
+      $res = $this->di->get("Database")->rawQuery($query);
+      return $res;
     }
 
 
@@ -26,7 +28,7 @@
 
     public function readDataToEdit($data){
       $res = $this->di->get("Database")->readData($this->table, ["*"], "id = ".$data['id'])[0];
-      $res["selling_rate"] = $this->getSellingRate($data['id'])[0]["selling_rate"];
+      $res["psr"] = $this->getSellingRate($data['id'])[0];
       return $res;
     }
 
@@ -55,6 +57,21 @@
         Session::setSession("product_add", "success");
       }catch(Exception $e){
         Session::setSession("product_add", "fail");
+      }
+    }
+
+    public function updateProduct($data){
+      
+      try{
+        $table_attr = ["name", "specification", "eoq_level", "danger_level"];
+        $assoc_array = Util::createAssocArray($table_attr,$data);
+        $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['product_id']}");
+        if(! ($data["old_selling_rate"] == $data["selling_rate"])){
+          $this->di->get("Database")->insert("products_selling_rate", ["product_id" => $data["product_id"], "selling_rate" => $data["selling_rate"]]);
+        }
+        Session::setSession("product_edit", "success");
+      }catch(Exception $e){
+        Session::setSession("product_edit", "fail");
       }
     }
   }

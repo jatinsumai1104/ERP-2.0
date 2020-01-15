@@ -22,3 +22,8 @@ if(isset($_POST['getDetails'])){
     $data = $di->get($_POST['table_name'])->readDataToEdit($_POST);
     echo json_encode($data);
 }
+
+if(isset($_POST["editBtn"])){
+    $di->get("Product")->updateProduct($_POST);
+    // Util::redirect("manage-product");
+}

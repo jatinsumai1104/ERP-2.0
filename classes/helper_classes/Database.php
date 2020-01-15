@@ -34,6 +34,7 @@ class Database {
 
 
     public function insert($table, $data){
+        echo "hello";
         $keys = array_keys($data);
         // print_r($keys);
         $fields = "`" . implode("`, `", $keys). "`";
@@ -44,10 +45,11 @@ class Database {
         //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
-        
+        echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
 
         $this->stmt->execute($data);
+        echo "success";
         return $this->pdo->lastInsertId();
     }
 
@@ -93,7 +95,7 @@ class Database {
 			$columnValueSet .= $key. "='".$value."'".$comma;
 			$i++;
 		}
-		$sql = "update {$table} set {$columnValueSet} where {$condition}";
+		$sql = "update {$table} set {$columnValueSet}, updated_at = now() where {$condition} ";
         echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();

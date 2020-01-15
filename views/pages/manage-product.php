@@ -58,6 +58,7 @@ require_once('../includes/header.php');
                       <th>Product Name</th>
                       <th>Specification</th>
                       <th>Selling Rate</th>
+                      <th>With Effect From</th>
                       <th>EOQ Level</th>
                       <th>Danger Level</th>
                       <th>Category Name</th>
@@ -75,6 +76,7 @@ require_once('../includes/header.php');
                       <td><?echo $product["product_name"];?></td>
                       <td><?echo $product["specification"]?></td>
                       <td><?echo $product["selling_rate"]?></td>
+                      <td><?echo $product["wef"]?></td>
                       <td><?echo $product["eoq_level"]?></td>
                       <td><?echo $product["danger_level"]?></td>
                       <td><?echo $product["category_name"]?></td>
@@ -117,56 +119,68 @@ require_once('../includes/header.php');
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form action="<?php echo BASEURL?>helper/routing.php">
-            <input type="hidden" name="editId">
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label for="product_name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+        <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+          <div class="modal-body">
+            
+              <input type="hidden" name="product_id" id="editId">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="name" name="name">
+                </div>
               </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="product_name" name="product_name">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="specification" class="col-sm-2 col-form-label" style="max-width: 100%">Specification</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="specification" name="specification">
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label for="specification" class="col-sm-2 col-form-label" style="max-width: 100%">Specification</label>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <input type="hidden" name="old_selling_rate" id="old_selling_rate">
+                  <label for="selling_rate" class="col-sm-2 col-form-label" style="max-width: 100%">Selling Rate</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="selling_rate" name="selling_rate">
+                </div>
               </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="specification" name="specification">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="wef" class="col-sm-2 col-form-label" style="max-width: 100%">With Effect From</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="wef" name="wef" disabled>
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label for="selling_rate" class="col-sm-2 col-form-label" style="max-width: 100%">Selling Rate</label>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="eoq_level" class="col-sm-2 col-form-label" style="max-width: 100%">EOQ Level</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="eoq_level" name="eoq_level">
+                </div>
               </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="selling_rate" name="selling_rate">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="danger_level" class="col-sm-2 col-form-label" style="max-width: 100%">Danger Level</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="danger_level" name="danger_level">
+                </div>
               </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label for="eoq_level" class="col-sm-2 col-form-label" style="max-width: 100%">EOQ Level</label>
-              </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="eoq_level" name="eoq_level">
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label for="danger_level" class="col-sm-2 col-form-label" style="max-width: 100%">Danger Level</label>
-              </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="danger_level" name="danger_level">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-success " href="login.html">Confirm Edit</a>
-        </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit" name="editBtn">Confirm Edit</button>
+          </div>
+        </form>
       </div>
+      
     </div>
   </div>
   <!-- End of Delete Modal -->
