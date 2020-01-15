@@ -31,7 +31,12 @@ if(isset($_POST['getDetails'])){
 
 if(isset($_POST["editBtn"])){
     $di->get("Product")->updateProduct($_POST);
-    // Util::redirect("manage-product");
+    if(Session::getSession("product_edit") != null && Session::getSession("product_edit") === "success"){
+        Util::redirect("manage-product");
+    }else{
+        echo "Error while Insertion";
+    }
+    
 }
 
 if(isset($_POST['add_supplier'])){
