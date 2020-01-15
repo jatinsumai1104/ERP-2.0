@@ -41,6 +41,32 @@
   </div>
 </li>
 
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <i class="fas fa-fw fa-cog"></i>
+    <span>Supplier</span>
+  </a>
+  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="<?echo BASEPAGES?>add-supplier.php">Add Supplier</a>
+      <a class="collapse-item" href="<?echo BASEPAGES?>manage-supplier.php">Manage Supplier</a>
+    </div>
+  </div>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <i class="fas fa-fw fa-cog"></i>
+    <span>Category</span>
+  </a>
+  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="<?echo BASEPAGES?>add-category.php">Add Category</a>
+      <a class="collapse-item" href="<?echo BASEPAGES?>manage-category.php">Manage Category</a>
+    </div>
+  </div>
+</li>
+
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
