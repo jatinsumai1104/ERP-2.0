@@ -42,7 +42,7 @@ class Validator
 
 	public function errors()
 	{
-		return $this->errorHandler;
+		return $this->di->get("ErrorHandler");
 	}
 
 	protected function validate($item)

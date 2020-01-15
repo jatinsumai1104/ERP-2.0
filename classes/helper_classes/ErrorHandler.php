@@ -7,6 +7,7 @@ class ErrorHandler
 
 	public function __construct($di){
 		$this->di = $di;
+		$this->errors = [];
 	}
 	
 	public function addError($error, $key = null)

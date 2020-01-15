@@ -11,9 +11,9 @@ $di->set("Auth", new Auth($di));
 // $di->set("TokenHandler", new TokenHandler($database, $hash));
 $di->set("UserHelper", new UserHelper($di));
 // $di->set("Mail", MailConfigHelper::getMailer());
-
+$di->set("Validator", new Validator($di));
 $di->set("Product", new Product($di));
 $di->set("Supplier", new Supplier($di));
-$di->set("Supplier", new Category($di));
+$di->set("Category", new Category($di));
 
 // $tokenHandler->build();
