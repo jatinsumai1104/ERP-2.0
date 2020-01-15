@@ -86,7 +86,7 @@ class Validator
 
 	protected function unique($field, $value, $satisfier)
 	{
-		return !$this->di->get("Database")->table($satisfier)->exists([
+		return !$this->di->get("Database")->exists($satisfier, [
 			$field => $value
 		]);
 	}

@@ -73,7 +73,7 @@ class Database {
         $columnNameString = $this->prepareColumnString($fields);
         
         $sql = "SELECT {$columnNameString} from {$table} where {$condition}";
-        // echo $sql;
+        echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -99,6 +99,17 @@ class Database {
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         return $this;
+    }
+
+    public function exists($table,$data){
+        $field = array_keys($data)[0];
+        echo "hello";
+        $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
+        if(count($result)>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

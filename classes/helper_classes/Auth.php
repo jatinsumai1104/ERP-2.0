@@ -65,5 +65,5 @@ class Auth {
     
     public function signout(){
 		unset($_SESSION[$this->session]);
-	}
+	  }
 }
