@@ -24,6 +24,12 @@ class Auth {
 		return $this->database->table($this->table)->insert($data);
     }
     
+    public function login($data){
+
+      $employee = $this->database->readData($employee,['email_id','password_hash']);
+
+    }
+
     public function signin($data){
 		$user = $this->database->table($this->table)->where('username', '=', $data['username']);
 
@@ -61,5 +67,5 @@ class Auth {
     
     public function signout(){
 		unset($_SESSION[$this->session]);
-	}
+	  }
 }

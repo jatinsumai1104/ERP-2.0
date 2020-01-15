@@ -12,6 +12,7 @@ require_once "{$app}/../classes/helper_classes/Auth.php";
 require_once "{$app}/../classes/helper_classes/UserHelper.php";
 require_once "{$app}/../classes/helper_classes/MailConfigHelper.php";
 require_once "{$app}/../classes/Product.class.php";
+require_once "{$app}/../classes/helper_classes/Util.php";
 
 $database = new Database();
 $hash = new Hash();

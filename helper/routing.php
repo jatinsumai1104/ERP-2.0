@@ -18,13 +18,14 @@ if(isset($_POST['add_product'])){
     $eoq_level = $_POST['eoq_level'];
     $danger_level = $_POST['danger_level'];
     $quantity = $_POST['quantity'];
-    //$data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
-    //$assoc_array = $database->createAssocArray($data,$_POST);
+    $data = ["name","specification","hsn_code","sale_rate","category_id","eoq_level","danger_level","quantity"];
+    $assoc_array = Util::createAssocArray($data,$_POST);
     $product_db = new Product($database);
+    echo print_r($assoc_array);
     //echo $product_db->call();
-    $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
-    $res = $database->insert($table,$data);
-    $lastInsertedID =  $database->lastInsertedID();
+    // $data = ["name"=>$name,"specification"=>$specification,"hsn_code"=>$hsn_code,"category_id"=>$category_id,"eoq_level"=>$eoq_level,"danger_level"=>$danger_level,"quantity"=>$quantity];
+    // $res = $database->insert($table,$data);
+    // $lastInsertedID =  $database->lastInsertedID();
 
     
 
@@ -33,39 +34,57 @@ if(isset($_POST['add_product'])){
 }
 
 if(isset($_POST['register_button'])){
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = $_POST['password_hash'];
     $repeat_password = $_POST['repeat_password'];
-    $phone = $_POST['phone'];
-    $gender = $_POST['gender'];
-    $block_no = $_POST['block_no'];
-    $street = $_POST['street'];
-    $city = $_POST['city'];
-    $pincode = $_POST['pincode'];
-    $town = $_POST['town'];
-    $state = $_POST['state'];
-    $country = $_POST['country'];
+
+        $validator = new Validator($database, $errorHandler);
+        $validation = $validator->check($_POST, [
+            'email' => [
+                'required' => true,
+                'maxlength' => 200,
+                'unique' => 'employees',
+                'email' => true
+            ],
+            'password' => [
+                'required' => true,
+                'minlength' => 5
+            ]
+        ]);
+
+        if($validation->fails())
+        {
+            echo '<pre>', print_r($validation->errors()->all(), true), '</pre>';
+        }
+        else
+        {
+            //CODE TO BE EXECUTED IF THE VALIDATION HAS NO ERRORS
+            $hashed_password = $hash->make($password);
+    
+            $data = ['block_no','street','city','pincode','state','country','state','country','town'];
+            $insertion_array = Util::createAssocArray($data,$_POST);
+            $database->insert('address', $insertion_array);
+
+            $address_id = $database->lastInsertedID();
+            $_POST['password_hash'] = $hashed_password;
+            $_POST['address_id'] = $address_id;
+
+            $data = ['first_name','last_name','email','password_hash','phone_no','gender','address_id'];
+            $insertion_array2 = Util::createAssocArray($data,$_POST);
+            $database->insert('employees', $insertion_array2);
+
+            Util::redirect("login");
+        }
 
     
-    $hashed_password = $hash->make($password);
-
-    $data = array('block_no'=>$block_no, 'street'=>$street,'city'=> $city, 'pincode' =>$pincode, 'state'=>$state, 'country'=>$country, 'town'=>$town);
-
-    $data = ['block_no','street','city','pincode','state','country','state','country','town'];
-
-    $database->insert('address', $data);
-
-    $address_id = $database->lastInsertedID();
-    $data = array('first_name'=>$first_name,'last_name'=>$last_name, 'email_id'=> $email, 'password_hash'=>$password,'phone_no'=>$phone,'gender'=>$gender,'address_id'=>$address_id);
-    $database->insert('employees', $data);
-
 
 }
 if(isset($_POST['login_details'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+
+
     if(isset($_POST['remember'])){
         echo $_POST['remember'];
     }else{
@@ -73,4 +92,7 @@ if(isset($_POST['login_details'])){
     }
 }
 
-
+if(isset($_POST['deleteBtn'])){
+    $database->delete($_POST['table'], "id = ".$_POST['id']);
+    Util::redirect("manage-product");
+}

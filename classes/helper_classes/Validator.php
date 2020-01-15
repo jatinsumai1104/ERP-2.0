@@ -91,8 +91,10 @@ class Validator
 
 	protected function unique($field, $value, $satisfier)
 	{
-		return !$this->db->table($satisfier)->exists([
-			$field => $value
-		]);
+		// return !$this->db->table($satisfier)->exists([
+		// 	$field => $value
+		// ]);
+		// echo $satisfier;
+		return !$this->db->exists($satisfier,[$field=>$value]);
 	}
 }
