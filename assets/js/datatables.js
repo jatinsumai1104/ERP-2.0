@@ -14,7 +14,7 @@ table.on("click", ".edit", function(e) {
     method: "POST",
     data: { getDetails: true, id: $id, table_name: $table_name },
     dataType: "json",
-    success: function(data) {
+    success: function(data,assoc_array) {
       $("#name").val(data.name);
       $("#specification").val(data.specification);
       $("#old_selling_rate").val(data.psr.selling_rate);
