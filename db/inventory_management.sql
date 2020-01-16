@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2020 at 01:17 PM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Jan 16, 2020 at 09:38 AM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -37,9 +37,9 @@ CREATE TABLE `address` (
   `state` varchar(25) NOT NULL,
   `country` varchar(25) NOT NULL,
   `town` varchar(25) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -111,7 +111,8 @@ INSERT INTO `address` (`id`, `block_no`, `street`, `city`, `pincode`, `state`, `
 (62, 'B/204, Navjeevan Society', 'Sector-19', 'Mumbai', 400708, 'Maharashtra', 'India', 'Airoli', '2019-12-31 15:13:35', '2019-12-31 15:13:35', 0),
 (63, 'D/904, Sainath Tower', 'Neelam Nagar', 'Mumbai', 400081, 'Maharashtra', 'India', 'Mulund', '2019-12-31 15:13:35', '2019-12-31 15:13:35', 0),
 (64, '303 B, Sainath Heights', 'Neelam Nagar', 'Mumbai', 400081, 'Maharashtra', 'India', 'Mulund', '2019-12-31 15:13:35', '2019-12-31 15:13:35', 0),
-(65, '2, Sai Niwas Chawl', 'Gavdevi Road', 'Mumbai', 400078, 'Maharashtra', 'India', 'Bhandup', '2019-12-31 15:13:35', '2019-12-31 15:13:35', 0);
+(65, '2, Sai Niwas Chawl', 'Gavdevi Road', 'Mumbai', 400078, 'Maharashtra', 'India', 'Bhandup', '2019-12-31 15:13:35', '2019-12-31 15:13:35', 0),
+(80, '401 greenland apt', '401 greenland apt, gol ma', 'ulhasnagar', 421001, '', '', '', '2020-01-15 16:14:17', '2020-01-15 16:14:17', 0);
 
 -- --------------------------------------------------------
 
@@ -217,9 +218,9 @@ INSERT INTO `address_supplier` (`id`, `address_id`, `supplier_id`) VALUES
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(5) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `deleted` int(5) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -250,9 +251,9 @@ CREATE TABLE `cheque_details` (
   `cheque_no` int(6) NOT NULL,
   `cheque_date` date NOT NULL,
   `bank_name` varchar(40) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -418,9 +419,9 @@ CREATE TABLE `customers` (
   `phone_no` varchar(15) NOT NULL,
   `email_id` varchar(40) NOT NULL,
   `gender` varchar(10) NOT NULL,
-  `deleted` int(6) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `deleted` int(6) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -468,26 +469,29 @@ CREATE TABLE `employees` (
   `id` int(11) NOT NULL,
   `first_name` varchar(25) NOT NULL,
   `last_name` varchar(25) NOT NULL,
-  `email_id` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password_hash` text NOT NULL,
   `phone_no` varchar(15) NOT NULL,
   `gender` varchar(10) NOT NULL,
   `address_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `first_name`, `last_name`, `email_id`, `phone_no`, `gender`, `address_id`, `created_at`, `updated_at`, `deleted`) VALUES
-(1, 'Tanay', 'Shinde', 'tanay.shinde@gmail.com', '8097939894', 'Male', 60, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
-(2, 'Mehul', 'Mirajkar', 'mehul.mirajkar@gmail.com', '9969586525', 'Male', 61, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
-(3, 'Mrunali', 'Khokale', 'khokale.mru@gmail.com', '7276362828', 'Female', 62, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
-(4, 'Snehal', 'Gite', 'snehal.gite@gmail.com', '8097957424', 'Female', 63, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
-(5, 'Anmol', 'Dube', 'anmol28596@gmail.com', '8655626530', 'Male', 64, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
-(6, 'Santosh', 'Salian', '9santoshsalian9@gmail.com', '9987711913', 'Male', 65, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0);
+INSERT INTO `employees` (`id`, `first_name`, `last_name`, `email`, `password_hash`, `phone_no`, `gender`, `address_id`, `created_at`, `updated_at`, `deleted`) VALUES
+(1, 'Tanay', 'Shinde', 'tanay.shinde@gmail.com', '', '8097939894', 'Male', 60, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(2, 'Mehul', 'Mirajkar', 'mehul.mirajkar@gmail.com', '', '9969586525', 'Male', 61, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(3, 'Mrunali', 'Khokale', 'khokale.mru@gmail.com', '', '7276362828', 'Female', 62, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(4, 'Snehal', 'Gite', 'snehal.gite@gmail.com', '', '8097957424', 'Female', 63, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(5, 'Anmol', 'Dube', 'anmol28596@gmail.com', '', '8655626530', 'Male', 64, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(6, 'Santosh', 'Salian', '9santoshsalian9@gmail.com', '', '9987711913', 'Male', 65, '2020-01-01 17:45:29', '2020-01-01 17:45:29', 0),
+(7, 'Akash', 'Narang', 'akash@gmail.com', 'abc123', '9004084311', 'male', 1, '2020-01-14 22:27:12', '2020-01-14 22:27:12', 0),
+(19, 'Neelam', '', 't2lass12345@gmail.com', '$2y$10$r.pPNqp2vSnVr71aTnOlKOEqAP4fCk8ZreKWISGzN/NQjnZBAwHn2', '09421628283', 'male', 80, '2020-01-15 16:14:17', '2020-01-15 16:14:17', 0);
 
 -- --------------------------------------------------------
 
@@ -499,10 +503,10 @@ CREATE TABLE `gst` (
   `id` int(11) NOT NULL,
   `hsn_code` int(8) NOT NULL,
   `gst_rate` float NOT NULL,
-  `with_effect_from` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `with_effect_from` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -530,9 +534,9 @@ INSERT INTO `gst` (`id`, `hsn_code`, `gst_rate`, `with_effect_from`, `created_at
 CREATE TABLE `invoice` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -794,9 +798,9 @@ CREATE TABLE `payments` (
   `invoice_id` int(11) NOT NULL,
   `amount` float NOT NULL,
   `pay_mode` varchar(25) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1102,9 +1106,9 @@ CREATE TABLE `products` (
   `eoq_level` int(5) NOT NULL,
   `danger_level` int(5) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1173,8 +1177,8 @@ CREATE TABLE `products_selling_rate` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `selling_rate` float NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `with_effect_from` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `with_effect_from` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1243,9 +1247,9 @@ CREATE TABLE `product_supplier` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1516,9 +1520,9 @@ CREATE TABLE `purchases` (
   `supplier_id` int(11) NOT NULL,
   `purchase_rate` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2039,9 +2043,9 @@ CREATE TABLE `sales` (
   `quantity` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted` int(6) NOT NULL DEFAULT '0'
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3044,9 +3048,9 @@ CREATE TABLE `suppliers` (
   `phone_no` varchar(15) NOT NULL,
   `email_id` varchar(40) NOT NULL,
   `company_name` varchar(25) NOT NULL,
-  `deleted` int(6) NOT NULL DEFAULT '0',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `deleted` int(6) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3084,6 +3088,20 @@ INSERT INTO `suppliers` (`id`, `first_name`, `last_name`, `gst_no`, `phone_no`, 
 (28, 'Dhum', 'Vijay', '27BAADE1139A2Z5', '8692085402', 'vijay.dhum22@rediffmail.com', 'DFI', 0, '2020-01-01 17:33:08', '2020-01-01 17:33:08'),
 (29, 'Kunal', 'Hile', '27BAADE1140A2Z5', '9819324622', 'kunal.hile@gmail.com', 'Intel', 0, '2020-01-01 17:33:08', '2020-01-01 17:33:08'),
 (30, 'Roshan', 'Sakpal', '27BAADE1141A2Z5', '9769069674', 'roshusakpal@yahoo.com', 'IBall', 0, '2020-01-01 17:33:08', '2020-01-01 17:33:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` bigint(20) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `expires_at` datetime NOT NULL,
+  `is_remember` tinyint(4) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -3186,6 +3204,13 @@ ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -3193,7 +3218,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `address_customer`
@@ -3229,7 +3254,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `gst`
@@ -3284,6 +3309,12 @@ ALTER TABLE `sales`
 --
 ALTER TABLE `suppliers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

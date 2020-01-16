@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" name="phone" class="form-control form-control-user" id="exampleFirstName" placeholder="Phone Number">
+                    <input type="text" name="phone_no" class="form-control form-control-user" id="exampleFirstName" placeholder="Phone Number">
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" checked>

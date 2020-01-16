@@ -41,7 +41,7 @@ require_once('../includes/header.php');
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800"> Manage Product</h1>
-          <a href="<?echo BASEPAGES?>add-product.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Product </a>
+          <a href="<?php echo BASEPAGES?>add-product.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Product </a>
         </div>
 
         <!-- Content Row -->
@@ -56,8 +56,9 @@ require_once('../includes/header.php');
                   <thead>
                     <tr>
                       <th>Product Name</th>
-                      <th>Additional Specification</th>
+                      <th>Specification</th>
                       <th>Selling Rate</th>
+                      <th>With Effect From</th>
                       <th>EOQ Level</th>
                       <th>Danger Level</th>
                       <th>Category Name</th>
@@ -68,20 +69,20 @@ require_once('../includes/header.php');
                   </thead>
                   <tbody>
                   <?php
-                      $product = new Product($database);
-                      $products = $product->getDataForDataTables();
+                      $products = $di->get("Product")->getDataForDataTables();
                       foreach($products as $product){
                     ?>
                     <tr>
-                      <td><?echo $product["product_name"];?></td>
-                      <td><?echo $product["specification"]?></td>
-                      <td><?echo $product["selling_rate"]?></td>
-                      <td><?echo $product["eoq_level"]?></td>
-                      <td><?echo $product["danger_level"]?></td>
-                      <td><?echo $product["category_name"]?></td>
-                      <td><?echo $product["supplier_name"]?></td>
-                      <td><a type="button" class="btn btn-primary btn-block" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
-                      <td><a type="button" class="btn btn-danger btn-block delete" id="<?echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
+                      <td><?php echo $product["product_name"];?></td>
+                      <td><?php echo $product["specification"]?></td>
+                      <td><?php echo $product["selling_rate"]?></td>
+                      <td><?php echo $product["wef"]?></td>
+                      <td><?php echo $product["eoq_level"]?></td>
+                      <td><?php echo $product["danger_level"]?></td>
+                      <td><?php echo $product["category_name"]?></td>
+                      <td><?php echo $product["supplier_name"]?></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" id="<?php echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#editModal" table_name="Product"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-danger btn-block delete" id="<?php echo $product["product_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                       <?php }?>
                   </tbody>
@@ -118,23 +119,68 @@ require_once('../includes/header.php');
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form action="<?php echo BASEURL?>helper/routing.php">
-          <div class="form-group row">
-            <div class="col-sm-4">
-              <label for="product_name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
-            </div>
-            <div class="col-sm-7">
-              <input type="text" class="form-control" id="product_name" name="product_name">
-            </div>
+        <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+          <div class="modal-body">
+            
+              <input type="hidden" name="product_id" id="editId">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="name" name="name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="specification" class="col-sm-2 col-form-label" style="max-width: 100%">Specification</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="specification" name="specification">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <input type="hidden" name="old_selling_rate" id="old_selling_rate">
+                  <label for="selling_rate" class="col-sm-2 col-form-label" style="max-width: 100%">Selling Rate</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="selling_rate" name="selling_rate">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="wef" class="col-sm-2 col-form-label" style="max-width: 100%">With Effect From</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="wef" name="wef" disabled>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="eoq_level" class="col-sm-2 col-form-label" style="max-width: 100%">EOQ Level</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="eoq_level" name="eoq_level">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="danger_level" class="col-sm-2 col-form-label" style="max-width: 100%">Danger Level</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="danger_level" name="danger_level">
+                </div>
+              </div>
+            
           </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-success " href="login.html">Confirm Edit</a>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit" name="editBtn">Confirm Edit</button>
+          </div>
+        </form>
       </div>
+      
     </div>
   </div>
   <!-- End of Delete Modal -->

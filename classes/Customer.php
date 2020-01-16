@@ -2,15 +2,14 @@
 class Customer
 {
     private $table="customers";
-    private $db;
+    protected $di;
     
-    public function __construct(Database $db){
-        $this->db = $db;
-    }
+    public function __construct($di){
+		$this->di = $di;
+	}
 
     function readAllCustomers(){
-        $customerData =  $this->db->readData($this->table);
-        return $customerData;
+        return $this->di->get("Database")->readData();
     }
 
 }

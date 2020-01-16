@@ -11,7 +11,7 @@ class Util{
   public static function createAssocArray($arrayOfKeys,$post){
     $assoc_array;
     foreach($arrayOfKeys as $key){
-        $assoc_array[$key] = $_POST[$key];
+        $assoc_array[$key] = $post[$key];
     }
     return $assoc_array;
 }

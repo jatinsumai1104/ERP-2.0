@@ -34,6 +34,7 @@ class Database {
 
 
     public function insert($table, $data){
+        echo "hello";
         $keys = array_keys($data);
         // print_r($keys);
         $fields = "`" . implode("`, `", $keys). "`";
@@ -44,21 +45,17 @@ class Database {
         //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
-        print_r($data);
-        echo "<br>";
-        
+        echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
 
-        return $this->stmt->execute($data);
+        $this->stmt->execute($data);
+        echo "success";
+        return $this->pdo->lastInsertId();
     }
 
     public function lastInsertedID(){
         return $this->pdo->lastInsertId();
     }
-
-    
-
-    
 
     public function prepareColumnString($fields){
         $fieldsString = "";
@@ -98,12 +95,38 @@ class Database {
 			$columnValueSet .= $key. "='".$value."'".$comma;
 			$i++;
 		}
-		$sql = "update {$table} set {$columnValueSet} where {$condition}";
+		$sql = "update {$table} set {$columnValueSet}, updated_at = now() where {$condition} ";
         echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         return $this;
     }
+
+    public function exists($table,$data){
+        $field = array_keys($data)[0];
+        // echo "hello";
+        $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
+        if(count($result)>0){
+            // echo "count>0";
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public function beginTransaction(){
+        return $this->pdo->beginTransaction();
+    }
+
+    public function commit(){
+        return $this->pdo->commit();
+    }
+
+    public function rollback(){
+        return $this->pdo->rollback();
+    }
+
 
 }
 // $db = new Database();
