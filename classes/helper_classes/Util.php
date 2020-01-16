@@ -7,12 +7,17 @@ class Util{
     header("Location: ".BASEURL."views/pages/$file.php");
   }
 
+  public static function createCsrfToken(){
+    return uniqid().rand();
+  }
 
   public static function createAssocArray($arrayOfKeys,$post){
     $assoc_array;
     foreach($arrayOfKeys as $key){
         $assoc_array[$key] = $post[$key];
     }
-    return $assoc_array;
+    return $assoc_array;  
 }
+
+
 }

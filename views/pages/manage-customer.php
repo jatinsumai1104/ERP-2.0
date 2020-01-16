@@ -1,9 +1,7 @@
 <?php
-require_once('../../../helper/constants.php');
-require_once('../../../helper/init.php');
-require_once('../../../classes/Customer.php');
-$customer = new Customer($database);
-$customer_details =  $customer->readAllCustomers();
+require_once(__DIR__.'../../../helper/constants.php');
+require_once(__DIR__.'../../../helper/init.php');
+$customer_details =  $di->get("Customer")->readAllCustomers();
 
 ?>
 <!DOCTYPE html>
@@ -11,7 +9,7 @@ $customer_details =  $customer->readAllCustomers();
 
 <!-- Header containing all Links -->
 <?php
-require_once('../../includes/header.php');
+require_once('../includes/header.php');
 ?>
 
 
@@ -22,7 +20,7 @@ require_once('../../includes/header.php');
 
   <!-- Sidebar -->
   <?php
-    require_once('../../includes/sidebar.php');
+    require_once('../includes/sidebar.php');
   ?>
   <!-- End of Sidebar -->
 
@@ -34,7 +32,7 @@ require_once('../../includes/header.php');
 
       <!-- Topbar -->
       <?php
-        require_once('../../includes/navbar.php');        
+        require_once('../includes/navbar.php');        
       ?>
       <!-- End of Topbar -->
 
@@ -43,19 +41,19 @@ require_once('../../includes/header.php');
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800"> Manage Product</h1>
-          <a href="<?php echo BASEPAGES?>add-product.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Product </a>
+          <h1 class="h3 mb-0 text-gray-800"> Manage Customer</h1>
+          <a href="<?php echo BASEPAGES?>add-customer.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Add Customer </a>
         </div>
 
         <!-- Content Row -->
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-cog"></i>  Manage Product</h6>
+              <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-cog"></i>  Manage Customer</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="customer_list" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>First name</th>
@@ -79,7 +77,7 @@ require_once('../../includes/header.php');
                       <td><?php echo $customer_details[$i]['phone_no'];?></td>
                       <td><?php echo $customer_details[$i]['email_id'];?></td>
                       <td><?php echo $customer_details[$i]['gender'];?></td>
-                      <td><a type="button" class="btn btn-primary btn-block edit" table_name="customers" id=<?php echo $customer_details[$i]['id']?> href="#" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
+                      <td><a type="button" class="btn btn-primary btn-block edit" table_name="Customer" id=<?php echo $customer_details[$i]['id']?> href="#" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt" ></i> Edit</a></td>
                       <td><a type="button" class="btn btn-danger btn-block delete" id=<?php echo $customer_details[$i]['id']?> href="#" data-toggle="modal" data-target="#deleteModal"><i class="far fa-trash-alt"></i> Delete</a></td>
                     </tr>
                     <?php
@@ -101,7 +99,7 @@ require_once('../../includes/header.php');
 
     <!-- Footer -->
     <?php
-      require_once('../../includes/footer.php');
+      require_once('../includes/footer.php');
     ?>
     <!-- End of Footer -->
 
@@ -121,8 +119,8 @@ require_once('../../includes/header.php');
           </button>
         </div>
         <div class="modal-body">
-          <form action="<?php echo BASEURL?>helper/routing.php">
-            <input type="hidden" name="editId">
+          <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+            <input type="hidden" name="customer_id" id="editId">
             <div class="form-group row">
               <div class="col-sm-4">
                 <label for="first_name" class="col-sm-2 col-form-label" style="max-width: 100%">First Name</label>
@@ -144,7 +142,7 @@ require_once('../../includes/header.php');
                 <label for="gst_no" class="col-sm-2 col-form-label" style="max-width: 100%">Gst No.</label>
               </div>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="gst_no" name="gst_no">
+                <input type="text" class="form-control" id="gst_no" name="gst_no" disabled>
               </div>
             </div>
             <div class="form-group row">
@@ -168,15 +166,20 @@ require_once('../../includes/header.php');
                 <label for="gender" class="col-sm-2 col-form-label" style="max-width: 100%">Gender</label>
               </div>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="gender" name="gender">
+                <select name="gender" id="gender" class="form-control">
+                    <!-- <option value=""></option> -->
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>    
+                <!-- <input type="text" class="form-control" id="gender" name="gender"> -->
               </div>
             </div>
-          </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-success " href="login.html">Confirm Edit</a>
+          <button class="btn btn-success" type="submit" name="editBtnCustomer">Confirm Edit</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
@@ -195,7 +198,7 @@ require_once('../../includes/header.php');
         <div class="modal-footer">
           <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
             <input type="hidden" name="table" value="customers">
-            <input type="hidden" name="id" id="recordID">
+            <input type="hidden" name="id" id="recordId">
             <button class="btn btn-danger" type="submit"  name="deleteBtn">Yes</button>
           </form>
           <a class="btn btn-success" href="#" data-dismiss="modal">No</a>
@@ -207,7 +210,7 @@ require_once('../../includes/header.php');
 
 <!-- All Required Scripts  -->
 <?php
-  require_once('../../includes/scripts.php');
+  require_once('../includes/scripts.php');
 ?>
 </body>
 

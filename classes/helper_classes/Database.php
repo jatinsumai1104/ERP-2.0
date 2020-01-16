@@ -82,7 +82,7 @@ class Database {
 
     public function delete($table,$condition="1"){
         $sql = "update {$table} set deleted = 1 where $condition";
-        // echo $sql;
+        echo $sql;
 		$this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
     }

@@ -20,7 +20,11 @@ if(isset($_POST['register_button'])){
 }
 
 if(isset($_POST['login_details'])){
-    $di->get("Auth")->login($_POST);
+    if(isset($_POST['csrf_token']) && $_POST['csrf_token']==Session::getSession("csrf_token")){
+        $di->get("Auth")->login($_POST);
+    }else{
+        Util::redirect("login.php");
+    }
 }
 
 if(isset($_POST['deleteBtn'])){
@@ -37,6 +41,17 @@ if(isset($_POST["editBtn"])){
     $di->get("Product")->updateProduct($_POST);
     if(Session::getSession("product_edit") != null && Session::getSession("product_edit") === "success"){
         Util::redirect("manage-product");
+    }else{
+        echo "Error while Insertion";
+    }
+    
+}
+
+if(isset($_POST["editBtnCustomer"])){
+    // echo("Hii");
+    $di->get("Customer")->updateCustomer($_POST);
+    if(Session::getSession("customer_edit") != null && Session::getSession("customer_edit") === "success"){
+        Util::redirect("manage-customer");
     }else{
         echo "Error while Insertion";
     }
@@ -62,5 +77,4 @@ if(isset($_POST['add_category'])){
     }else{
         Util::redirect("manage-category");
     }
-    
 }
