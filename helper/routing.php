@@ -19,6 +19,10 @@ if(isset($_POST['register_button'])){
     Util::redirect("login");
 }
 
+if(isset($_POST['login_details'])){
+    $di->get("Auth")->login($_POST);
+}
+
 if(isset($_POST['deleteBtn'])){
     $di->get("Product")->deleteProduct($_POST);
     Util::redirect("manage-product");
