@@ -4,14 +4,12 @@ require_once ("init.php");
 
 
 if(isset($_POST['add_product'])){
-
     $di->get("Product")->addProduct($_POST);
     if(Session::getSession("product_add") == null){
         echo "Error";
     }else{
         Util::redirect("manage-product");
     }
-    
 }
 
 if(isset($_POST['register_button'])){
@@ -36,7 +34,6 @@ if(isset($_POST["editBtn"])){
     }else{
         echo "Error while Insertion";
     }
-    
 }
 
 if(isset($_POST['add_supplier'])){
