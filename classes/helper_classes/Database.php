@@ -31,10 +31,14 @@ class Database {
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function query($sql){
+        return $this->pdo->query($sql);
+    }
+
 
 
     public function insert($table, $data){
-        echo "hello";
+        // echo "hello";
         $keys = array_keys($data);
         // print_r($keys);
         $fields = "`" . implode("`, `", $keys). "`";
@@ -45,11 +49,11 @@ class Database {
         //echo $placeholders;
 
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
-        echo $sql;
+        // echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
 
         $this->stmt->execute($data);
-        echo "success";
+        // echo "success";
         return $this->pdo->lastInsertId();
     }
 
@@ -82,7 +86,7 @@ class Database {
 
     public function delete($table,$condition="1"){
         $sql = "update {$table} set deleted = 1 where $condition";
-        //echo $sql;
+        echo $sql;
 		$this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
     }
@@ -104,12 +108,13 @@ class Database {
 
     public function exists($table,$data){
         $field = array_keys($data)[0];
-        // echo "hello";
+        // echo $field;
         $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
         if(count($result)>0){
             // echo "count>0";
             return true;
         }else{
+            // echo "hello";
             return false;
         }
     }

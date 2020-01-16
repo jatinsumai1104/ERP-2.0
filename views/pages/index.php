@@ -1,6 +1,12 @@
 
 <?php
   require_once('../../helper/constants.php');
+  require_once(__DIR__.'/../../helper/init.php');
+
+if(!isset($_SESSION['employee_id'])){
+  Util::redirect("login");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +14,7 @@
 <!-- Header containing all Links -->
 <?php
   require_once('../includes/header.php');
+  
 ?>
 
 
