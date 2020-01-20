@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-<?php 
-require_once(__DIR__."/../../helper/requirements.php");
-echo Session::getSession("supplier_id");
-echo "success";
-?>
-=======
 
 <?php
 require_once(__DIR__.'/../../helper/constants.php');
@@ -152,4 +145,3 @@ require_once('../includes/header.php');
 </body>
 
 </html>
->>>>>>> 1b3711bccb7abc59115e5e3f70c823ced921fa21

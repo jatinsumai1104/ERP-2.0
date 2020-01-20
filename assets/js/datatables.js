@@ -25,13 +25,6 @@ table.on("click", ".edit", function(e) {
         $("#wef").val(data.psr.wef);
         $("#eoq_level").val(data.eoq_level);
         $("#danger_level").val(data.danger_level);
-      }else if($table_name=="Customer"){
-        $("#first_name").val(data.first_name);
-        $("#last_name").val(data.last_name);
-        $("#gst_no").val(data.gst_no);
-        $("#phone_no").val(data.phone_no);
-        $("#email_id").val(data.email_id);
-        $("#gender").val(data.gender);
       }
     },
     error: function(error) {
