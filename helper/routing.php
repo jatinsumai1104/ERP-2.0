@@ -20,7 +20,7 @@ if (isset($_POST['add_product'])) {
 if (isset($_POST['add_supplier'])) {
     if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
         $di->get("Supplier")->addSupplier($_POST);
-        if (Session::getSession("supplier_add") == null) {
+        if (Session::getSession("supplier_add") == "fail") {
             echo "Error";
         } else {
             Util::redirect("manage-supplier");
@@ -43,7 +43,7 @@ if (isset($_POST['add_category'])) {
 
     if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
         $di->get("Category")->addCategory($_POST);
-        if (Session::getSession("category_add") == null) {
+        if (Session::getSession("category_add") == "fail") {
             echo "Error";
         } else {
             Util::redirect("manage-category");

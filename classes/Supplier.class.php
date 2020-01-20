@@ -17,33 +17,81 @@ class Supplier
         return $res;
     }
 
+    public function validateData($data)
+    {
+        $validator = $this->di->get("Validator");
+        $validation = $validator->check($data, [
+            'first_name' => [
+                'required' => true,
+                'minlength' => 3,
+                'maxlength' => 20,
+            ],
+            'last_name' => [
+                'required' => true,
+                'minlength' => 3,
+                'maxlength' => 20,
+            ],
+            'gst_no' => [
+                'required' => true,
+            ],
+            'phone_no' => [
+                'required' => true,
+                'phone' => true,
+            ],
+            'company_name' => [
+                'required' => true,
+            ],
+            'gender' => [
+                'required' => true,
+            ],
+            'block_no' => [
+                'required' => true,
+            ],
+            'street' => [
+                'required' => true,
+            ],
+            'city' => [
+                'required' => true,
+            ],
+            'pincode' => [
+                'required' => true,
+            ],
+        ]);
+        return $validation;
+    }
+
     public function addSupplier($data)
     {
-        try {
+        $validation = $this->validateData($data);
+        if (!$validation->fails()) {
+            try {
 
-            $table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "company_name"];
-            $assoc_array = Util::createAssocArray($table_attr, $data);
-            // Begin Transaction
-            $this->di->get("Database")->beginTransaction();
+                $table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "company_name"];
+                $assoc_array = Util::createAssocArray($table_attr, $data);
+                // Begin Transaction
+                $this->di->get("Database")->beginTransaction();
 
-            $supplier_id = $this->di->get("Database")->insert($this->table, $assoc_array);
-            //echo $supplier_id;
-            $table_attr = [];
-            $assoc_array = [];
-            $table_attr = ["block_no", "street", "city", "pincode", "state", "country", "town"];
-            $assoc_array = Util::createAssocArray($table_attr, $data);
-            $address_id = $this->di->get("Database")->insert("address", $assoc_array);
+                $supplier_id = $this->di->get("Database")->insert($this->table, $assoc_array);
+                //echo $supplier_id;
+                $table_attr = [];
+                $assoc_array = [];
+                $table_attr = ["block_no", "street", "city", "pincode", "state", "country", "town"];
+                $assoc_array = Util::createAssocArray($table_attr, $data);
+                $address_id = $this->di->get("Database")->insert("address", $assoc_array);
 
-            $assoc_array = [];
-            $assoc_array['address_id'] = $address_id;
-            $assoc_array['supplier_id'] = $supplier_id;
-            $address_supplier_id = $this->di->get("Database")->insert("address_supplier", $assoc_array);
+                $assoc_array = [];
+                $assoc_array['address_id'] = $address_id;
+                $assoc_array['supplier_id'] = $supplier_id;
+                $address_supplier_id = $this->di->get("Database")->insert("address_supplier", $assoc_array);
 
-            $this->di->get("Database")->commit();
-            // end transaction
-            Session::setSession("supplier_add", "success");
-        } catch (Exception $e) {
-            $this->di->get("Database")->rollback();
+                $this->di->get("Database")->commit();
+                // end transaction
+                Session::setSession("supplier_add", "success");
+            } catch (Exception $e) {
+                $this->di->get("Database")->rollback();
+                Session::setSession("supplier_add", "fail");
+            }
+        } else {
             Session::setSession("supplier_add", "fail");
         }
     }
@@ -57,19 +105,23 @@ class Supplier
 
     public function updateSupplier($data)
     {
-
-        try {
-            $this->di->get("Database")->beginTransaction();
-            $table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "company_name"];
-            $assoc_array = Util::createAssocArray($table_attr, $data);
-            $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['supplier_id']}");
-            $table_attr = ["block_no", "street", "city", "pincode", "state", "country", "town"];
-            $assoc_array = Util::createAssocArray($table_attr, $data);
-            $this->di->get("Database")->update("address", $assoc_array, "id={$data['address_id']}");
-            $this->di->get("Database")->commit();
-            Session::setSession("supplier_edit", "success");
-        } catch (Exception $e) {
-            $this->di->get("Database")->rollback();
+        $validation = $this->validateData($data);
+        if (!$validation->fails()) {
+            try {
+                $this->di->get("Database")->beginTransaction();
+                $table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "company_name"];
+                $assoc_array = Util::createAssocArray($table_attr, $data);
+                $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['supplier_id']}");
+                $table_attr = ["block_no", "street", "city", "pincode", "state", "country", "town"];
+                $assoc_array = Util::createAssocArray($table_attr, $data);
+                $this->di->get("Database")->update("address", $assoc_array, "id={$data['address_id']}");
+                $this->di->get("Database")->commit();
+                Session::setSession("supplier_edit", "success");
+            } catch (Exception $e) {
+                $this->di->get("Database")->rollback();
+                Session::setSession("supplier_edit", "fail");
+            }
+        } else {
             Session::setSession("supplier_edit", "fail");
         }
     }
