@@ -36,7 +36,7 @@ Session::setSession("csrf_token", Util::createCsrfToken());
                   </div>
                   <form method="post" class="user" action="<?php echo BASEPAGES?>../../helper/routing.php">
 
-                    <input type="hidden" name="csrf_token" id="csrf_token" value=<?php Session::getSession("csrf_token");?>>
+                    <input type="hidden" name="csrf_token" id="csrf_token" value=<?php echo Session::getSession("csrf_token");?>>
                     <div class="form-group">
                       <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>

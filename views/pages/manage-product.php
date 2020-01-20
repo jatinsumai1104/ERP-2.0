@@ -121,8 +121,7 @@ require_once('../includes/header.php');
         </div>
         <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
           <div class="modal-body">
-            
-              <input type="hidden" name="product_id" id="editId">
+            <input type="hidden" name="product_id" id="editId">
               <div class="form-group row">
                 <div class="col-sm-4">
                   <label for="name" class="col-sm-2 col-form-label" style="max-width: 100%">Product Name</label>

@@ -94,19 +94,81 @@ class Auth {
       else
       {
           // CODE TO BE EXECUTED IF THE VALIDATION HAS NO ERRORS
-          $hashed_password = $this->di->get("Hash")->make($password);
-  
-          $data = ['block_no','street','city','pincode','state','country','state','country','town'];
-          $insertion_array = Util::createAssocArray($data,$input);
-          $address_id = $this->di->get("Database")->insert('address', $insertion_array);
 
-          $input['password_hash'] = $hashed_password;
-          $input['address_id'] = $address_id;
+          try{
 
-          $data = ['first_name','last_name','email','password_hash','phone_no','gender','address_id'];
-          $insertion_array2 = Util::createAssocArray($data,$input);
-          $this->di->get("Database")->insert('employees', $insertion_array2);
+            $this->di->get("Database")->beginTransaction();
+              
+            $hashed_password = $this->di->get("Hash")->make($password);
+    
+            $data = ['block_no','street','city','pincode','state','country','state','country','town'];
+            $insertion_array = Util::createAssocArray($data,$input);
+            $address_id = $this->di->get("Database")->insert('address', $insertion_array);
+
+            $input['password_hash'] = $hashed_password;
+            $input['address_id'] = $address_id;
+
+            $data = ['first_name','last_name','email','password_hash','phone_no','gender','address_id'];
+            $insertion_array2 = Util::createAssocArray($data,$input);
+            $this->di->get("Database")->insert('employees', $insertion_array2);
+
+            $this->di->get("Database")->commit();
+            Session::setSession("sign_up", "success");
+            Util::redirect("login");
+          }catch(Exception $e){
+            $this->di->get("Database")->rollback();
+          }
       }
-      Session::setSession("sign_up", "success");
+      
+    }
+
+    public function login($input){
+      
+
+      $email = $input['email'];
+      $password = $input['password'];
+
+      // $this->di->get("Database")->beginTransaction();
+
+      if(!$this->di->get("Database")->exists("employees",["email"=>$email])){
+        Session::setSession("login", "failed");
+        Util::redirect("login");
+        return;
+      }else{
+        $hashed_password =$this->di->get("Database")->readData("employees",["password_hash"],"email='{$email}'");
+        $db_password = $hashed_password[0]['password_hash'];
+        
+        if($this->di->get("Hash")->verify($password,$db_password)){
+          // echo "verified";
+          $id = $this->di->get("Database")->readData("employees",["id"],"email='{$email}'");
+          Session::setSession("employee_id",$id[0]['id']);
+          Session::setSession("login","success");
+          if(isset($input['remember'])){
+            $this->setCookie($id[0]['id']);
+          }
+          Util::redirect("index");
+        }else{
+          Session::setSession("login","failed");
+          Util::redirect("login");
+          return;
+        }
+
+      }
+      
+      
+
+      
+      
+    }
+
+    public function setCookie($id){
+      $token = $this->di->get("TokenHandler")->createRememberMeToken($id);
+      // print_r($token);
+      setcookie("token",$token['token'],time() + 1800, '/');
+      setcookie("user_id",$token['user_id'], time() + 1800, '/');
+
+      // if(isset($_COOKIE['token'])&& isset($_COOKIE['user_id'])){
+      //   echo $_COOKIE['token']." ".$_COOKIE['user_id'];
+      // }
     }
 }

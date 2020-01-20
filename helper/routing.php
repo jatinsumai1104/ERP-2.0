@@ -18,12 +18,11 @@ if(isset($_POST['register_button'])){
     $di->get("Auth")->register($_POST);
     Util::redirect("login");
 }
-
 if(isset($_POST['login_details'])){
     if(isset($_POST['csrf_token']) && $_POST['csrf_token']==Session::getSession("csrf_token")){
         $di->get("Auth")->login($_POST);
     }else{
-        Util::redirect("login.php");
+        Util::redirect("login");
     }
 }
 
@@ -48,7 +47,6 @@ if(isset($_POST["editBtn"])){
 }
 
 if(isset($_POST["editBtnCustomer"])){
-    // echo("Hii");
     $di->get("Customer")->updateCustomer($_POST);
     if(Session::getSession("customer_edit") != null && Session::getSession("customer_edit") === "success"){
         Util::redirect("manage-customer");
@@ -67,6 +65,15 @@ if(isset($_POST['add_supplier'])){
         Util::redirect("manage-supplier");
     }
     
+}
+
+if(isset($_POST['add_customer'])){
+    $di->get("Customer")->addCustomer($_POST);
+    if(Session::getSession("customer_add") == "fail"){
+        echo "Error";
+    }else{
+        Util::redirect("add-customer");
+    }
 }
 
 if(isset($_POST['add_category'])){

@@ -4,14 +4,16 @@ class Validator
 {
 	protected $di;
 
-	protected $rules = ['required', 'minlength', 'maxlength', 'unique', 'email'];
+	protected $rules = ['required', 'minlength', 'maxlength', 'unique', 'email','phone'];
 
 	protected $messages = [
 		'required' => 'The :field field is required',
 		'minlength' => 'The :field field must be a minimum of :satisfier character',
 		'maxlength' => 'The :field field must be a maximum of :satisfier character',
 		'email' => 'That is not a valid email address',
-		'unique' => 'That :field is already taken'
+		'unique' => 'That :field is already taken',
+		'phone' => 'That is not a valid phone number'
+
 	];
 
 	public function __construct($di){
@@ -82,6 +84,11 @@ class Validator
 	protected function email($field, $value, $satisfier)
 	{
 		return filter_var($value, FILTER_VALIDATE_EMAIL);
+	}
+
+	protected function phone($field, $value, $satisfier)
+	{
+		return strlen(preg_replace('/[^0-9]/', '', $value)) == 10; 
 	}
 
 	protected function unique($field, $value, $satisfier)
