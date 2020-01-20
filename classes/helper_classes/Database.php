@@ -31,6 +31,10 @@ class Database {
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function query($sql){
+        return $this->pdo->query($sql);
+    }
+
 
 
     public function insert($table, $data){
@@ -104,12 +108,13 @@ class Database {
 
     public function exists($table,$data){
         $field = array_keys($data)[0];
-        // echo "hello";
+        // echo $field;
         $result = $this->readData($table,["*"], "{$field}='{$data[$field]}'");
         if(count($result)>0){
             // echo "count>0";
             return true;
         }else{
+            // echo "hello";
             return false;
         }
     }

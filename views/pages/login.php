@@ -2,10 +2,21 @@
 
 
 require_once('../../helper/constants.php');
-require_once(__DIR__.'../../../helper/init.php');
+// require_once(__DIR__.'../../../helper/init.php');
 
 Session::setSession("csrf_token", Util::createCsrfToken());
 // echo Session::getSession("csrf_token");
+require_once(__DIR__.'/../../helper/init.php');
+
+if(isset($_SESSION['employee_id'])){
+  Util::redirect("index");
+}
+if(isset($_COOKIE['token']) && $di->get("TokenHandler")->isValid($_COOKIE["token"],1)){
+    $_SESSION['employee_id']=$_COOKIE['user_id'];
+    Util::redirect("index");
+
+}else{
+// echo "I am in else";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,10 +49,10 @@ Session::setSession("csrf_token", Util::createCsrfToken());
 
                     <input type="hidden" name="csrf_token" id="csrf_token" value=<?php echo Session::getSession("csrf_token");?>>
                     <div class="form-group">
-                      <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="email" required="true" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
                     <div class="form-group">
-                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" required="true" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -86,3 +97,6 @@ Session::setSession("csrf_token", Util::createCsrfToken());
 </body>
 
 </html>
+<?php
+}
+?>

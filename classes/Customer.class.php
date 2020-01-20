@@ -82,7 +82,6 @@ class Customer
       }
     }else{
       Session::setSession("customer_add", "fail");
-      echo "Fail";
     }
   }  
 
