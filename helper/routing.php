@@ -5,11 +5,13 @@ require_once "init.php";
 if (isset($_POST['add_product'])) {
 
     if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
-        $di->get("Product")->addProduct($_POST);
-        if (Session::getSession("product_add") == null) {
-            echo "Error";
-        } else {
-            Util::redirect("manage-product");
+        if (isset($_POST['supplier_id'])) {
+            $di->get("Product")->addProduct($_POST);
+            if (Session::getSession("product_add") == "fail") {
+                echo "Error";
+            } else {
+                Util::redirect("manage-product");
+            }
         }
     }
 
@@ -89,6 +91,11 @@ if (isset($_POST["edit_customer"])) {
 if (isset($_POST['deleteBtn'])) {
     $di->get("Product")->deleteProduct($_POST);
     Util::redirect("manage-product");
+}
+
+if (isset($_POST['deleteSupplierBtn'])) {
+    $di->get("Supplier")->deleteSupplier($_POST);
+    Util::redirect("manage-supplier");
 }
 
 if (isset($_POST['deleteCustomerBtn'])) {

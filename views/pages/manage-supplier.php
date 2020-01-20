@@ -127,9 +127,9 @@ require_once('../includes/header.php');
         <div class="modal-body">Are you sure you want to delete?</div>
         <div class="modal-footer">
           <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
-            <input type="hidden" name="table" value="Supplier">
+            <input type="hidden" name="table" value="suppliers">
             <input type="hidden" name="id" id="recordId">
-            <button class="btn btn-danger" type="submit"  name="deleteBtn">Yes</button>
+            <button class="btn btn-danger" type="submit"  name="deleteSupplierBtn">Yes</button>
           </form>
           <a class="btn btn-success" href="#" data-dismiss="modal">No</a>
         </div>

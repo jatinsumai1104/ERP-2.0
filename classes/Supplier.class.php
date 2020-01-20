@@ -74,15 +74,16 @@ class Supplier
         }
     }
 
-    public function delete($data)
+    public function deleteSupplier($data)
     {
         try {
-            $res = "SELECT a.id as address_id FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE supplier_id = {$data['id']}";
+            $query = "SELECT a.id as address_id FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE supplier_id = {$data['id']}";
+            $res = $this->di->get("Database")->rawQuery($query);
             $this->di->get("Database")->beginTransaction();
 
             $this->di->get("Database")->delete($data['table'], "id = " . $data['id']);
 
-            $this->di->get("Database")->delete("address", "id = " . $res['address_id']);
+            $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
 

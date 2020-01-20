@@ -80,7 +80,7 @@ require_once('../includes/header.php');
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="">Supplier</label>
-                                                        <select name="supplier_id[]" id="supplier_id"
+                                                        <select name="supplier_id" id="supplier_id"
                                                             class="form-control" multiple="multiple">
                                                             <?php
                             $res = $di->get("Database")->readData("suppliers",["id","first_name","last_name"],"deleted=0");
