@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'../../../helper/constants.php');
-require_once(__DIR__.'../../../helper/init.php');
-$customer_details =  $di->get("Customer")->getDataForDataTables();
+require_once __DIR__ . '../../../helper/constants.php';
+require_once __DIR__ . '../../../helper/init.php';
+$customer_details = $di->get("Customer")->getDataForDataTables();
 
 ?>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ $customer_details =  $di->get("Customer")->getDataForDataTables();
 
 <!-- Header containing all Links -->
 <?php
-require_once('../includes/header.php');
+require_once '../includes/header.php';
 ?>
 
 
@@ -20,8 +20,8 @@ require_once('../includes/header.php');
 
         <!-- Sidebar -->
         <?php
-    require_once('../includes/sidebar.php');
-  ?>
+require_once '../includes/sidebar.php';
+?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -32,8 +32,8 @@ require_once('../includes/header.php');
 
                 <!-- Topbar -->
                 <?php
-        require_once('../includes/navbar.php');        
-      ?>
+require_once '../includes/navbar.php';
+?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -42,7 +42,7 @@ require_once('../includes/header.php');
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"> Manage Customer</h1>
-                        <a href="<?php echo BASEPAGES?>add-customer.php"
+                        <a href="<?php echo BASEPAGES ?>add-customer.php"
                             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-list-ul fa-sm text-white-75"></i> Add Customer </a>
                     </div>
@@ -72,22 +72,22 @@ require_once('../includes/header.php');
                                     </thead>
                                     <tbody>
                                         <?php
-                    for($i=0;$i<count($customer_details);$i++){
-                  ?>
+for ($i = 0; $i < count($customer_details); $i++) {
+    ?>
                                         <tr>
-                                            <form action="<?php echo BASEPAGES?>add-customer.php" method="POST">
-                                                <td><?php echo $customer_details[$i]['first_name'];?></td>
-                                                <td><?php echo $customer_details[$i]['last_name'];?></td>
-                                                <td><?php echo $customer_details[$i]['gst_no'];?></td>
-                                                <td><?php echo $customer_details[$i]['phone_no'];?></td>
-                                                <td><?php echo $customer_details[$i]['email_id'];?></td>
-                                                <td><?php echo $customer_details[$i]['gender'];?></td>
-                                                <td><?php echo $customer_details[$i]["address_of_customer"]?></td>
+                                            <form action="<?php echo BASEPAGES ?>add-customer.php" method="POST">
+                                                <td><?php echo $customer_details[$i]['first_name']; ?></td>
+                                                <td><?php echo $customer_details[$i]['last_name']; ?></td>
+                                                <td><?php echo $customer_details[$i]['gst_no']; ?></td>
+                                                <td><?php echo $customer_details[$i]['phone_no']; ?></td>
+                                                <td><?php echo $customer_details[$i]['email_id']; ?></td>
+                                                <td><?php echo $customer_details[$i]['gender']; ?></td>
+                                                <td><?php echo $customer_details[$i]["address_of_customer"] ?></td>
                                                 <td><button type="submit" class="btn btn-primary btn-block"
                                                         name="edit_customer"><i class="fas fa-pencil-alt"></i>
                                                         Edit</button></td>
                                                 <td><a type="button" class="btn btn-danger btn-block delete"
-                                                        id=<?php echo $customer_details[$i]['customer_id']?> href="#"
+                                                        id=<?php echo $customer_details[$i]['customer_id'] ?> href="#"
                                                         data-toggle="modal" data-target="#deleteModal"><i
                                                             class="far fa-trash-alt"></i> Delete</a></td>
                                                 <input type="hidden" name="customer_id"
@@ -95,8 +95,8 @@ require_once('../includes/header.php');
                                             </form>
                                         </tr>
                                         <?php
-                    }
-                    ?>
+}
+?>
                                     </tbody>
                                 </table>
                             </div>
@@ -113,8 +113,8 @@ require_once('../includes/header.php');
 
             <!-- Footer -->
             <?php
-      require_once('../includes/footer.php');
-    ?>
+require_once '../includes/footer.php';
+?>
             <!-- End of Footer -->
 
         </div>
@@ -134,7 +134,7 @@ require_once('../includes/header.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
                         <input type="hidden" name="customer_id" id="editId">
                         <div class="form-group row">
                             <div class="col-sm-4">
@@ -218,7 +218,7 @@ require_once('../includes/header.php');
                 </div>
                 <div class="modal-body">Are you sure you want to delete?</div>
                 <div class="modal-footer">
-                    <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
                         <input type="hidden" name="table" value="customers">
                         <input type="hidden" name="id" id="recordId">
                         <button class="btn btn-danger" type="submit" name="deleteCustomerBtn">Yes</button>
@@ -232,7 +232,9 @@ require_once('../includes/header.php');
 
     <!-- All Required Scripts  -->
     <?php
-  require_once('../includes/scripts.php');
+require_once '../includes/scripts.php';
+Util::createToastr("status", CUSTOMER_EDIT_SUCCESS, array("message" => "You successfully changed", "title" => "Customer Edit"));
+Util::createToastr("status", CUSTOMER_DELETE_SUCCESS, array("message" => "You successfully deleted", "title" => "Customer Delete"));
 ?>
 </body>
 

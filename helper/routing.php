@@ -31,10 +31,10 @@ if (isset($_POST['add_supplier'])) {
 if (isset($_POST['add_customer'])) {
     if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
         $di->get("Customer")->addCustomer($_POST);
-        if (Session::getSession("customer_add") == "fail") {
-            echo "Error";
-        } else {
+        if (Session::getSession("status") != null && Session::getSession("status") === CUSTOMER_ADD_SUCCESS) {
             Util::redirect("add-customer");
+        } else {
+            echo "Error while adding customer";
         }
     }
 }
@@ -80,7 +80,7 @@ if (isset($_POST['edit_supplier'])) {
 if (isset($_POST["edit_customer"])) {
     if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
         $di->get("Customer")->updateCustomer($_POST);
-        if (Session::getSession("customer_edit") != null && Session::getSession("customer_edit") === "success") {
+        if (Session::getSession("status") != null && Session::getSession("status") === CUSTOMER_EDIT_SUCCESS) {
             Util::redirect("manage-customer");
         } else {
             echo "Error while Insertion";
@@ -100,7 +100,11 @@ if (isset($_POST['deleteSupplierBtn'])) {
 
 if (isset($_POST['deleteCustomerBtn'])) {
     $di->get("Customer")->deleteCustomer($_POST);
-    Util::redirect("manage-customer");
+    if (Session::getSession("status") != null && Session::getSession("status") === CUSTOMER_DELETE_SUCCESS) {
+        Util::redirect("manage-customer");
+    } else {
+        echo "Error while Deleting";
+    }
 }
 
 if (isset($_POST['login_details'])) {

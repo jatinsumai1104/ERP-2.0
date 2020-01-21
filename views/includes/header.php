@@ -17,4 +17,6 @@
   <link href="<?php echo BASEASSETS;?>css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Custom styles for this page -->
   <link href="<?php echo BASEASSETS;?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <!-- Custom styles for toastr -->
+  <link href="<?php echo BASEASSETS;?>vendor/bootstrap-toastr/toastr.min.css" rel="stylesheet">  
 </head>

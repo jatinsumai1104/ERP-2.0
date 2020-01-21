@@ -1,13 +1,13 @@
 <?php
-require_once('../../helper/constants.php');
-require_once(__DIR__.'/../../helper/init.php');
+require_once '../../helper/constants.php';
+require_once __DIR__ . '/../../helper/init.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <!-- Header containing all Links -->
 <?php
-require_once('../includes/header.php');
+require_once '../includes/header.php';
 ?>
 
 
@@ -18,8 +18,8 @@ require_once('../includes/header.php');
 
         <!-- Sidebar -->
         <?php
-    require_once('../includes/sidebar.php');
-  ?>
+require_once '../includes/sidebar.php';
+?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -30,8 +30,8 @@ require_once('../includes/header.php');
 
                 <!-- Topbar -->
                 <?php
-        require_once('../includes/navbar.php');
-      ?>
+require_once '../includes/navbar.php';
+?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -40,7 +40,7 @@ require_once('../includes/header.php');
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Customer</h1>
-                        <a href="<?php echo BASEPAGES?>manage-customer.php"
+                        <a href="<?php echo BASEPAGES ?>manage-customer.php"
                             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-list-ul fa-sm text-white-75"></i> Manage Customer </a>
                     </div>
@@ -57,12 +57,12 @@ require_once('../includes/header.php');
                                             Customer</h6>
                                     </div>
                                     <!-- Card Body -->
-                                    <?php if(isset($_POST['edit_customer'])){
-                $customer = $di->get("Customer")->readDataToEdit($_POST['customer_id']);
-            ?>
-                                    <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+                                    <?php if (isset($_POST['edit_customer'])) {
+    $customer = $di->get("Customer")->readDataToEdit($_POST['customer_id']);
+    ?>
+                                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
                                         <input type="hidden" name="csrf_token" id="csrf_token"
-                                            value=<?php echo Session::getSession("csrf_token");?>>
+                                            value=<?php echo Session::getSession("csrf_token"); ?>>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -165,11 +165,11 @@ require_once('../includes/header.php');
                                         </div>
                                     </form>
                                     <?php
-                                    }else{
-                                    ?>
-                                    <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+} else {
+    ?>
+                                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
                                         <input type="hidden" name="csrf_token" id="csrf_token"
-                                            value=<?php echo Session::getSession("csrf_token");?>>
+                                            value=<?php echo Session::getSession("csrf_token"); ?>>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -258,8 +258,8 @@ require_once('../includes/header.php');
                                         </div>
                                     </form>
                                     <?php
-                                    }
-                                    ?>
+}
+?>
                                 </div>
                             </div>
                         </div>
@@ -272,8 +272,8 @@ require_once('../includes/header.php');
 
                 <!-- Footer -->
                 <?php
-      require_once('../includes/footer.php');
-    ?>
+require_once '../includes/footer.php';
+?>
                 <!-- End of Footer -->
 
             </div>
@@ -283,7 +283,8 @@ require_once('../includes/header.php');
 
         <!-- All Required Scripts  -->
         <?php
-  require_once('../includes/scripts.php');
+require_once '../includes/scripts.php';
+Util::createToastr("status", CUSTOMER_ADD_SUCCESS, array("message" => "You successfully added", "title" => "Customer Add"));
 ?>
 
 </body>

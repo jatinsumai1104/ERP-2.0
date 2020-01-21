@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../helper/constants.php";
 class Customer
 {
     private $table = "customers";
@@ -92,14 +93,15 @@ class Customer
                 $address_customer_id = $this->di->get("Database")->insert("address_customer", $address_customer_assoc_array);
                 
                 $this->di->get("Database")->commit();
-                Session::setSession("customer_add", "success");
+                Session::setSession("status",CUSTOMER_ADD_SUCCESS);
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("customer_add", "fail");
+                // Session::setSession("customer_add", "fail");
             }
-        } else {
-            Session::setSession("customer_add", "fail");
         }
+        //  else {
+        //     Session::setSession("customer_add", "fail");
+        // }
     }
 
     // Not Editing Email Id because its unique
@@ -120,13 +122,14 @@ class Customer
                 $this->di->get("Database")->update("address", $address_assoc_array, "id={$data['address_id']}");
                 
                 $this->di->get("Database")->commit();
-                Session::setSession("customer_edit", "success");
+                Session::setSession("status", CUSTOMER_EDIT_SUCCESS);
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("customer_edit", "fail");
+                // Session::setSession("customer_edit", "fail");
             }
-        } else {
-            Session::setSession("customer_edit", "fail");
+            //  else {
+        //     Session::setSession("customer_edit", "fail");
+        // }
         }
     }
 
@@ -142,9 +145,10 @@ class Customer
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
+            Session::setSession("status",CUSTOMER_DELETE_SUCCESS);
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("supplier_delete", "fail");
+            // Session::setSession("customer_delete", "fail");
         }
     }
 
