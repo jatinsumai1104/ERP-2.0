@@ -98,3 +98,19 @@ if(isset($_POST["getSupplierByProductId"])){
 if(isset($_POST["getCategories"])){
     echo json_encode($di->get("Category")->getAllCategories());
 }
+
+if(isset($_POST["checkEmailOfCustomer"])){
+    echo json_encode($di->get("Customer")->checkCustomerExist($_POST)[0]);
+}
+
+if(isset($_POST["add_sales"])){
+    $di->get("Sale")->addProducts($_POST);
+    if(Session::getSession("products_add") == null){
+        echo "Error";
+    }else{
+        Util::redirect("manage-sales");
+    }
+}
+if(isset($_POST["get_total_amount"])){
+    echo json_encode($di->get("Sale")->getTotalRate($_POST));
+}
