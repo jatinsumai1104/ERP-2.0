@@ -4,14 +4,12 @@ require_once ("init.php");
 
 
 if(isset($_POST['add_product'])){
-
     $di->get("Product")->addProduct($_POST);
     if(Session::getSession("product_add") == null){
         echo "Error";
     }else{
         Util::redirect("manage-product");
     }
-    
 }
 
 if(isset($_POST['register_button'])){
@@ -87,4 +85,16 @@ if(isset($_POST['add_category'])){
         Util::redirect("manage-category");
     }
     
+}
+
+if(isset($_POST["getProductByCategoryId"])){
+    echo json_encode($di->get("Database")->readData("products",["id", "name"], "category_id = {$_POST['category_id']}"));
+}
+
+if(isset($_POST["getSupplierByProductId"])){
+    echo json_encode($di->get("Supplier")->getSupplierByProductId($_POST));
+}
+
+if(isset($_POST["getCategories"])){
+    echo json_encode($di->get("Category")->getAllCategories());
 }

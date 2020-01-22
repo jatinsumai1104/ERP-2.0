@@ -40,6 +40,8 @@ class Category{
         $this->di->get("Database")->rollback();
         Session::setSession("category_edit", "fail");
       }
+    public function getAllCategories(){
+      return $this->di->get("Database")->readData($this->table);
     }
 
   }
