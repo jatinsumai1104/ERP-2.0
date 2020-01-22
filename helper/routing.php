@@ -1,92 +1,103 @@
 <?php
 
-require_once ("init.php");
+require_once "init.php";
 
-
-if(isset($_POST['add_product'])){
-    $di->get("Product")->addProduct($_POST);
-    if(Session::getSession("product_add") == null){
-        echo "Error";
-    }else{
+//Add Routings
+if (isset($_POST['add_product'])) {
+    if (Util::verifyCSRF($_POST)) {
+        $di->get("Product")->addProduct($_POST);
         Util::redirect("manage-product");
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
+    }
+}
+if (isset($_POST['add_supplier'])) {
+    if (Util::verifyCSRF($_POST)) {
+        $di->get("Supplier")->addSupplier($_POST);
+        Util::redirect("manage-supplier");
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
+    }
+}
+if (isset($_POST['add_customer'])) {
+    if (Util::verifyCSRF($_POST)) {
+        $di->get("Customer")->addCustomer($_POST);
+        Util::redirect("add-customer");
+        echo "Error while adding customer";
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
+    }
+}
+if (isset($_POST['add_category'])) {
+    if (Util::verifyCSRF($_POST)) {
+        $di->get("Category")->addCategory($_POST);
+        Util::redirect("manage-category");
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
+    }
+}
+if (isset($_POST['add_purchase'])){
+    if(Util::verifyCSRF($_POST)){
+        $di->get("Purchase")->addPurchase($_POST);
+        Util::redirect("add-purchase");
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
     }
 }
 
-if(isset($_POST['register_button'])){
-    $di->get("Auth")->register($_POST);
-    
+//Edit Routings
+if(isset($_POST["editBtn"])){
+    if (Util::verifyCSRF($_POST)) {
+        $di->get($_POST["class_name"])->update($_POST);
+        Util::redirect("manage-".strtolower($_POST["class_name"]));
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        var_dump($_SESSION);
+        // Util::redirect("login");
+    }
 }
 
-if(isset($_POST['login_details'])){
-    $di->get("Auth")->login($_POST);
-}
-
+//Delete Routings
 if(isset($_POST['deleteBtn'])){
-    if($_POST['table'] == "products"){
-    $di->get("Product")->deleteProduct($_POST);
-    Util::redirect("manage-product");
-    }else if($_POST['table'] == "category"){
-        $di->get("Database")->delete("category","id={$_POST['id']}");
-    Util::redirect("manage-category");
+    $di->get($_POST["class_name"])->delete($_POST);
+    Util::redirect("manage-".strtolower($_POST["class_name"]));
+}
+
+//Auth Routings
+if (isset($_POST['login_details'])) {
+    if (isset($_POST['csrf_token']) && isset($_SESSION["csrf_token"]) && $_POST['csrf_token'] == Session::getSession("csrf_token")) {
+        $di->get("Auth")->login($_POST);
+    } else {
+        Util::redirect("login");
     }
 }
+
+if (isset($_POST['register_button'])) {
+    $di->get("Auth")->register($_POST);
+}
+
+if (isset($_POST['logout'])){
+    Session::destroySession();
+    if(isset($_COOKIE['token'])){
+        unset($_COOKIE['token']);
+        unset($_COOKIE['user_id']);
+    }
+    Util::redirect("login");
+}
+
+//Getting Data for Edit Modal Routes
 
 if(isset($_POST['getDetails'])){
-    $data = $di->get($_POST['table_name'])->readDataToEdit($_POST);
+    $data = $di->get($_POST['class_name'])->readDataToEdit($_POST);
     echo json_encode($data);
 }
 
-if(isset($_POST["editBtn"])){
-    if($_POST['class_name'] == "Product"){
-    $di->get("Product")->updateProduct($_POST);
-    if(Session::getSession("product_edit") != null && Session::getSession("product_edit") === "success"){
-        Util::redirect("manage-product");
-    }else{
-        echo "Error while Updating";
-    }
-    }else if($_POST['class_name'] == "Category"){
-    $di->get("Category")->updateCategory($_POST);
-    if(Session::getSession("category_edit") != null && Session::getSession("category_edit") === "success"){
-        Util::redirect("manage-category");
-    }else{
-        echo "Error while Updating";
-    }
-}
-    
-}
-
-if(isset($_POST['add_supplier'])){
-
-    $di->get("Supplier")->addSupplier($_POST);
-    if(Session::getSession("supplier_add") == null){
-        echo "Error";
-    }else{
-        Util::redirect("manage-supplier");
-    }
-    
-}
-
-if(isset($_POST['edit_supplier'])){
-
-    $di->get("Supplier")->updateSupplier($_POST);
-    if(Session::getSession("supplier_edit") == null){
-        echo "Error";
-    }else{
-        Util::redirect("manage-supplier");
-    }
-    
-}
-if(isset($_POST['add_category'])){
-
-    $di->get("Category")->addCategory($_POST);
-    if(Session::getSession("category_add") == null){
-        echo "Error";
-    }else{
-        Util::redirect("manage-category");
-    }
-    
-}
-
+//Anonymous Routings
 if(isset($_POST["getProductByCategoryId"])){
     echo json_encode($di->get("Database")->readData("products",["id", "name"], "category_id = {$_POST['category_id']}"));
 }
@@ -100,11 +111,3 @@ if(isset($_POST["getCategories"])){
 }
 
 
-if(isset($_POST['add_purchase'])){
-    $di->get("Purchase")->addPurchase($_POST);
-    if(Session::getSession("add") == null){
-        echo "Error";
-    }else{
-        Util::redirect("add-purchase");
-    }
-}

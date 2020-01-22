@@ -1,3 +1,8 @@
+<?php 
+  if(Session::getSession("employee_id") == null){
+    Util::redirect("login");
+  }
+?>
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -48,8 +53,8 @@
   </a>
   <div id="supplier" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?echo BASEPAGES?>add-supplier.php">Add Supplier</a>
-      <a class="collapse-item" href="<?echo BASEPAGES?>manage-supplier.php">Manage Supplier</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-supplier.php">Add Supplier</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-supplier.php">Manage Supplier</a>
     </div>
   </div>
 </li>
@@ -61,8 +66,21 @@
   </a>
   <div id="category" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?echo BASEPAGES?>add-category.php">Add Category</a>
-      <a class="collapse-item" href="<?echo BASEPAGES?>manage-category.php">Manage Category</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-category.php">Add Category</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-category.php">Manage Category</a>
+    </div>
+  </div>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#customer" aria-expanded="true" aria-controls="customer">
+    <i class="fas fa-fw fa-cog"></i>
+    <span>Customer</span>
+  </a>
+  <div id="customer" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-customer.php">Add Customer</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-customer.php">Manage Customer</a>
     </div>
   </div>
 </li>

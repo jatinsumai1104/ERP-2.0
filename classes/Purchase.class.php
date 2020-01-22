@@ -19,10 +19,10 @@ class Purchase{
           "quantity" => $data["quantity"][$i]
         ]);
       }
-      Session::setSession("add", "purchase add success");
+      Session::setSession("add", "Add Purchase success");
       $this->di->get("Database")->commit();
     }catch(Exception $e){
-      Session::setSession("add", "purchase add fail");
+      Session::setSession("add", "Add Purchase error");
       $this->di->get("Database")->rollback();
     }
   }

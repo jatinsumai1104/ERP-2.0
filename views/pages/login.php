@@ -2,7 +2,12 @@
 
 
 require_once('../../helper/constants.php');
-require_once(__DIR__.'/../../helper/init.php');
+require_once(__DIR__.'../../../helper/init.php');
+
+Session::setSession("csrf_token", Util::createCsrfToken());
+// echo Session::getSession("csrf_token");
+// require_once(__DIR__.'/../../helper/init.php');
+
 
 if(isset($_SESSION['employee_id'])){
   Util::redirect("index");
@@ -42,6 +47,7 @@ if(isset($_COOKIE['token']) && $di->get("TokenHandler")->isValid($_COOKIE["token
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
                   <form method="post" class="user" action="<?php echo BASEPAGES?>../../helper/routing.php">
+                    <input type="hidden" name="csrf_token" id="csrf_token" value=<?php echo Session::getSession("csrf_token");?>>
                     <div class="form-group">
                       <input type="email" required="true" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>

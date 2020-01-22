@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-unset($_SESSION['employee_id']);
+Session::destroySession();
 if(isset($_COOKIE['token'])){
     unset($_COOKIE['token']);
     unset($_COOKIE['user_id']);

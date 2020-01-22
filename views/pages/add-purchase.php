@@ -57,6 +57,7 @@ require_once('../includes/header.php');
             <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
               <div class="card-body">
                 <div id="purchase_product">
+                <input type="hidden" name="csrf_token" id="csrf_token" value=<?php echo Session::getSession("csrf_token"); ?>>
                   <div class="row" id="element_1">
                     <div class="col-md-4">
                       <div class="form-group">
