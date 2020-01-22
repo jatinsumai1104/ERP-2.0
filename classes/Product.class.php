@@ -32,7 +32,6 @@
       return $res;
     }
 
-
     public function addProduct($data){
       try{
         
@@ -81,5 +80,8 @@
         Session::setSession("product_edit", "fail");
       }
     }
+
+
+    
   }
 ?>

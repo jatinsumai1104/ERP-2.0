@@ -23,5 +23,9 @@ class Category{
       }
     }
 
+    public function getAllCategories(){
+      return $this->di->get("Database")->readData($this->table);
+    }
+
   }
 ?>

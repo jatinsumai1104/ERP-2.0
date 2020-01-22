@@ -71,3 +71,15 @@ if(isset($_POST['add_category'])){
     }
     
 }
+
+if(isset($_POST["getProductByCategoryId"])){
+    echo json_encode($di->get("Database")->readData("products",["id", "name"], "category_id = {$_POST['category_id']}"));
+}
+
+if(isset($_POST["getSupplierByProductId"])){
+    echo json_encode($di->get("Supplier")->getSupplierByProductId($_POST));
+}
+
+if(isset($_POST["getCategories"])){
+    echo json_encode($di->get("Category")->getAllCategories());
+}
