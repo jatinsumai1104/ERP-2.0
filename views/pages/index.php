@@ -133,6 +133,23 @@ if(!isset($_SESSION['employee_id'])){
 
           <!-- Content Row -->
 
+<?php
+$data=array("Jan","Feb","Mar","April","May","June","July","August","September","October","November","December") ;
+$data2 = array();
+$years = $di->get("Database")->rawQuery("SELECT YEAR(created_at) as year from purchases GROUP by YEAR(created_at)");
+$data4 = array();
+// $data5 = 
+foreach($years as $year){
+  $ans = $di->get("Database")->rawQuery("select MONTH(created_at) as year,Sum(purchase_rate*quantity) as amount from purchases WHERE YEAR(created_at)={$year['year']} GROUP BY MONTH(created_at)");
+  // print_r($ans);
+  // echo "<br><br>";
+  array_push($data3,$ans);
+  array_push($data2,$year['year']);
+}
+$data3 = array($data,$data2);
+// print_r($data);
+?>
+
           <div class="row">
 
             <!-- Area Chart -->
@@ -141,23 +158,35 @@ if(!isset($_SESSION['employee_id'])){
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                  <div class="dropdown no-arrow">
+                  <select name="time" id="timeperiod">
+                  <!-- <option value="month-wise">Monthly</option> -->
+                  <?php
+                    $i=0;
+                    foreach($years as $year){
+                      echo "<option value={$i}>{$year['year']}</option>";
+                      $i++;
+                    }
+                  ?>
+                  <option value="year-wise">Yearly</option>
+                  </select>
+
+                  <!-- <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    </a> -->
+                    <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Dropdown Header:</div>
                       <a class="dropdown-item" href="#">Action</a>
                       <a class="dropdown-item" href="#">Another action</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
+                    </div> -->
+                  <!-- </div> -->
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                  <div class="chart-area" id="chart-container">
+                    <canvas id="bar-chart-grouped"></canvas>
                   </div>
                 </div>
               </div>
@@ -347,3 +376,11 @@ if(!isset($_SESSION['employee_id'])){
 </body>
 
 </html>
+
+
+
+<script>
+var data = <?php echo json_encode($data3); ?>;
+var monthdata = <?php echo json_encode($data4); ?>;
+loadCharts(data,monthdata);
+</script>
