@@ -82,11 +82,11 @@
 </li>
 
 <li class="nav-item">
-  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#purchases" aria-expanded="true" aria-controls="purchases">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales" aria-expanded="true" aria-controls="sales">
     <i class="fas fa-fw fa-shopping-cart"></i>
     <span>Sales</span>
   </a>
-  <div id="purchases" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+  <div id="sales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="<?echo BASEPAGES?>add-sales.php">Add Sales</a>
       <a class="collapse-item" href="<?echo BASEPAGES?>manage-sales.php">Manage Sales</a>

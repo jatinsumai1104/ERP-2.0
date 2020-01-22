@@ -63,7 +63,12 @@ require_once('../includes/header.php');
                         <label for="">Category</label>
                         <select name="category_id" id="category_1" class="form-control category_class">
                         <option disabled selected>Select Category</option>
-                          
+                          <?php
+                            $res = $di->get("Database")->readData("category",["id","name"],"deleted=0");
+                            foreach($res as $arr){
+                              echo "<option value={$arr['id']}>{$arr['name']}</option>";
+                            }
+                          ?>
                         </select>
                       </div>
                     </div>
@@ -90,9 +95,12 @@ require_once('../includes/header.php');
                           class="form-control" name="discount" id="discount" aria-describedby="helpId" placeholder="">
                       </div>
                     </div>
-                    
+                    <div class="col-md-4">
+                      <label for="">Selling Rate</label>
+                      <h3>Price</h3>
+                    </div>
                     <div class="col-md-4" style="text-align: center">
-                      <button type="button" class="btn btn-danger" id="1" style="margin-top: 8%;" onclick="deletePurchase(1)">
+                      <button type="button" class="btn btn-danger" style="margin-top: 8%;" onclick="deletePurchase(1)">
                         <i class="far fa-trash-alt"></i> Delete Element
                       </button>
                     </div>
