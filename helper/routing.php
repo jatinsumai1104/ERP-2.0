@@ -113,4 +113,12 @@ if(isset($_POST["add_sales"])){
 }
 if(isset($_POST["get_total_amount"])){
     echo json_encode($di->get("Sale")->getTotalRate($_POST));
+
+if(isset($_POST['add_purchase'])){
+    $di->get("Purchase")->addPurchase($_POST);
+    if(Session::getSession("add") == null){
+        echo "Error";
+    }else{
+        Util::redirect("add-purchase");
+    }
 }

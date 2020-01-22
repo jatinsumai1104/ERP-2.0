@@ -23,3 +23,4 @@ require_once "{$app}/../classes/Supplier.class.php";
 require_once "{$app}/../classes/Category.class.php";
 require_once "{$app}/../classes/Customer.class.php";
 require_once "{$app}/../classes/Sale.class.php";
+require_once "{$app}/../classes/Purchase.class.php";
