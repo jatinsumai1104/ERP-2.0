@@ -149,7 +149,19 @@ class Customer
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
             // Session::setSession("customer_delete", "fail");
+
+
+
+    function checkCustomerExist($data){
+        $query = "SELECT * from customers WHERE email_id='{$data['customer_email']}'";
+        $res = $this->di->get("Database")->rawQuery($query);
+        if(count($res)>0){
+            return $res;
+        }else{
+            return [[]];
         }
     }
 
 }
+
+?>

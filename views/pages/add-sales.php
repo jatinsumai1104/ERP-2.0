@@ -56,6 +56,24 @@ require_once('../includes/header.php');
             <!-- Card Body -->
             <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
               <div class="card-body">
+              <div class="row">
+              <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Email of Customer</label>
+                      <input type="text"
+                        class="form-control" name="email" id="customer_email" aria-describedby="helpId" placeholder="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary" name="check_email" id="check_email">Check</button>
+                    <p id="customer_exist"></p>
+                    <input type="hidden" name="customer_id" id="customer_id"> 
+                    </div>
+                </div>
+                
+                </div>
+                  
                 <div id="purchase_product">
                   <div class="row" id="element_1">
                     <div class="col-md-4">
@@ -75,7 +93,7 @@ require_once('../includes/header.php');
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="">Product</label>
-                        <select name="product_id" id="product_1" class="form-control product_class">
+                        <select name="product_id[]" id="product_1" class="form-control product_class">
                           <option disabled selected>Select Product</option>
                         </select>
                       </div>
@@ -84,7 +102,7 @@ require_once('../includes/header.php');
                       <div class="form-group">
                         <label for="">Quantity</label>
                         <input type="number"
-                          class="form-control" name="quantity" id="quantity" aria-describedby="helpId" placeholder="">
+                          class="form-control" name="quantity[]" id="quantity" aria-describedby="helpId" placeholder="">
                       </div>
                     </div>
 
@@ -92,13 +110,10 @@ require_once('../includes/header.php');
                       <div class="form-group">
                         <label for="">Discount</label>
                         <input type="number"
-                          class="form-control" name="discount" id="discount" aria-describedby="helpId" placeholder="">
+                          class="form-control" name="discount[]" id="discount" aria-describedby="helpId" placeholder="">
                       </div>
                     </div>
-                    <div class="col-md-4">
-                      <label for="">Selling Rate</label>
-                      <h3>Price</h3>
-                    </div>
+                    
                     <div class="col-md-4" style="text-align: center">
                       <button type="button" class="btn btn-danger" style="margin-top: 8%;" onclick="deletePurchase(1)">
                         <i class="far fa-trash-alt"></i> Delete Element
@@ -108,8 +123,28 @@ require_once('../includes/header.php');
                   
                 </div>
               </div>
+
+              
+              <button type="button" class="btn btn-primary" id="get_total_amount">Get Total Price</button>
+              <input type="text" name="amount" id="total_price">
+
+              <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Payment Mode</label>
+                        <select name="pay_mode" id="payment_mode" class="form-control">
+                          <option disabled selected>Select Payment mode</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                        </select>
+                      </div>
+              </div>
+              <div id="payment-div">
+
+                 </div>
+                
+                
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <button type="submit" class="btn btn-primary" name="add_product">Submit</button>
+              <button type="submit" class="btn btn-primary" name="add_sales">Submit</button>
                 </div>
             </form>
           </div>
