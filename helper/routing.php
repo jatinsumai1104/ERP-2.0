@@ -98,3 +98,13 @@ if(isset($_POST["getSupplierByProductId"])){
 if(isset($_POST["getCategories"])){
     echo json_encode($di->get("Category")->getAllCategories());
 }
+
+
+if(isset($_POST['add_purchase'])){
+    $di->get("Purchase")->addPurchase($_POST);
+    if(Session::getSession("add") == null){
+        echo "Error";
+    }else{
+        Util::redirect("add-purchase");
+    }
+}

@@ -15,5 +15,6 @@ $di->set("Validator", new Validator($di));
 $di->set("Product", new Product($di));
 $di->set("Supplier", new Supplier($di));
 $di->set("Category", new Category($di));
+$di->set("Purchase", new Purchase($di));
 
 $di->get("TokenHandler")->build();
