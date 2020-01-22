@@ -72,9 +72,8 @@ class Customer
 
     public function addCustomer($data)
     {
-
         $validation = $this->validateData($data);
-
+        print_r($data);
         if (!$validation->fails()) {
             try {
                 $customer_table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "gender"];
@@ -93,7 +92,7 @@ class Customer
                 $address_customer_id = $this->di->get("Database")->insert("address_customer", $address_customer_assoc_array);
                 
                 $this->di->get("Database")->commit();
-                Session::setSession("status",CUSTOMER_ADD_SUCCESS);
+                Session::setSession("status", CUSTOMER_ADD_SUCCESS);
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
                 // Session::setSession("customer_add", "fail");
@@ -145,23 +144,22 @@ class Customer
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
-            Session::setSession("status",CUSTOMER_DELETE_SUCCESS);
+            Session::setSession("status", CUSTOMER_DELETE_SUCCESS);
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
             // Session::setSession("customer_delete", "fail");
-
-
-
-    function checkCustomerExist($data){
-        $query = "SELECT * from customers WHERE email_id='{$data['customer_email']}'";
-        $res = $this->di->get("Database")->rawQuery($query);
-        if(count($res)>0){
-            return $res;
-        }else{
-            return [[]];
+        }
+        function checkCustomerExist($data)
+        {
+            $query = "SELECT * from customers WHERE email_id='{$data['customer_email']}'";
+            $res = $this->di->get("Database")->rawQuery($query);
+            if (count($res)>0) {
+                return $res;
+            } else {
+                return [[]];
+            }
         }
     }
-
 }
 
 ?>
