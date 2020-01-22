@@ -105,7 +105,7 @@ if(isset($_POST["checkEmailOfCustomer"])){
 
 if(isset($_POST["add_sales"])){
     $di->get("Sale")->addProducts($_POST);
-    if(Session::getSession("products_add") == null){
+    if(Session::getSession("sales_add") == null){
         echo "Error";
     }else{
         Util::redirect("manage-sales");
@@ -113,6 +113,7 @@ if(isset($_POST["add_sales"])){
 }
 if(isset($_POST["get_total_amount"])){
     echo json_encode($di->get("Sale")->getTotalRate($_POST));
+}
 
 if(isset($_POST['add_purchase'])){
     $di->get("Purchase")->addPurchase($_POST);

@@ -13,15 +13,40 @@ class Sale
     
             // Begin Transaction
             $this->di->get("Database")->beginTransaction();
+            $assoc_array=[];
             $assoc_array["customer_id"] = $data['customer_id'];
             $invoice_id = $this->di->get("Database")->insert("invoice",$assoc_array);
+            
+            for($i=0;$i<count($data['product_id']);$i++){
+                $assoc_array = [];
+                $assoc_array["product_id"] = $data['product_id'][$i];
+                $assoc_array["quantity"] = $data['quantity'][$i];
+                $assoc_array["discount"] = $data['discount'][$i];
+                $assoc_array["invoice_id"] = $invoice_id;
+                $sales_id = $this->di->get("Database")->insert($this->table,$assoc_array);
+            }
             $assoc_array = [];
+            $assoc_array["invoice_id"]=$invoice_id;
+            $assoc_array["amount"] = $data["amount"];
+            if($data["pay_mode"] == "cash"){
+                    $assoc_array["pay_mode"] = $data["pay_mode"];
+                    $payment_id = $this->di->get("Database")->insert("payments",$assoc_array);
+            }else if($data["pay_mode"] == "cheque"){
+                    $assoc_array["pay_mode"] = $data["pay_mode"];
+                    $payment_id = $this->di->get("Database")->insert("payments",$assoc_array);
+                    $assoc_array = [];
+                    $assoc_array["payment_id"] = $payment_id;
+                    $assoc_array["cheque_no"] = $data["cheque_no"];
+                    $assoc_array["cheque_date"] = $data["cheque_date"];
+                    $assoc_array["bank_name"] = $data["bank_name"];
+                    $cheque_details_id = $this->di->get("Database")->insert("cheque_details",$assoc_array);
+            }
            
             $this->di->get("Database")->commit();
-            Session::setSession("product_add", "success");
+            Session::setSession("sales_add", "success");
           }catch(Exception $e){
             $this->di->get("Database")->rollback();
-            Session::setSession("product_add", "fail");
+            Session::setSession("sales_add", "fail");
           }
     }
 

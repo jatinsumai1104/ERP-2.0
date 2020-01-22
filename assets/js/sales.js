@@ -118,3 +118,14 @@ $('input[name="discount[]"]').each(function() {
    }
  });
 });
+
+$("#payment_mode").change(function(){
+ $payment_mode = $(this).val();
+//console.log($payment_mode);
+if($payment_mode == "cash"){
+$("#payment-div").empty();
+}else if($payment_mode == "cheque"){
+  $("#payment-div").append('<label for="">Cheque Number</label> <input type="number" name="cheque_no"> <label for="">Cheque Date</label> <input type="date" name="cheque_date"> <label for="">Bank Name</label> <input type="text" name="bank_name"> ');
+}
+  
+});

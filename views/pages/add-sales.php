@@ -123,10 +123,26 @@ require_once('../includes/header.php');
                   
                 </div>
               </div>
-              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+              
               <button type="button" class="btn btn-primary" id="get_total_amount">Get Total Price</button>
-                </div>
-                <input type="text" id="total_price">
+              <input type="text" name="amount" id="total_price">
+
+              <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Payment Mode</label>
+                        <select name="pay_mode" id="payment_mode" class="form-control">
+                          <option disabled selected>Select Payment mode</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                        </select>
+                      </div>
+              </div>
+              <div id="payment-div">
+
+                 </div>
+                
+                
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <button type="submit" class="btn btn-primary" name="add_sales">Submit</button>
                 </div>
