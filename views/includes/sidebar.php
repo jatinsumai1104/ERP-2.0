@@ -30,7 +30,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#product" aria-expanded="true" aria-controls="product">
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-cubes"></i>
     <span>Product</span>
   </a>
   <div id="product" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -43,7 +43,7 @@
 
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#supplier" aria-expanded="true" aria-controls="supplier">
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-briefcase"></i>
     <span>Supplier</span>
   </a>
   <div id="supplier" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -56,7 +56,7 @@
 
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category" aria-expanded="true" aria-controls="category">
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-lightbulb"></i>
     <span>Category</span>
   </a>
   <div id="category" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -76,6 +76,33 @@
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="<?php echo BASEPAGES?>add-customer.php">Add Customer</a>
       <a class="collapse-item" href="<?php echo BASEPAGES?>manage-customer.php">Manage Customer</a>
+    </div>
+  </div>
+</li>
+
+
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#purchases" aria-expanded="true" aria-controls="purchases">
+    <i class="fas fa-fw fa-shopping-cart"></i>
+    <span>Purchase</span>
+  </a>
+  <div id="purchases" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="<?echo BASEPAGES?>add-purchase.php">Add Purchase</a>
+      <a class="collapse-item" href="<?echo BASEPAGES?>manage-purchase.php">Manage Purchase</a>
+    </div>
+  </div>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales" aria-expanded="true" aria-controls="sales">
+    <i class="fas fa-fw fa-shopping-cart"></i>
+    <span>Sales</span>
+  </a>
+  <div id="sales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="<?echo BASEPAGES?>add-sales.php">Add Sales</a>
+      <a class="collapse-item" href="<?echo BASEPAGES?>manage-sales.php">Manage Sales</a>
     </div>
   </div>
 </li>

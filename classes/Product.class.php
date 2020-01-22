@@ -81,8 +81,6 @@ class Product
                 $this->di->get("Database")->beginTransaction();
                 $product_id = $this->di->get("Database")->insert($this->table, $assoc_array);
 
-                $tale_attr = ["product_id", "supplier_id"];
-
                 $assoc_array = [];
                 $assoc_array["product_id"] = $product_id;
                 foreach ($data["supplier_id"] as $supplier_id) {
@@ -123,4 +121,5 @@ class Product
             Session::setSession("product_edit", "fail");
         }
     }
+
 }

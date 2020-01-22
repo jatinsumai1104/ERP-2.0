@@ -145,4 +145,11 @@ class Supplier
         }
     }
 
-}
+
+    public function getSupplierByProductId($data){
+      $query = "select s.id, concat(s.first_name, ' ', s.last_name) as name from {$this->table} as s inner join product_supplier as ps on ps.supplier_id = s.id where ps.product_id = {$data['product_id']}";
+      return $this->di->get("Database")->rawQuery($query);
+    }
+
+  }
+?>

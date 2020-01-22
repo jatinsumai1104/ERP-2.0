@@ -38,22 +38,15 @@ class Database {
 
 
     public function insert($table, $data){
-        // echo "hello";
         $keys = array_keys($data);
-        // print_r($keys);
         $fields = "`" . implode("`, `", $keys). "`";
 
         $placeholders = ":" . implode(", :", $keys);
-        //echo $fields;
-        // echo "<br>";
-        //echo $placeholders;
-
         $sql = "INSERT INTO {$table} ({$fields}) VALUES({$placeholders})";
         // echo $sql;
         $this->stmt = $this->pdo->prepare($sql);
 
         $this->stmt->execute($data);
-        // echo "success";
         return $this->pdo->lastInsertId();
     }
 
