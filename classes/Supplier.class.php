@@ -9,7 +9,7 @@ class Supplier{
   }
 
   public function getDataForDataTables(){
-    $query = "SELECT s.id as supplier_id, s.first_name,s.last_name,s.gst_no,s.phone_no,s.email_id,s.company_name,CONCAT(a.block_no,' ',a.street,' ',a.city,' ',a.pincode,' ',a.state,' ',a.country,a.town) as address_of_supplier FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id";
+    $query = "SELECT s.id as supplier_id, s.first_name,s.last_name,s.gst_no,s.phone_no,s.email_id,s.company_name,CONCAT(a.block_no,' ',a.street,' ',a.city,' ',a.pincode,' ',a.state,' ',a.country,a.town) as address_of_supplier FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE s.deleted=0";
     $res = $this->di->get("Database")->rawQuery($query);
     return $res;
   }

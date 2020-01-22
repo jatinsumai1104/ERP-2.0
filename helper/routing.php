@@ -24,8 +24,13 @@ if(isset($_POST['login_details'])){
 }
 
 if(isset($_POST['deleteBtn'])){
+    if($_POST['table'] == "products"){
     $di->get("Product")->deleteProduct($_POST);
     Util::redirect("manage-product");
+    }else if($_POST['table'] == "category"){
+        $di->get("Database")->delete("category","id={$_POST['id']}");
+    Util::redirect("manage-category");
+    }
 }
 
 if(isset($_POST['getDetails'])){
@@ -34,12 +39,21 @@ if(isset($_POST['getDetails'])){
 }
 
 if(isset($_POST["editBtn"])){
+    if($_POST['class_name'] == "Product"){
     $di->get("Product")->updateProduct($_POST);
     if(Session::getSession("product_edit") != null && Session::getSession("product_edit") === "success"){
         Util::redirect("manage-product");
     }else{
         echo "Error while Updating";
     }
+    }else if($_POST['class_name'] == "Category"){
+    $di->get("Category")->updateCategory($_POST);
+    if(Session::getSession("category_edit") != null && Session::getSession("category_edit") === "success"){
+        Util::redirect("manage-category");
+    }else{
+        echo "Error while Updating";
+    }
+}
     
 }
 

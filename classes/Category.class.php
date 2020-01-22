@@ -23,5 +23,24 @@ class Category{
       }
     }
 
+    public function readDataToEdit($data){
+      $res = $this->di->get("Database")->readData($this->table, ["*"], "id = ".$data['id'])[0];
+      return $res;
+    }
+
+    public function updateCategory($data){
+      
+      try{
+        $this->di->get("Database")->beginTransaction();
+        $assoc_array["name"] = $data["name"];
+        $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['category_id']}");
+        $this->di->get("Database")->commit();
+        Session::setSession("category_edit", "success");
+      }catch(Exception $e){
+        $this->di->get("Database")->rollback();
+        Session::setSession("category_edit", "fail");
+      }
+    }
+
   }
 ?>
