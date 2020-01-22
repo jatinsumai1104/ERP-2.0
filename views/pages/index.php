@@ -141,8 +141,7 @@ $data4 = array();
 // $data5 = 
 foreach($years as $year){
   $ans = $di->get("Database")->rawQuery("select MONTH(created_at) as year,Sum(purchase_rate*quantity) as amount from purchases WHERE YEAR(created_at)={$year['year']} GROUP BY MONTH(created_at)");
-  // print_r($ans);
-  // echo "<br><br>";
+
   array_push($data3,$ans);
   array_push($data2,$year['year']);
 }
@@ -192,6 +191,20 @@ $data3 = array($data,$data2);
               </div>
             </div>
 
+
+            <?php
+                $category_quantity = $di->get("Database")->rawQuery("SELECT SUM(quantity) AS quantity,c.name FROM products p INNER JOIN category c ON p.category_id = c.id GROUP BY p.category_id");
+                // die(print_R($category_quantity));
+                $quantity = array();
+                $categories = array();
+                foreach($category_quantity as $category){
+                 array_push($quantity,$category['quantity']);
+                 array_push($categories,$category['name']); 
+                }
+                // print_r($quantity); 
+            ?>
+
+
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
@@ -216,7 +229,7 @@ $data3 = array($data,$data2);
                   <div class="chart-pie pt-4 pb-2">
                     <canvas id="myPieChart"></canvas>
                   </div>
-                  <div class="mt-4 text-center small">
+                  <!-- <div class="mt-4 text-center small">
                     <span class="mr-2">
                       <i class="fas fa-circle text-primary"></i> Direct
                     </span>
@@ -225,7 +238,7 @@ $data3 = array($data,$data2);
                     </span>
                     <span class="mr-2">
                       <i class="fas fa-circle text-info"></i> Referral
-                    </span>
+                    </span> -->
                   </div>
                 </div>
               </div>
@@ -369,11 +382,22 @@ $data3 = array($data,$data2);
   <!-- End of Page Wrapper -->
 
   <!-- All Required Scripts  -->
+  
+  
+  
   <?php
     require_once('../includes/scripts.php');
   ?>
+  <script>
+              var chartData = <?php echo json_encode($quantity); ?>;
+              var labelData = <?php echo json_encode($categories); ?>;
+              // alert(quantity);
+              renderPieChart(chartData,labelData,"Category Quantity");
+            </script>
 
 </body>
+
+
 
 </html>
 
@@ -383,4 +407,5 @@ $data3 = array($data,$data2);
 var data = <?php echo json_encode($data3); ?>;
 var monthdata = <?php echo json_encode($data4); ?>;
 loadCharts(data,monthdata);
+
 </script>

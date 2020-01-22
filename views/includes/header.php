@@ -20,12 +20,13 @@
   <!-- Custom styles for toastr -->
   <link href="<?php echo BASEASSETS;?>vendor/bootstrap-toastr/toastr.min.css" rel="stylesheet">  
   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
+<!-- One Signal Api Script -->
+<!-- <script>
   var OneSignal = window.OneSignal || [];
   OneSignal.push(function() {
     OneSignal.init({
       appId: "33b24b52-9c91-4043-8cdf-c72c9094fffb",
     });
   });
-</script>
+</script> -->
 </head>

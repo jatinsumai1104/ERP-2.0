@@ -74,6 +74,7 @@ class Product
         $validation = $this->validateData($data);
         if (!$validation->fails()) {
             try {
+
                 $table_attr = ["name", "specification", "hsn_code", "category_id", "eoq_level", "danger_level", "quantity"];
                 $assoc_array = Util::createAssocArray($table_attr, $data);
 
