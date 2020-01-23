@@ -127,4 +127,7 @@ if(isset($_POST['add_purchase'])){
 if(isset($_POST['purchase_report'])){
     echo $_POST['from'];
     echo $_POST['to'];
+    $_SESSION['from_date'] = $_POST['from'];
+    $_SESSION['to_date'] = $_POST['to'];
+    Util::redirect("purchase-report");
 }
