@@ -22,27 +22,25 @@ class Category
         return $validation;
     }
 
-    public function addCategory($data)
-    {
+    public function addCategory($data){
         $validation = $this->validateData($data);
 
         if (!$validation->fails()) {
 
             try {
-
                 // Begin Transaction
                 $this->di->get("Database")->beginTransaction();
                 $assoc_array = ["name" => $data['name']];
                 $category_id = $this->di->get("Database")->insert($this->table, $assoc_array);
                 $this->di->get("Database")->commit();
                 // end transaction
-                Session::setSession("category_add", "success");
+                Session::setSession("add", "Add Category success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("category_add", "fail");
+                Session::setSession("add", "Add Category error");
             }
         } else {
-            Session::setSession("category_add", "fail");
+          Session::setSession("validation", "Category Validation error");
         }
     }
 
@@ -51,22 +49,44 @@ class Category
       return $res;
     }
 
-    public function updateCategory($data){
-      
-      try{
-        $this->di->get("Database")->beginTransaction();
-        $assoc_array["name"] = $data["name"];
-        $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['category_id']}");
-        $this->di->get("Database")->commit();
-        Session::setSession("category_edit", "success");
-      }catch(Exception $e){
-        $this->di->get("Database")->rollback();
-        Session::setSession("category_edit", "fail");
-      }
-    }
     public function getAllCategories(){
       return $this->di->get("Database")->readData($this->table);
     }
 
+    public function update($data){
+      $validation = $this->validateData($data);
+
+      if (!$validation->fails()) {
+          try{
+            $this->di->get("Database")->beginTransaction();
+            $assoc_array["name"] = $data["name"];
+            $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['category_id']}");
+            $this->di->get("Database")->commit();
+            Session::setSession("edit", "Edit Category success");
+          }catch(Exception $e){
+            $this->di->get("Database")->rollback();
+            Session::setSession("edit", "Edit Category error");
+          }
+      }else{
+        Session::setSession("validation", "Category Validation error");
+      }
+    }
+
+    
+
+    public function delete($data){
+      try {
+          $this->di->get("Database")->beginTransaction();
+          
+          $this->di->get("Database")->delete($this->table, "id = " . $data['id']);
+          
+          $this->di->get("Database")->commit();
+          Session::setSession("edit", "delete product success");
+      } catch (Exception $e) {
+          $this->di->get("Database")->rollback();
+          Session::setSession("edit", "delete product error");
+      }
   }
+
+}
 ?>

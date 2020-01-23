@@ -24,11 +24,6 @@ class Product
         return $res;
     }
 
-    public function deleteProduct($data)
-    {
-        $this->di->get("Database")->delete($data['table'], "id = " . $data['id']);
-    }
-
     public function readDataToEdit($data)
     {
         $res = $this->di->get("Database")->readData($this->table, ["*"], "id = " . $data['id'])[0];
@@ -36,8 +31,7 @@ class Product
         return $res;
     }
 
-    public function validateData($data)
-    {
+    public function validateData($data){
         $validator = $this->di->get("Validator");
         $validation = $validator->check($data, [
             'name' => [
@@ -69,8 +63,7 @@ class Product
         return $validation;
     }
 
-    public function addProduct($data)
-    {
+    public function addProduct($data){
         $validation = $this->validateData($data);
         if (!$validation->fails()) {
             try {
@@ -94,33 +87,49 @@ class Product
                 $assoc_array["selling_rate"] = $data["selling_rate"];
                 $res = $this->di->get("Database")->insert("products_selling_rate", $assoc_array);
                 $this->di->get("Database")->commit();
-                Session::setSession("product_add", "success");
+                Session::setSession("add", "Add Product success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("product_add", "fail");
+                Session::setSession("add", "Add Product error");
             }
         } else {
-            Session::setSession("product_add", "fail");
+            Session::setSession("validation", "Product Validation error");
         }
     }
 
-    public function updateProduct($data)
-    {
+    public function update($data){
+        $validation = $this->validateData($data);
+        if (!$validation->fails()) {
+            try {
+                $this->di->get("Database")->beginTransaction();
+                $table_attr = ["name", "specification", "eoq_level", "danger_level"];
+                $assoc_array = Util::createAssocArray($table_attr, $data);
+                $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['product_id']}");
+                if (!($data["old_selling_rate"] == $data["selling_rate"])) {
+                    $this->di->get("Database")->insert("products_selling_rate", ["product_id" => $data["product_id"], "selling_rate" => $data["selling_rate"]]);
+                }
+                $this->di->get("Database")->commit();
+                Session::setSession("edit", "Edit Product success");
+            } catch (Exception $e) {
+                $this->di->get("Database")->rollback();
+                Session::setSession("edit", "Edit Product error");
+            }
+        }else{
+            Session::setSession("validation", "Product Validation error");
+        }
+    }
 
+    public function delete($data){
         try {
             $this->di->get("Database")->beginTransaction();
-            $table_attr = ["name", "specification", "eoq_level", "danger_level"];
-            $assoc_array = Util::createAssocArray($table_attr, $data);
-            $this->di->get("Database")->update($this->table, $assoc_array, "id={$data['product_id']}");
-            if (!($data["old_selling_rate"] == $data["selling_rate"])) {
-                $this->di->get("Database")->insert("products_selling_rate", ["product_id" => $data["product_id"], "selling_rate" => $data["selling_rate"]]);
-            }
+            
+            $this->di->get("Database")->delete($this->table, "id = " . $data['id']);
+            
             $this->di->get("Database")->commit();
-            Session::setSession("product_edit", "success");
+            Session::setSession("delete", "delete product success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("product_edit", "fail");
+            Session::setSession("delete", "delete product error");
         }
     }
-
 }

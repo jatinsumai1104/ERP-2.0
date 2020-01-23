@@ -160,7 +160,7 @@ require_once '../includes/navbar.php';
                                                 value="<?php echo $customer[0]["address_id"] ?>">
                                             <input type="hidden" name="customer_id"
                                                 value="<?php echo $customer[0]["customer_id"] ?>">
-                                            <button type="submit" class="btn btn-primary" name="edit_customer">Save
+                                            <button type="submit" class="btn btn-primary" name="editBtn">Save
                                                 Changes</button>
                                         </div>
                                     </form>
@@ -284,7 +284,6 @@ require_once '../includes/footer.php';
         <!-- All Required Scripts  -->
         <?php
 require_once '../includes/scripts.php';
-Util::createToastr("status", CUSTOMER_ADD_SUCCESS, array("message" => "You successfully added", "title" => "Customer Add"));
 ?>
 
 </body>

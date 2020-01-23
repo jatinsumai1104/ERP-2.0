@@ -23,15 +23,15 @@ class Util
         return $assoc_array;
     }
 
-    public static function createToastr($status, $constant, $toastrDetails)
+    public static function createToastr($status, $toastrDetails)
     {
-        if (isset($_SESSION[$status]) && $_SESSION[$status] == $constant) {
-            $script = '<script>
-            toastr["success"]("'.$toastrDetails["message"].'","' . $toastrDetails["title"] . '")
-          </script>';
-            echo $script;
-            unset($_SESSION[$status]);
-        }
+        // echo $status;
+        echo "<script>
+            toastr['{$status}']( '{$toastrDetails["message"]}', '{$toastrDetails["title"]}' )
+        </script>";
     }
 
+    public static function verifyCSRF($data){
+        return (isset($data['csrf_token']) && Session::getSession("csrf_token") != null && $data['csrf_token'] == Session::getSession("csrf_token"));
+    }
 }

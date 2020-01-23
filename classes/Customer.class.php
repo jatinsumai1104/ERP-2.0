@@ -92,19 +92,18 @@ class Customer
                 $address_customer_id = $this->di->get("Database")->insert("address_customer", $address_customer_assoc_array);
                 
                 $this->di->get("Database")->commit();
-                Session::setSession("status", CUSTOMER_ADD_SUCCESS);
+                Session::setSession("add", "Add Customer success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                // Session::setSession("customer_add", "fail");
+                Session::setSession("add", "Add Customer error");
             }
+        }else {
+            Session::setSession("validation", "Customer Validation error");
         }
-        //  else {
-        //     Session::setSession("customer_add", "fail");
-        // }
     }
 
     // Not Editing Email Id because its unique
-    public function updateCustomer($data)
+    public function update($data)
     {
         $validation = $this->validateData($data);
         if (!$validation->fails()) {
@@ -121,19 +120,17 @@ class Customer
                 $this->di->get("Database")->update("address", $address_assoc_array, "id={$data['address_id']}");
                 
                 $this->di->get("Database")->commit();
-                Session::setSession("status", CUSTOMER_EDIT_SUCCESS);
+                Session::setSession("edit", "Edit customer success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                // Session::setSession("customer_edit", "fail");
+                Session::setSession("edit", "Edit customer error");
             }
-            //  else {
-        //     Session::setSession("customer_edit", "fail");
-        // }
+        }else{
+            Session::setSession("validation", "Customer Validation error");
         }
     }
 
-    public function deleteCustomer($data)
-    {
+    public function delete($data){
         try {
             $query = "SELECT address_id FROM customers c INNER JOIN address_customer a_c ON c.id = a_c.customer_id INNER JOIN address a ON a_c.address_id = a.id WHERE customer_id = " . $data['id'];
             $res = $this->di->get("Database")->rawQuery($query);
@@ -144,12 +141,13 @@ class Customer
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
-            Session::setSession("status", CUSTOMER_DELETE_SUCCESS);
+            Session::setSession("delete", "delete customer success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            // Session::setSession("customer_delete", "fail");
+            Session::setSession("delete", "delete customer error");
         }
-        function checkCustomerExist($data)
+    }
+    function checkCustomerExist($data)
         {
             $query = "SELECT * from customers WHERE email_id='{$data['customer_email']}'";
             $res = $this->di->get("Database")->rawQuery($query);
@@ -159,7 +157,6 @@ class Customer
                 return [[]];
             }
         }
-    }
 }
 
 ?>

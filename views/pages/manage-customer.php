@@ -88,7 +88,7 @@ for ($i = 0; $i < count($customer_details); $i++) {
                                                         Edit</button></td>
                                                 <td><a type="button" class="btn btn-danger btn-block delete"
                                                         id=<?php echo $customer_details[$i]['customer_id'] ?> href="#"
-                                                        data-toggle="modal" data-target="#deleteModal"><i
+                                                        data-toggle="modal" data-target="#deleteModal" class_name="Customer"><i
                                                             class="far fa-trash-alt"></i> Delete</a></td>
                                                 <input type="hidden" name="customer_id"
                                                     value="<?php echo $customer_details[$i]['customer_id']; ?>">
@@ -122,119 +122,16 @@ require_once '../includes/footer.php';
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Edit?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
-                        <input type="hidden" name="customer_id" id="editId">
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="first_name" class="col-sm-2 col-form-label" style="max-width: 100%">First
-                                    Name</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="first_name" name="first_name">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="last_name" class="col-sm-2 col-form-label" style="max-width: 100%">Last
-                                    Name</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="last_name" name="last_name">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="gst_no" class="col-sm-2 col-form-label" style="max-width: 100%">Gst
-                                    No.</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="gst_no" name="gst_no" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="phone_no" class="col-sm-2 col-form-label" style="max-width: 100%">Phone
-                                    Number</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="phone_no" name="phone_no">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="email_id" class="col-sm-2 col-form-label" style="max-width: 100%">Email
-                                    id</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="email_id" name="email_id">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4">
-                                <label for="gender" class="col-sm-2 col-form-label"
-                                    style="max-width: 100%">Gender</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <select name="gender" id="gender" class="form-control">
-                                    <!-- <option value=""></option> -->
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                                <!-- <input type="text" class="form-control" id="gender" name="gender"> -->
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" type="submit" name="editBtnCustomer">Confirm Edit</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- End of edit Modal -->
     <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Delete?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Are you sure you want to delete?</div>
-                <div class="modal-footer">
-                    <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
-                        <input type="hidden" name="table" value="customers">
-                        <input type="hidden" name="id" id="recordId">
-                        <button class="btn btn-danger" type="submit" name="deleteCustomerBtn">Yes</button>
-                    </form>
-                    <a class="btn btn-success" href="#" data-dismiss="modal">No</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php
+        require_once('../includes/delete-modal.php');
+    ?>
     <!-- End of Delete Modal -->
 
     <!-- All Required Scripts  -->
     <?php
 require_once '../includes/scripts.php';
-Util::createToastr("status", CUSTOMER_EDIT_SUCCESS, array("message" => "You successfully changed", "title" => "Customer Edit"));
-Util::createToastr("status", CUSTOMER_DELETE_SUCCESS, array("message" => "You successfully deleted", "title" => "Customer Delete"));
+
 ?>
 </body>
 

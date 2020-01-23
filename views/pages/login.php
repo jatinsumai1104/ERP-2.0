@@ -8,6 +8,7 @@ Session::setSession("csrf_token", Util::createCsrfToken());
 // echo Session::getSession("csrf_token");
 // require_once(__DIR__.'/../../helper/init.php');
 
+
 if(isset($_SESSION['employee_id'])){
   Util::redirect("index");
 }

@@ -21,7 +21,7 @@ class Session{
 	}
 	public static function destroySession(){
 		if(self::isSessionStart()){
-			unset($_SESSION['id']);
+			// unset($_SESSION['id']);
 			session_destroy();
 			return 1;
 		}else{
@@ -38,7 +38,13 @@ class Session{
     if(!(session_status() == PHP_SESSION_NONE) && isset($_SESSION[$key])){
       return $_SESSION[$key];
     }
-  }
+	}
+	
+	public static function unsetSession($key){
+		if(!(session_status() == PHP_SESSION_NONE) && isset($_SESSION[$key])){
+			unset($_SESSION[$key]);
+		}
+	}
 }
 
 ?>

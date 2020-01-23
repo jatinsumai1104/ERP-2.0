@@ -86,13 +86,13 @@ class Supplier
 
                 $this->di->get("Database")->commit();
                 // end transaction
-                Session::setSession("supplier_add", "success");
+                Session::setSession("add", "Add Supplier success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("supplier_add", "fail");
+                Session::setSession("add", "Add Supplier error");
             }
         } else {
-            Session::setSession("supplier_add", "fail");
+            Session::setSession("validation", "Supplier Validation error");
         }
     }
 
@@ -103,7 +103,7 @@ class Supplier
         return $res;
     }
 
-    public function updateSupplier($data)
+    public function update($data)
     {
         $validation = $this->validateData($data);
         if (!$validation->fails()) {
@@ -116,17 +116,17 @@ class Supplier
                 $assoc_array = Util::createAssocArray($table_attr, $data);
                 $this->di->get("Database")->update("address", $assoc_array, "id={$data['address_id']}");
                 $this->di->get("Database")->commit();
-                Session::setSession("supplier_edit", "success");
+                Session::setSession("edit", "Edit Supplier success");
             } catch (Exception $e) {
                 $this->di->get("Database")->rollback();
-                Session::setSession("supplier_edit", "fail");
+                Session::setSession("edit", "Edit Supplier error");
             }
         } else {
-            Session::setSession("supplier_edit", "fail");
+            Session::setSession("validation", "Supplier Validation error");
         }
     }
 
-    public function deleteSupplier($data)
+    public function delete($data)
     {
         try {
             $query = "SELECT a.id as address_id FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE supplier_id = {$data['id']}";
@@ -138,10 +138,10 @@ class Supplier
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
-
+            Session::setSession("delete", "delete supplier success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("supplier_delete", "fail");
+            Session::setSession("delete", "delete supplier error");
         }
     }
 

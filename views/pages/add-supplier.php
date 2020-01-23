@@ -153,7 +153,7 @@ require_once('../includes/header.php');
                                                         value="<?php echo $supplier[0]["supplier_id"] ?>">
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary" name="edit_supplier">Save
+                                            <button type="submit" class="btn btn-primary" name="editBtn">Save
                                                 Changes</button>
                                         </div>
                                     </form>

@@ -1,3 +1,8 @@
+<?php 
+  if(Session::getSession("employee_id") == null){
+    Util::redirect("login");
+  }
+?>
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
