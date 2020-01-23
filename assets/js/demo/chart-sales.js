@@ -5,39 +5,35 @@ Chart.defaults.global.defaultFontColor = '#858796';
 var allLabels;
 var allData;
 
-function loadCharts(data,monthdata){
+function loadSalesCharts(data,monthdata){
   allLabels = data;
   allData = monthdata;
-  var year = $("#timeperiod").val();
+  var year = $("#timeperiod2").val();
   if(year=="year-wise"){
-    var yearlyData = allData[allData.length-1];
-    var chartData = [];
-    yearlyData.forEach(element=>{
-      chartData.push(element['amount']);
-    });
-    renderChart(allLabels[1],chartData);
+    renderSalesChart(allLabels[1],[0,0]);
   }else{
+    //   console.log(allData);
     var yearData = allData[year];
     var chartData = fitInMonthData(yearData);
-    renderChart(allLabels[0],chartData);
+    renderSalesChart(allLabels[0],chartData);
   }
 }
 
-$("#timeperiod").change(function (){
-  $("#bar-chart-grouped").remove();
-  $("#chart-container").append('<canvas id="bar-chart-grouped"></canvas>');
-  var year = $("#timeperiod").val();
+$("#timeperiod2").change(function (){
+  $("#bar-chart-sales").remove();
+  $("#chart-container2").append('<canvas id="bar-chart-sales"></canvas>');
+  var year = $("#timeperiod2").val();
   if(year=="year-wise"){
     var yearlyData = allData[allData.length-1];
     var chartData = [];
     yearlyData.forEach(element=>{
       chartData.push(element['amount']);
     });
-    renderChart(allLabels[1],chartData);
+    renderSalesChart(allLabels[1],chartData);
   }else{
     var yearData = allData[year];
     var chartData = fitInMonthData(yearData);
-    renderChart(allLabels[0],chartData);
+    renderSalesChart(allLabels[0],chartData);
   }
 })
 
@@ -52,8 +48,8 @@ function fitInMonthData(yearData){
 }
 
 
-function renderChart(labels,data){
-new Chart(document.getElementById("bar-chart-grouped"), {
+function renderSalesChart(labels,data){
+new Chart(document.getElementById("bar-chart-sales"), {
     type: 'bar',
     data: {
       labels: labels,

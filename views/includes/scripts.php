@@ -18,6 +18,7 @@
   <script src="<?php echo BASEASSETS;?>js/demo/chart-pie-demo.js"></script>
   <script src="<?php echo BASEASSETS;?>js/demo/chart-bar-demo.js"></script>
   <script src="<?php echo BASEASSETS;?>js/demo/chart-temp-demo.js"></script>
+  <script src="<?php echo BASEASSETS;?>js/demo/chart-sales.js"></script>
   <script src="<?php echo BASEASSETS;?>vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo BASEASSETS;?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
   

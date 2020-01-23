@@ -41,7 +41,7 @@ require_once('../includes/header.php');
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Category</h1>
-          <a href="<?echo BASEPAGES?>manage-category.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Manage Supplier </a>
+          <a href="<?php echo BASEPAGES?>manage-category.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list-ul fa-sm text-white-75"></i> Manage Supplier </a>
         </div>
 
         <!-- Content Row -->
