@@ -4,12 +4,11 @@
 require_once('../../helper/constants.php');
 require_once(__DIR__.'../../../helper/init.php');
 
-Session::setSession("csrf_token", Util::createCsrfToken());
+Util::createCsrfToken();
 // echo Session::getSession("csrf_token");
 // require_once(__DIR__.'/../../helper/init.php');
 
-
-if(isset($_SESSION['employee_id'])){
+if(Session::getSession("employee_id") != null && Session::getSession("csrf") == null){
   Util::redirect("index");
 }
 if(isset($_COOKIE['token']) && $di->get("TokenHandler")->isValid($_COOKIE["token"],1)){

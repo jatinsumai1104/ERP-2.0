@@ -11,7 +11,8 @@ class Util
 
     public static function createCsrfToken()
     {
-        return uniqid() . rand();
+        Session::setSession("csrf_token", uniqid() . rand());
+        Session::setSession("token_expire", time() + 3600);
     }
 
     public static function createAssocArray($arrayOfKeys, $post)
@@ -32,6 +33,6 @@ class Util
     }
 
     public static function verifyCSRF($data){
-        return (isset($data['csrf_token']) && Session::getSession("csrf_token") != null && $data['csrf_token'] == Session::getSession("csrf_token"));
+        return (isset($data['csrf_token']) && Session::getSession("csrf_token") != null && $data['csrf_token'] == Session::getSession("csrf_token") && Session::getSession("token_expire") > time());
     }
 }

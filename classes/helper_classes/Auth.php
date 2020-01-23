@@ -11,40 +11,24 @@ class Auth {
     public function __construct(DependencyInjector $di){
         $this->di = $di;
     }
-
-    // public function build() {
-    //     return $this->di->get("Database")->query(
-    //     "CREATE TABLE IF NOT EXISTS users(id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL)"
-    //     );
-    // }
-
-    public function create($data)
-	{
-		if(isset($data['password']))
-		{
-			$data['password'] = $this->di->get("Hash")->make($data['password']);
-		}
-
-		return $this->di->get("Database")->table($this->table)->insert($data);
-    }
     
-    public function signIn($data){
-      $user = $this->di->get("Database")->table($this->table)->where('username', '=', $data['username']);
+    // public function signIn($data){
+    //   $user = $this->di->get("Database")->table($this->table)->where('username', '=', $data['username']);
 
-      if($user->count())
-      {
-        $user = $user->first();
+    //   if($user->count())
+    //   {
+    //     $user = $user->first();
 
-        if($this->di->get("Hash")->verify($data['password'], $user->password))
-        {
-          $this->setAuthSession($user->id);
+    //     if($this->di->get("Hash")->verify($data['password'], $user->password))
+    //     {
+    //       $this->setAuthSession($user->id);
 
-          return true;
-        }
-      }
+    //       return true;
+    //     }
+    //   }
 
-      return false;
-    }
+    //   return false;
+    // }
 
 
 
@@ -61,10 +45,6 @@ class Auth {
     
     public function check(){
 		return isset($_SESSION[$this->session]);
-    }
-    
-    public function signout(){
-		unset($_SESSION[$this->session]);
     }
     
     public function register($input){
@@ -86,10 +66,10 @@ class Auth {
           ]
       ]);
 
-      if($validation->fails())
+      if($validation->errors())
       {
-        Session::setSession("sign_up", "fail");
-        echo '<pre>', print_r($validation->errors()->all(), true), '</pre>';
+        Session::setSession("sign_up", "Sign Up error");
+        Session::setSession("validation", "Product Validation error");
       }
       else
       {
@@ -113,9 +93,10 @@ class Auth {
             $this->di->get("Database")->insert('employees', $insertion_array2);
 
             $this->di->get("Database")->commit();
-            Session::setSession("sign_up", "success");
+            Session::setSession("sign_up", "Sign-up success");
             Util::redirect("login");
           }catch(Exception $e){
+            Session::setSession("sign_up", "Sign-up error");
             $this->di->get("Database")->rollback();
           }
       }
@@ -131,9 +112,8 @@ class Auth {
       // $this->di->get("Database")->beginTransaction();
 
       if(!$this->di->get("Database")->exists("employees",["email"=>$email])){
-        Session::setSession("login", "failed");
+        Session::setSession("login", "Login employee_already_present error");
         Util::redirect("login");
-        return;
       }else{
         $hashed_password =$this->di->get("Database")->readData("employees",["password_hash"],"email='{$email}'");
         $db_password = $hashed_password[0]['password_hash'];
@@ -146,11 +126,11 @@ class Auth {
           if(isset($input['remember'])){
             $this->setCookie($id[0]['id']);
           }
+          Session::setSession("login","Login Employee success");
           Util::redirect("index");
         }else{
-          Session::setSession("login","failed");
+          Session::setSession("login","Login Incorrect_username/password error");
           Util::redirect("login");
-          return;
         }
 
       }

@@ -27,3 +27,18 @@ if(Session::getSession("csrf") != null){
   Util::createToastr($data[1], array("message" => Session::getSession("csrf"), "title" => $data[0]));
   Session::unsetSession("csrf");
 }
+if(Session::getSession("sign_up") != null){
+  $data = explode(" ", Session::getSession("sign_up"));
+  Util::createToastr($data[1], array("message" => Session::getSession("sign_up"), "title" => $data[0]));
+  Session::unsetSession("sign_up");
+}
+if(Session::getSession("login") != null){
+  $data = explode(" ", Session::getSession("login"));
+  $message = Session::getSession("login");
+  
+  if($data[2] == "error"){
+    $message = str_replace("_", " ", $data[1]);
+  }
+  Util::createToastr($data[2], array("message" => $message, "title" => $data[0] ." ". $data[2]));
+  Session::unsetSession("login");
+}
