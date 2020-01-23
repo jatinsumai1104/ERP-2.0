@@ -55,8 +55,8 @@ new Chart(document.getElementById("bar-chart-sales"), {
       labels: labels,
       datasets: [
         {
-          label: "Purchase(Rupees)",
-          backgroundColor: "#3e95cd",
+          label: "Sales(Rupees)",
+          backgroundColor: "#3295cd",
           data: data
         }
       ]
@@ -64,7 +64,7 @@ new Chart(document.getElementById("bar-chart-sales"), {
     options: {
       title: {
         display: true,
-        text: 'Purchase Revenue (Rupees)'
+        text: 'Sales Revenue (Rupees)'
       },
       maintainAspectRatio: false,
       layout: {

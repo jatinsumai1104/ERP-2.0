@@ -123,3 +123,8 @@ if(isset($_POST['add_purchase'])){
         Util::redirect("add-purchase");
     }
 }
+
+if(isset($_POST['purchase_report'])){
+    echo $_POST['from'];
+    echo $_POST['to'];
+}

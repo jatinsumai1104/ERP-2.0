@@ -290,7 +290,13 @@ $monthYearLabels2 = array($monthLabels2,$yearLabels2);
                   ?>
                   <option value="year-wise">Yearly</option>
                   </select>
+                
 
+<form method="post" action="<?php echo BASEURL?>helper/routing.php">
+<input type="date" name="from">
+<input type="date" name="to">
+<button type="submit" name="purchase_report">SUBMIT</button>
+</form>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -300,6 +306,8 @@ $monthYearLabels2 = array($monthLabels2,$yearLabels2);
                 </div>
               </div>
             </div>
+            
+
 
 
 
@@ -337,6 +345,9 @@ $monthYearLabels2 = array($monthLabels2,$yearLabels2);
                   </div>
                 </div>
               </div>
+
+
+
 
               <!-- Color System -->
               <div class="row">
