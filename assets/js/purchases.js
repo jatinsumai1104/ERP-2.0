@@ -47,7 +47,15 @@ $("#purchase_product").on("change", ".category_class", function() {
     data: { getProductByCategoryId: true, category_id: $id },
     dataType: "json",
     success: function(data) {
-      // console.log(data);
+      $("#product_" + $element_id).empty();
+      $("#supplier_" + $element_id).empty();
+      $("#product_" + $element_id).append(
+        "<option disabled selected>Select Product</option>"
+      );
+      $("#supplier_" + $element_id).append(
+        "<option disabled selected>Select Supplier</option>"
+      );
+
       data.forEach(function(item, index) {
         $("#product_" + $element_id).append(
           "<option value='" + item.id + "'>" + item.name + "</option>"
@@ -70,7 +78,10 @@ $("#purchase_product").on("change", ".product_class", function() {
     data: { getSupplierByProductId: true, product_id: $id },
     dataType: "json",
     success: function(data) {
-      console.log(data);
+      $("#supplier_" + $element_id).empty();
+      $("#supplier_" + $element_id).append(
+        "<option disabled selected>Select Supplier</option>"
+      );
       data.forEach(function(item, index) {
         $("#supplier_" + $element_id).append(
           "<option value='" + item.id + "'>" + item.name + "</option>"

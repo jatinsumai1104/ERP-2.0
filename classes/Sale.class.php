@@ -43,10 +43,10 @@ class Sale
             }
            
             $this->di->get("Database")->commit();
-            Session::setSession("sales_add", "success");
+            Session::setSession("add", "Add Sale success");
           }catch(Exception $e){
             $this->di->get("Database")->rollback();
-            Session::setSession("sales_add", "fail");
+            Session::setSession("add", "Add Sale fail");
           }
     }
 

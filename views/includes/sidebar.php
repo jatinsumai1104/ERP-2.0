@@ -74,7 +74,7 @@
 
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#customer" aria-expanded="true" aria-controls="customer">
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-users"></i>
     <span>Customer</span>
   </a>
   <div id="customer" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -89,31 +89,29 @@
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#purchases" aria-expanded="true" aria-controls="purchases">
     <i class="fas fa-fw fa-shopping-cart"></i>
-    <span>Purchase</span>
+    <span>Sales & Purchases</span>
   </a>
   <div id="purchases" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?php echo BASEPAGES?>add-purchase.php">Add Purchase</a>
-      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-purchase.php">Manage Purchase</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-purchase.php">Purchase</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-sales.php">Sales</a>
     </div>
   </div>
 </li>
 
-<li class="nav-item">
-  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales" aria-expanded="true" aria-controls="sales">
-    <i class="fas fa-fw fa-shopping-cart"></i>
-    <span>Sales</span>
-  </a>
-  <div id="sales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-    <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?php echo BASEPAGES?>add-sales.php">Add Sales</a>
-      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-sales.php">Manage Sales</a>
-    </div>
-  </div>
+
+<!-- Divider -->
+<!-- <hr class="sidebar-divider"> -->
+
+
+<li class="nav-item active">
+  <a class="nav-link" href="<?php echo BASEPAGES?>index.php">
+    <i class="fas fa-fw fa-chart-line"></i>
+    <span>Reports</span></a>
 </li>
 
 <!-- Divider -->
-<hr class="sidebar-divider d-none d-md-block">
+<hr class="sidebar-divider">
 
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">

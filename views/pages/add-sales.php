@@ -10,6 +10,21 @@ require_once(__DIR__.'/../../helper/init.php');
 <?php
 require_once('../includes/header.php');
 ?>
+<style>
+.email-verify{
+  background-color: green;
+  color: #fff;
+  padding: 6px 8px;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: .2rem;
+  vertical-align: middle;
+  display:none;
+}
+.bg-red{
+  background-color: red;
+}
+</style>
 
 
 <body id="page-top">
@@ -48,32 +63,31 @@ require_once('../includes/header.php');
         <div class="row">
           <div class="col-md-12">
           <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
+            <!-- Customer Email Verification -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <div>
+                <!-- <label for="">Check Customer Email</label> -->
+                <input type="text"
+                  class="form-control" name="email" id="customer_email" aria-describedby="helpId" placeholder="Email of Customer.." style="width:160%">
+              </div>
+              <div>
+                <p class="email-verify" id="email_verified_success"><i class="fas fa-check fa-sm text-white-75 mr-1"></i>Email Verified</p>
+                <p class="email-verify bg-red" id="email_verified_fail"><i class="fas fa-times fa-sm text-white-75 mr-1"></i>Email Not Verified</p>
+                <a href="<?php echo BASEPAGES?>manage-product.php" class="btn btn-sm btn-warning shadow-sm" id="add_customer" style="display:none;"><i class="fas fa-users fa-sm text-white-75"></i> Add Customer </a>
+                <button type="button" class=" d-sm-inline-block btn btn-sm btn-primary shadow-sm" name="check_email" id="check_email"><i class="fas fa-envelope fa-sm text-white-75"></i> Check Email</button>
+              </div>
+            </div>
+            <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-plus"></i> Sales</h6>
               <button type="button" onclick="addPurchase();" class=" d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-75"></i> Add One More Element</button>
             </div>
+            
             <!-- Card Body -->
             <form action="<?php echo BASEURL?>helper/routing.php" method="POST">
+              <input type="hidden" name="customer_id" id="customer_id">
+              <input type="hidden" name="csrf_token" id="csrf_token" value=<?php echo Session::getSession("csrf_token"); ?>>
               <div class="card-body">
-              <div class="row">
-              <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Email of Customer</label>
-                      <input type="text"
-                        class="form-control" name="email" id="customer_email" aria-describedby="helpId" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                    <button type="button" class="btn btn-primary" name="check_email" id="check_email">Check</button>
-                    <p id="customer_exist"></p>
-                    <input type="hidden" name="customer_id" id="customer_id"> 
-                    </div>
-                </div>
-                
-                </div>
-                  
                 <div id="purchase_product">
                   <div class="row" id="element_1">
                     <div class="col-md-4">
@@ -105,7 +119,6 @@ require_once('../includes/header.php');
                           class="form-control" name="quantity[]" id="quantity" aria-describedby="helpId" placeholder="">
                       </div>
                     </div>
-
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="">Discount</label>
@@ -113,39 +126,41 @@ require_once('../includes/header.php');
                           class="form-control" name="discount[]" id="discount" aria-describedby="helpId" placeholder="">
                       </div>
                     </div>
-                    
                     <div class="col-md-4" style="text-align: center">
                       <button type="button" class="btn btn-danger" style="margin-top: 8%;" onclick="deletePurchase(1)">
                         <i class="far fa-trash-alt"></i> Delete Element
                       </button>
                     </div>
                   </div>
-                  
+                </div>
+                <hr>
+                <div id="get_total_price_div">
+                  <div class="row">
+                    <div class="col-md-4"><button type="button" class="btn btn-primary" id="get_total_amount">Get Total Price</button></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <h3 class="product_class" placeholder="Total Price">Total Price:  <span id="total_price">______</span></h3>
+                        <input type="text" name="amount" id="total_price_input" hidden>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div id="payment_mode_div">
+                  <div class="form-group">
+                    <label for="">Payment Mode</label>
+                    <select name="pay_mode" id="payment_mode" class="form-control">
+                      <option disabled selected>Select Payment mode</option>
+                      <option value="cash">Cash</option>
+                      <option value="cheque">Cheque</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="payment-div">
                 </div>
               </div>
-
-              
-              <button type="button" class="btn btn-primary" id="get_total_amount">Get Total Price</button>
-              <input type="text" name="amount" id="total_price">
-
-              <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="">Payment Mode</label>
-                        <select name="pay_mode" id="payment_mode" class="form-control">
-                          <option disabled selected>Select Payment mode</option>
-                          <option value="cash">Cash</option>
-                          <option value="cheque">Cheque</option>
-                        </select>
-                      </div>
-              </div>
-              <div id="payment-div">
-
-                 </div>
-                
-                
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <button type="submit" class="btn btn-primary" name="add_sales">Submit</button>
-                </div>
+                <button type="submit" class="btn btn-primary" name="add_sales">Submit</button>
+              </div>
             </form>
           </div>
           </div>

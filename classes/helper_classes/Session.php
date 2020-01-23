@@ -3,29 +3,18 @@
 
 class Session{
 	public static function start_session(){
-		if(session_status() == PHP_SESSION_NONE){
+		if(!self::checkSession()){
 			session_start();
 		}
 	}
-	public static function startSession($user_id){
-		self::start_session();
-		$_SESSION['id'] = $user_id;
+
+	public static function checkSession(){
+		return session_status() != PHP_SESSION_NONE;
 	}
-	public static function isSessionStart(){
-		self::start_session();
-		if(isset($_SESSION['id'])){
-			return true;
-		}else{
-			return false;
-		}
-	}
+
 	public static function destroySession(){
-		if(self::isSessionStart()){
-			// unset($_SESSION['id']);
+		if(self::checkSession()){
 			session_destroy();
-			return 1;
-		}else{
-			return 0;
 		}
   }
   
@@ -35,13 +24,13 @@ class Session{
   }
 
   public static function getSession($key){
-    if(!(session_status() == PHP_SESSION_NONE) && isset($_SESSION[$key])){
+    if(self::checkSession() && isset($_SESSION[$key])){
       return $_SESSION[$key];
     }
 	}
 	
 	public static function unsetSession($key){
-		if(!(session_status() == PHP_SESSION_NONE) && isset($_SESSION[$key])){
+		if(self::checkSession() && isset($_SESSION[$key])){
 			unset($_SESSION[$key]);
 		}
 	}

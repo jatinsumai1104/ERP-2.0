@@ -42,7 +42,7 @@ require_once('../includes/header.php');
                         <h1 class="h3 mb-0 text-gray-800">Category</h1>
                         <a href="<?echo BASEPAGES?>manage-category.php"
                             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-list-ul fa-sm text-white-75"></i> Manage Supplier </a>
+                                class="fas fa-list-ul fa-sm text-white-75"></i> Manage Category </a>
                     </div>
 
                     <!-- Content Row -->

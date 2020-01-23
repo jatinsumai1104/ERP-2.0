@@ -18,6 +18,8 @@ class Purchase{
           "purchase_rate" => $data["purchase_rate"][$i],
           "quantity" => $data["quantity"][$i]
         ]);
+        $old_quantity = $this->di->get("Database")->readData("products", ["quantity"], "id={$data['product_id'][$i]}")[0]["quantity"];
+        $this->di->get("Database")->update("products", ["quantity"=>$old_quantity+$data["quantity"][$i]], "id={$data['product_id'][$i]}");
       }
       Session::setSession("add", "Add Purchase success");
       $this->di->get("Database")->commit();

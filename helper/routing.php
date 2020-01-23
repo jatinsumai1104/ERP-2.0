@@ -50,6 +50,16 @@ if (isset($_POST['add_purchase'])){
     }
 }
 
+if(isset($_POST["add_sales"])){
+    if(Util::verifyCSRF($_POST)){
+        $di->get("Sale")->addProducts($_POST);
+        Util::redirect("add-sales");
+    }else{
+        Session::setSession("csrf", "CSRF error");
+        Util::redirect("login");
+    }
+}
+
 //Edit Routings
 if(isset($_POST["editBtn"])){
     if (Util::verifyCSRF($_POST)) {
@@ -107,4 +117,17 @@ if(isset($_POST["getSupplierByProductId"])){
 
 if(isset($_POST["getCategories"])){
     echo json_encode($di->get("Category")->getAllCategories());
+}
+
+if(isset($_POST["checkEmailOfCustomer"])){
+    echo json_encode($di->get("Customer")->checkCustomerExist($_POST)[0]);
+}
+
+if(isset($_POST["get_total_amount"])){
+    echo json_encode($di->get("Sale")->getTotalRate($_POST));
+}
+
+if(isset($_POST['purchase_report'])){
+    echo $_POST['from'];
+    echo $_POST['to'];
 }
