@@ -93,8 +93,8 @@
   </a>
   <div id="purchases" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?echo BASEPAGES?>add-purchase.php">Add Purchase</a>
-      <a class="collapse-item" href="<?echo BASEPAGES?>manage-purchase.php">Manage Purchase</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-purchase.php">Add Purchase</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-purchase.php">Manage Purchase</a>
     </div>
   </div>
 </li>
@@ -106,8 +106,8 @@
   </a>
   <div id="sales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="<?echo BASEPAGES?>add-sales.php">Add Sales</a>
-      <a class="collapse-item" href="<?echo BASEPAGES?>manage-sales.php">Manage Sales</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>add-sales.php">Add Sales</a>
+      <a class="collapse-item" href="<?php echo BASEPAGES?>manage-sales.php">Manage Sales</a>
     </div>
   </div>
 </li>

@@ -67,13 +67,14 @@ class Product
         $validation = $this->validateData($data);
         if (!$validation->fails()) {
             try {
-
                 $table_attr = ["name", "specification", "hsn_code", "category_id", "eoq_level", "danger_level", "quantity"];
                 $assoc_array = Util::createAssocArray($table_attr, $data);
 
                 // Begin Transaction
                 $this->di->get("Database")->beginTransaction();
                 $product_id = $this->di->get("Database")->insert($this->table, $assoc_array);
+
+                $tale_attr = ["product_id", "supplier_id"];
 
                 $assoc_array = [];
                 $assoc_array["product_id"] = $product_id;
@@ -126,10 +127,10 @@ class Product
             $this->di->get("Database")->delete($this->table, "id = " . $data['id']);
             
             $this->di->get("Database")->commit();
-            Session::setSession("delete", "delete product success");
+            Session::setSession("delete", "Delete product success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("delete", "delete product error");
+            Session::setSession("delete", "Delete product error");
         }
     }
 }

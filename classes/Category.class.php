@@ -81,10 +81,10 @@ class Category
           $this->di->get("Database")->delete($this->table, "id = " . $data['id']);
           
           $this->di->get("Database")->commit();
-          Session::setSession("edit", "delete product success");
+          Session::setSession("edit", "Delete product success");
       } catch (Exception $e) {
           $this->di->get("Database")->rollback();
-          Session::setSession("edit", "delete product error");
+          Session::setSession("edit", "Delete product error");
       }
   }
 

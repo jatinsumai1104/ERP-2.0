@@ -1,6 +1,6 @@
 <?php
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 if(Session::getSession("add") != null){
   $data = explode(" ", Session::getSession("add"));
   Util::createToastr($data[2], array("message" => Session::getSession("add"), "title" => $data[0] ." ". $data[1]));

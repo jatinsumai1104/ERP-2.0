@@ -73,7 +73,6 @@ class Customer
     public function addCustomer($data)
     {
         $validation = $this->validateData($data);
-        print_r($data);
         if (!$validation->fails()) {
             try {
                 $customer_table_attr = ["first_name", "last_name", "gst_no", "phone_no", "email_id", "gender"];
@@ -141,10 +140,10 @@ class Customer
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
-            Session::setSession("delete", "delete customer success");
+            Session::setSession("delete", "Delete customer success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("delete", "delete customer error");
+            Session::setSession("delete", "Delete customer error");
         }
     }
     function checkCustomerExist($data)

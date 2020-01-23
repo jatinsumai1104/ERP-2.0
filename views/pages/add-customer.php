@@ -63,6 +63,7 @@ require_once '../includes/navbar.php';
                                     <form action="<?php echo BASEURL ?>helper/routing.php" method="POST">
                                         <input type="hidden" name="csrf_token" id="csrf_token"
                                             value=<?php echo Session::getSession("csrf_token"); ?>>
+                                            <input type="hidden" name="class_name" value="Customer">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">

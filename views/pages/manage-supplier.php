@@ -82,7 +82,7 @@ require_once('../includes/header.php');
                       <td><?php echo $supplier["email_id"]?></td>
                       <td><?php echo $supplier["company_name"]?></td>
                       <td><?php echo $supplier["address_of_supplier"]?></td>
-                      <td><button type="submit" class="btn btn-primary btn-block" name="edit_supplier" ><i class="fas fa-pencil-alt" ></i> Edit</button></td>
+                      <td><button type="submit" class="btn btn-primary btn-block" name="edit_supplier"><i class="fas fa-pencil-alt" ></i> Edit</button></td>
                       <td><a type="button" class="btn btn-danger btn-block delete" id="<?php echo $supplier["supplier_id"]?>" href="#" data-toggle="modal" data-target="#deleteModal" class_name="Supplier"><i class="far fa-trash-alt"></i> Delete</a></td>
                       <input type="hidden" name="supplier_id" value="<?php echo $supplier["supplier_id"] ?>">
                       </form>

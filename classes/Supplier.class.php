@@ -12,7 +12,7 @@ class Supplier
 
     public function getDataForDataTables()
     {
-        $query = "SELECT s.id as supplier_id, s.first_name,s.last_name,s.gst_no,s.phone_no,s.email_id,s.company_name,CONCAT(a.block_no,' ',a.street,' ',a.city,' ',a.pincode,' ',a.state,' ',a.country,a.town) as address_of_supplier FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id";
+        $query = "SELECT s.id as supplier_id, s.first_name,s.last_name,s.gst_no,s.phone_no,s.email_id,s.company_name,CONCAT(a.block_no,' ',a.street,' ',a.city,' ',a.pincode,' ',a.state,' ',a.country,a.town) as address_of_supplier FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE s.deleted = 0";
         $res = $this->di->get("Database")->rawQuery($query);
         return $res;
     }
@@ -128,20 +128,21 @@ class Supplier
 
     public function delete($data)
     {
+
         try {
             $query = "SELECT a.id as address_id FROM `suppliers` as s INNER JOIN address_supplier as a_s ON s.id = a_s.supplier_id INNER JOIN address as a ON a_s.address_id = a.id WHERE supplier_id = {$data['id']}";
+
             $res = $this->di->get("Database")->rawQuery($query);
             $this->di->get("Database")->beginTransaction();
 
-            $this->di->get("Database")->delete($data['table'], "id = " . $data['id']);
-
+            $this->di->get("Database")->delete($this->table, "id = " . $data['id']);
             $this->di->get("Database")->delete("address", "id = " . $res[0]['address_id']);
 
             $this->di->get("Database")->commit();
-            Session::setSession("delete", "delete supplier success");
+            Session::setSession("delete", "Delete supplier success");
         } catch (Exception $e) {
             $this->di->get("Database")->rollback();
-            Session::setSession("delete", "delete supplier error");
+            Session::setSession("delete", "Delete supplier error");
         }
     }
 

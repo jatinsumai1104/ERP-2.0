@@ -65,9 +65,9 @@ require_once('../includes/header.php');
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="">name</label>
+                                                        <label for="">Category Name</label>
                                                         <input type="text" class="form-control" name="name" id=""
-                                                            aria-describedby="helpId" placeholder="">
+                                                            aria-describedby="helpId" placeholder="Category Name">
                                                     </div>
                                                 </div>
                                             </div>
